@@ -1,7 +1,6 @@
 # Tower of Bullets
 
 ## Setup
--------
 In the root directory, `towerofbullets/`, run:
 ```
 $ pip install -r requirements.txt
