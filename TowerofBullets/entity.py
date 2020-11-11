@@ -2,7 +2,7 @@ import pygame
 
 class Entity:
 
-    def __init__(self, surface, position, size, speed=0, image_file='./assets/placeholder.png'):
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, speed=0, image_file='./assets/placeholder.png'):
         self.surface = surface
         self.size = size
         self.width, self.height = self.size
@@ -17,11 +17,10 @@ class Entity:
     # I think this method should be an utility function in utils/functions.py, 
     # because it will probably be used in many other classes.
     def __load_image(self, path, convert=False):
-        image = None
+        image = pygame.image.load(path)
         if convert:
-            image = pygame.image.load(path).convert()
-        else:
-            image = pygame.image.load(path)
+            image = image.convert()
+        
         return pygame.transform.scale(image, self.size)
 
     # @param direction: a tuple of two integers with values -1, 0 or 1, 
