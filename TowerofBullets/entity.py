@@ -1,4 +1,5 @@
 import pygame
+import os
 
 class Entity:
 
@@ -17,7 +18,7 @@ class Entity:
     # I think this method should be an utility function in utils/functions.py, 
     # because it will probably be used in many other classes.
     def __load_image(self, path, convert=False):
-        image = pygame.image.load(path)
+        image = pygame.image.load(os.path.join(os.path.dirname(__file__), 'assets/' + path))
         if convert:
             image = image.convert()
         

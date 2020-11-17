@@ -1,6 +1,6 @@
 import pygame
 
-from player import Player
+from character.player import Player
 
 
 class TowerOfBullets:
@@ -16,9 +16,9 @@ class TowerOfBullets:
     def start(self):
         pygame.init()
         pygame.display.init()
-        pygame.display.set_caption("The Life Aquatic with Steve Zissou")
+        pygame.display.set_caption("Super Test - Tower of Bullets")
         
-        self.player = Player(self.screen, (self.width/2, self.height/2), (70, 70), 1, 5, 200)
+        self.player = Player(self.screen, (self.width/2 - 70, self.height/2 - 70), (70, 70), 1, 'placeholder.png', 200, 200, 200)
         
         while True:
             for event in pygame.event.get():
@@ -30,11 +30,10 @@ class TowerOfBullets:
             
             self.handle_key_events()
             pygame.display.update()
-        
 
     def render(self):
         self.screen.fill(0)
-        self.player.update()
+        self.player.draw()
 
     def handle_key_events(self):
         keys = pygame.key.get_pressed()

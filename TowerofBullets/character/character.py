@@ -10,8 +10,11 @@ class Character(Entity):
         super().__init__(surface, position, size, speed, image_file)
         self.hp = hp
     
-    def move(self,x,y):
-        pass
+    def move(self, position):
+        x, y = position
+
+        self.x += x
+        self.y += y
 
     def shoot(self):
         pass

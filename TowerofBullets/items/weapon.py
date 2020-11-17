@@ -1,6 +1,6 @@
 import pygame
 
-from bullet import Bullet
+from items.bullet import Bullet
 from entity import Entity
 
 
