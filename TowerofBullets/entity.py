@@ -1,34 +1,34 @@
-import pygame
 import os
+import math
+
+import pygame
+from utils import *
 
 class Entity:
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, speed=0, image_file='./assets/placeholder.png'):
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, speed=0, image_file='placeholder.png'):
         self.surface = surface
         self.size = size
         self.width, self.height = self.size
-        self.image = self.__load_image(image_file)
+        self.image = load_image(image_file, self.size)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
-        self.x = self.rect.left - self.width/2
-        self.y = self.rect.top - self.width/2
+        self.x = self.rect.left - self.width/2 # meio do personagem
+        self.y = self.rect.top - self.width/2 # meio do personagem
         self.rect.center = (self.x + self.width/2, self.y + self.height/2)
         self.speed = speed
-    
-    # I think this method should be an utility function in utils/functions.py, 
-    # because it will probably be used in many other classes.
-    def __load_image(self, path, convert=False):
-        image = pygame.image.load(os.path.join(os.path.dirname(__file__), 'assets/' + path))
-        if convert:
-            image = image.convert()
-        
-        return pygame.transform.scale(image, self.size)
 
     # @param direction: a tuple of two integers with values -1, 0 or 1, 
     # that sets the movement way.
     def move(self, direction=None):
-        self.x += self.speed * direction[0]
-        self.y += self.speed * direction[1]
+        # keeps the same speed in diagonals
+        self.speed *= math.ceil((direction[0]**2 + direction[1]**2)**.5 / 2)
+        self.rect.left += self.speed * direction[0]
+        self.rect.top += self.speed * direction[1]
 
     def update(self):
-        self.surface.blit(self.image, (self.x, self.y))
+        pass
+
+    def draw(self):
+        self.update()
+        self.surface.blit(self.image, (self.rect.left, self.rect.top))

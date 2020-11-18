@@ -3,7 +3,7 @@ import pygame
 
 
 class Lobby(Scenario):
-    def __init__(self, position: tuple, size: tuple, structure: str,
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, image_path: str,
                  shop_image_file: str):
-        super().__init__(position, size, structure)
+        super().__init__(surface, position, size, image_path)
         self.shop = pygame.image.load(shop_image_file)

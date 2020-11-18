@@ -1,11 +1,10 @@
-from scenario import Scenario
+from scenery.scenario import Scenario
 import pygame
 
-
 class Room(Scenario):
-    def __init__(self, position: tuple, size: tuple, structure: str,
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, image_path: str,
                      enemies: int, traps: int, chest: bool):
-        super().__init__(position, size, structure)
+        super().__init__(surface, position, size, image_path)
         self.enemies = enemies
         self.traps = traps
         self.chest = chest
@@ -23,4 +22,13 @@ class Room(Scenario):
         pass
 
     def update(self):
-        self.surface.blit(self.image, (self.x, self.y))
+        pass
+    
+    def draw(self):
+        self.update()
+        self.surface.blit(self.background, (self.x, self.y))
+
+
+
+
+

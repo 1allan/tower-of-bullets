@@ -2,6 +2,7 @@ import pygame
 
 from character.character import *
 from items.weapon import *
+from utils import *
 
 
 class Player(Character):
@@ -16,10 +17,24 @@ class Player(Character):
 
     def change_weapon(self,weapon: Weapon):
         self.weapon = weapon
-    
-    def update(self):
-        pass
 
-    def draw(self):
-        self.update()
-        self.surface.blit(self.image, (self.x, self.y))
+    def shoot(self):
+        print('shoot')
+
+        bullet = load_image('characters/player/bullets/plain/01.png', (6, 6))
+        aim_x, aim_y = pygame.mouse.get_pos()
+        bullet_x, bullet_y = (self.rect.left, self.rect.top)
+        bullet_inclination = (aim_y - bullet_y) / (aim_x - bullet_x)
+        
+        
+        print(f'aim_x = {aim_x} / aim_y = {aim_y}')
+        print(f'bullet_inclination = {bullet_inclination}')
+
+        self.surface.blit(bullet, (aim_x, aim_y))
+
+        # while True:
+        #     self.surface.blit(bullet, (bullet_x, bullet_y))
+        #     bullet_x += 1
+        #     bullet_y += 1
+        #     if bullet_x == aim_x and bullet_y == aim_y:
+        #         break

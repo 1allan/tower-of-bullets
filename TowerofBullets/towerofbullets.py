@@ -1,7 +1,7 @@
 import pygame
 
 from character.player import Player
-
+from scenery.room import Room
 
 class TowerOfBullets:
     
@@ -9,30 +9,54 @@ class TowerOfBullets:
         self.width, self.height = screen_size
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.fps = fps
-        self.rooms = []
+
+        # self.rooms = []
+
+        self.room = None
         self.player = None
         self.paused = False
     
     def start(self):
         pygame.init()
         pygame.display.init()
-        pygame.display.set_caption("Super Test - Tower of Bullets")
+        pygame.display.set_caption("Tower of Bullets")
         
-        self.player = Player(self.screen, (self.width/2, self.height/2), (70, 70), 1, 'placeholder.png', 200, 200, 200)
+        self.room = Room(self.screen, (0, 0), (self.width, self.height), 'scenery/01.png', 0, 0, False)
+        self.player = Player(self.screen, (self.width/2, self.height/2), (70, 70), 5, 'placeholder.png', 200, 200, 200)
         
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
+                    self.quit()
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                  self.player.shoot()
 
             if not self.paused:
                 self.render()
+
+            for index, pad in enumerate(self.room.pads):
+                # parede esquerda
+                if self.player.rect.colliderect(pad) and index == 0:
+                    self.player.move((1, 0))
+
+                # parede inferior
+                elif self.player.rect.colliderect(pad) and index == 1:
+                    self.player.move((0, 1))
+
+                # parede direita
+                elif self.player.rect.colliderect(pad) and index == 2:
+                    self.player.move((-1, 0))
+
+                # parede superior
+                elif self.player.rect.colliderect(pad) and index == 3:
+                    self.player.move((0, -1))
             
             self.handle_key_events()
             pygame.display.update()
 
     def render(self):
-        self.screen.fill(0)
+        self.room.draw()
         self.player.draw()
 
     def handle_key_events(self):
@@ -45,6 +69,9 @@ class TowerOfBullets:
             self.player.move(( 0,  1))
         if keys[pygame.K_d]:
             self.player.move(( 1,  0))
+
+    def quit(self):
+        pygame.quit()
 
 
 if __name__ == '__main__':

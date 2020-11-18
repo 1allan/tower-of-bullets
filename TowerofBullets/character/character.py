@@ -2,6 +2,7 @@ import pygame
 
 from entity import Entity
 
+RED = pygame.Color(255, 0, 0)
 
 class Character(Entity):
 
@@ -9,15 +10,10 @@ class Character(Entity):
                  speed: int, image_file: str, hp: int):
         super().__init__(surface, position, size, speed, image_file)
         self.hp = hp
-    
-    def move(self, position):
-        x, y = position
-
-        self.x += x
-        self.y += y
 
     def shoot(self):
         pass
+
 
     def interact(self):
         pass
@@ -27,10 +23,3 @@ class Character(Entity):
     
     def die(self):
         pass
-
-    def update(self):
-        pass
-
-    def draw(self):
-        self.update()
-        self.surface.blit(self.image, (self.x, self.y))
