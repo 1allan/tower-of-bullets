@@ -3,6 +3,8 @@ import pygame
 from character.player import Player
 from scenery.room import Room
 
+from utils import *
+
 class TowerOfBullets:
     
     def __init__(self, screen_size, fps=60):
@@ -35,6 +37,7 @@ class TowerOfBullets:
             if not self.paused:
                 self.render()
 
+            # colisão com paredes
             for index, pad in enumerate(self.room.pads):
                 # parede esquerda
                 if self.player.rect.colliderect(pad) and index == 0:
@@ -51,7 +54,7 @@ class TowerOfBullets:
                 # parede superior
                 elif self.player.rect.colliderect(pad) and index == 3:
                     self.player.move((0, -1))
-            
+
             self.handle_key_events()
             pygame.display.update()
 

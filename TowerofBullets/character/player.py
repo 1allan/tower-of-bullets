@@ -1,7 +1,9 @@
 import pygame
+import math
 
 from character.character import *
 from items.weapon import *
+from items.bullet import Bullet
 from utils import *
 
 
@@ -13,28 +15,11 @@ class Player(Character):
         super().__init__(surface, position, size, speed, image_file, hp)
         self.energy = energy
         self.gold = gold
-        self.weapon = None if weapon is None else weapon # arrumar Weapon depois => self.weapon = Weapon(bla.bla.bla)
+        self.weapon = Weapon(self.surface, (self.rect.left, self.rect.top), (30, 30), self.speed, image_weapon='characters/player/weapons/main/01.png', image_bullet='characters/player/bullets/plain/01.png', damage=2) if weapon is None else weapon
 
-    def change_weapon(self,weapon: Weapon):
+    def change_weapon(self, weapon: Weapon):
         self.weapon = weapon
 
     def shoot(self):
-        print('shoot')
-
-        bullet = load_image('characters/player/bullets/plain/01.png', (6, 6))
-        aim_x, aim_y = pygame.mouse.get_pos()
-        bullet_x, bullet_y = (self.rect.left, self.rect.top)
-        bullet_inclination = (aim_y - bullet_y) / (aim_x - bullet_x)
+        self.weapon.shoot()
         
-        
-        print(f'aim_x = {aim_x} / aim_y = {aim_y}')
-        print(f'bullet_inclination = {bullet_inclination}')
-
-        self.surface.blit(bullet, (aim_x, aim_y))
-
-        # while True:
-        #     self.surface.blit(bullet, (bullet_x, bullet_y))
-        #     bullet_x += 1
-        #     bullet_y += 1
-        #     if bullet_x == aim_x and bullet_y == aim_y:
-        #         break

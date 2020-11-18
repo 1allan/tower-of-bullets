@@ -18,10 +18,7 @@ class Entity:
         self.rect.center = (self.x + self.width/2, self.y + self.height/2)
         self.speed = speed
 
-    # @param direction: a tuple of two integers with values -1, 0 or 1, 
-    # that sets the movement way.
     def move(self, direction=None):
-        # keeps the same speed in diagonals
         self.speed *= math.ceil((direction[0]**2 + direction[1]**2)**.5 / 2)
         self.rect.left += self.speed * direction[0]
         self.rect.top += self.speed * direction[1]

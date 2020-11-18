@@ -11,11 +11,12 @@ class Chest(Entity):
                          image_file=image_file)
         self.items = []
 
-    def get_items(self):
-        pass
+    def get_items(self, item: Items): #confere ai
+        self.items.pop(item)
+        return item
 
-    def set_items(self):
-        pass
+    def set_items(self,item: Items): #confere ai
+        self.items.append(item)
 
     def update(self):
         self.surface.blit(self.image, (self.x, self.y))
