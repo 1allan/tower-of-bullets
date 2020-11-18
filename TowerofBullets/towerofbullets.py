@@ -18,7 +18,7 @@ class TowerOfBullets:
         pygame.display.init()
         pygame.display.set_caption("Super Test - Tower of Bullets")
         
-        self.player = Player(self.screen, (self.width/2 - 70, self.height/2 - 70), (70, 70), 1, 'placeholder.png', 200, 200, 200)
+        self.player = Player(self.screen, (self.width/2, self.height/2), (70, 70), 1, 'placeholder.png', 200, 200, 200)
         
         while True:
             for event in pygame.event.get():

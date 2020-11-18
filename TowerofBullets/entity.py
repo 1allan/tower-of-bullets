@@ -10,9 +10,9 @@ class Entity:
         self.image = self.__load_image(image_file)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
-        self.x = round(self.rect.left + self.width/2)
-        self.y = round(self.rect.top + self.height/2)
-        self.rect.center = (self.x, self.y)
+        self.x = self.rect.left - self.width/2
+        self.y = self.rect.top - self.width/2
+        self.rect.center = (self.x + self.width/2, self.y + self.height/2)
         self.speed = speed
     
     # I think this method should be an utility function in utils/functions.py, 
