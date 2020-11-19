@@ -1,9 +1,6 @@
 import pygame
 
 from entity import Entity
-
-RED = pygame.Color(255, 0, 0)
-
 class Character(Entity):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,

@@ -19,4 +19,3 @@ class Player(Character):
 
     def shoot(self):
         self.weapon.shoot()
-        
