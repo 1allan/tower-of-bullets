@@ -12,23 +12,16 @@ class Weapon(Entity):
         self.bullets = []
 
     def shoot(self):
-        coordsBullet = []
-
-        # ver trajetória
         x_final, y_final = pygame.mouse.get_pos()
+        hip = ((y_final - self.rect.top)**2 + (x_final - self.rect.left)**2)**.5
+        
+        x_ratio = (max(x_final, self.rect.left) - min(x_final, self.rect.left))/hip
+        y_ratio = (max(y_final, self.rect.top) - min(y_final, self.rect.top))/hip
 
-        # linear coefficient
-        m = (y_final - self.rect.top) / (x_final - self.rect.left)
+        y_ratio = -y_ratio if y_final < self.rect.top else y_ratio
+        x_ratio = -x_ratio if x_final < self.rect.left else x_ratio
 
-        var = -1 if self.rect.top > y_final else 1
-
-        for i in range(self.rect.top, y_final + (1000 * var), var * self.speed):
-            y_next = i
-            x_next = ((y_next - self.rect.top) / m) + self.rect.left
-
-            coordsBullet.append((x_next, y_next))
-
-        bullet = Bullet(self.surface, (self.rect.left, self.rect.top), (6, 6), self.image_bullet, self.damage, 2, coordsBullet)
+        bullet = Bullet(self.surface, (x_ratio, y_ratio), (self.rect.left, self.rect.top), (6, 6), self.image_bullet, self.damage, 2)
         self.bullets.append(bullet)
 
     def change_image_bullet(self, image_bullet: str):
@@ -38,8 +31,9 @@ class Weapon(Entity):
         self.damage = damage
  
     def update(self):
-        for k, bullet in enumerate(self.bullets):
-            if bullet.rect.left == 0 or bullet.rect.top == 0 or bullet.rect.left == 800 or bullet.rect.top == 600:
-                self.bullets.pop(k)
+        for b in self.bullets:
+            width, height = b.surface.get_size()
+            if b.rect.top < 0 or b.rect.top > height or b.rect.left < 0 or b.rect.left > width:
+                self.bullets.remove(b)
             else:
-                bullet.draw()
+                b.draw()
