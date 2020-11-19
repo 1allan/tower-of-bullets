@@ -17,9 +17,6 @@ class Player(Character):
         self.gold = gold
         self.weapon = Weapon(self.surface, (self.rect.left, self.rect.top), (30, 30), self.speed, image_weapon='characters/player/weapons/main/01.png', image_bullet='characters/player/bullets/plain/01.png', damage=2) if weapon is None else weapon
 
-    def change_weapon(self, weapon: Weapon):
-        self.weapon = weapon
-
     def shoot(self):
         self.weapon.shoot()
         

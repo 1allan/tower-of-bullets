@@ -23,9 +23,11 @@ class TowerOfBullets:
         pygame.display.init()
         pygame.display.set_caption("Tower of Bullets")
         
+        # setar elementos principais
         self.room = Room(self.screen, (0, 0), (self.width, self.height), 'scenery/01.png', 0, 0, False)
-        self.player = Player(self.screen, (self.width/2, self.height/2), (70, 70), 5, 'placeholder.png', 200, 200, 200)
+        self.player = Player(self.screen, (self.width/2, self.height/2), (70, 70), 5, 'placeholder.png', 200, 200)
         
+        # while do jogo principal
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -34,29 +36,35 @@ class TowerOfBullets:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                   self.player.shoot()
 
+            # personagem colisão parede
+            self.collide_walls()
+
+            # ver se não está pausado, para renderizar o principal do jogo
             if not self.paused:
                 self.render()
 
-            # colisão com paredes
-            for index, pad in enumerate(self.room.pads):
-                # parede esquerda
-                if self.player.rect.colliderect(pad) and index == 0:
-                    self.player.move((1, 0))
-
-                # parede inferior
-                elif self.player.rect.colliderect(pad) and index == 1:
-                    self.player.move((0, 1))
-
-                # parede direita
-                elif self.player.rect.colliderect(pad) and index == 2:
-                    self.player.move((-1, 0))
-
-                # parede superior
-                elif self.player.rect.colliderect(pad) and index == 3:
-                    self.player.move((0, -1))
-
+            # handle key events
             self.handle_key_events()
             pygame.display.update()
+    
+    # colisão com paredes
+    def collide_walls(self):
+        for index, pad in enumerate(self.room.pads):
+            # parede esquerda
+            if self.player.rect.colliderect(pad) and index == 0:
+                self.player.move((1, 0))
+
+            # parede inferior
+            elif self.player.rect.colliderect(pad) and index == 1:
+                self.player.move((0, 1))
+
+            # parede direita
+            elif self.player.rect.colliderect(pad) and index == 2:
+                self.player.move((-1, 0))
+
+            # parede superior
+            elif self.player.rect.colliderect(pad) and index == 3:
+                self.player.move((0, -1))
 
     def render(self):
         self.room.draw()
