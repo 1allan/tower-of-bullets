@@ -6,23 +6,28 @@ from entity import Entity
 
 class Weapon(Entity):
     
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, speed: int, image_weapon: str, image_bullet: str, damage: int):
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
+                 speed: int, image_weapon: str, image_bullet: str,
+                 damage: int):
+
         super().__init__(surface, position, size, speed, image_weapon)
         self.image_bullet = image_bullet
         self.damage = damage
         self.bullets = []
 
     def shoot(self):
-        x_final, y_final = pygame.mouse.get_pos()
-        hip = ((y_final - self.rect.top)**2 + (x_final - self.rect.left)**2)**.5
+        x_mouse, y_mouse = pygame.mouse.get_pos()
+        x_player, y_player = self.rect.left, self.rect.top
+        distance = ((y_mouse - y_player)**2 + (x_mouse - x_player)**2) ** 0.5
         
-        x_ratio = (max(x_final, self.rect.left) - min(x_final, self.rect.left))/hip
-        y_ratio = (max(y_final, self.rect.top) - min(y_final, self.rect.top))/hip
+        x_ratio = abs(x_mouse - x_player) / distance
+        y_ratio = abs(y_mouse - y_player) / distance
 
-        y_ratio = -y_ratio if y_final < self.rect.top else y_ratio
-        x_ratio = -x_ratio if x_final < self.rect.left else x_ratio
+        y_ratio *= -1 if y_mouse < y_player else 1
+        x_ratio *= -1 if x_mouse < x_player else 1
 
-        bullet = Bullet(self.surface, (x_ratio, y_ratio), (self.rect.left, self.rect.top), (6, 6), self.image_bullet, self.damage, 5)
+        bullet = Bullet(self.surface, (x_player, y_player), (6, 6), 
+                        self.image_bullet, self.damage, 5, (x_ratio, y_ratio))
         self.bullets.append(bullet)
 
     def change_image_bullet(self, image_bullet: str):
@@ -34,7 +39,8 @@ class Weapon(Entity):
     def update(self):
         for b in self.bullets:
             width, height = b.surface.get_size()
-            if b.rect.top < 0 or b.rect.top > height or b.rect.left < 0 or b.rect.left > width:
+            x, y = b.rect.left, b.rect.top
+            if y < 0 or y > height or x < 0 or x > width:
                 self.bullets.remove(b)
             else:
                 b.draw()

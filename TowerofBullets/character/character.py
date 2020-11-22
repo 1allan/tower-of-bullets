@@ -1,10 +1,13 @@
 import pygame
 
 from entity import Entity
+
+
 class Character(Entity):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
                  speed: int, image_file: str, hp: int):
+                 
         super().__init__(surface, position, size, speed, image_file)
         self.weapon = None
         self.hp = hp

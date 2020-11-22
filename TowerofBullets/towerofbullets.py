@@ -1,9 +1,10 @@
 import pygame
 
+from utils import load_image
+
 from character.player import Player
 from scenery.room import Room
 
-from utils import *
 
 class TowerOfBullets:
     
@@ -11,31 +12,28 @@ class TowerOfBullets:
         self.width, self.height = screen_size
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.fps = fps
-
-        # self.rooms = []
-
         self.room = None
         self.player = None
         self.paused = False
     
-    def start(self):
+    def run(self):
         pygame.init()
         pygame.display.init()
         pygame.display.set_caption("Tower of Bullets")
         
         # setar elementos principais
-        self.room = Room(self.screen, (0, 0), (self.width, self.height), 'scenery/01.png', 0, 0, False)
-        self.player = Player(self.screen, (self.width/2, self.height/2), (70, 70), 5, 'placeholder.png', 200, 200)
+        self.room = Room(self.screen, (0, 0), (self.width, self.height),
+                         'scenery/01.png', 0, 0, False)
+        
+        self.player = Player(self.screen, (self.width/2, self.height/2),
+                             (70, 70), 5, 'placeholder.png', 200, 200)
         
         # while do jogo principal
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
-
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                  self.player.shoot()
-
+            
             # personagem colisão parede
             self.collide_walls()
 
@@ -44,8 +42,7 @@ class TowerOfBullets:
                 self.render()
 
             # handle key events
-            self.handle_key_events()
-            pygame.display.update()
+            self.handle_input()
     
     # colisão com paredes
     def collide_walls(self):
@@ -69,17 +66,27 @@ class TowerOfBullets:
     def render(self):
         self.room.draw()
         self.player.draw()
+        pygame.display.update()
 
-    def handle_key_events(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
-            self.player.move(( 0, -1))
-        if keys[pygame.K_a]:
-            self.player.move((-1,  0))
-        if keys[pygame.K_s]:
-            self.player.move(( 0,  1))
-        if keys[pygame.K_d]:
-            self.player.move(( 1,  0))
+    def handle_input(self):
+        keyboard = pygame.key.get_pressed()
+        mouse = pygame.mouse.get_pressed()
+
+        direction = [0, 0]
+        if keyboard[pygame.K_a]:
+            direction[0] = -1
+        elif keyboard [pygame.K_d]:
+            direction[0] = 1
+
+        if keyboard[pygame.K_w]:
+            direction[1] = -1
+        elif keyboard[pygame.K_s]:
+            direction[1] = 1
+        
+        self.player.move(direction)
+
+        if mouse[0]:
+            self.player.shoot()
 
     def quit(self):
         pygame.quit()
@@ -87,4 +94,4 @@ class TowerOfBullets:
 
 if __name__ == '__main__':
     game = TowerOfBullets((800, 600))
-    game.start()
+    game.run()

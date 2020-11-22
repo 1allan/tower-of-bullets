@@ -7,9 +7,11 @@ from utils import *
 
 class Bullet(Entity):
 
-    def __init__(self, surface: pygame.Surface, ratio, position: tuple, size: tuple,
-                 image_file: str, damage: int, speed: int):
-        super().__init__(surface, position, size, speed=speed, 
+    def __init__(self, surface: pygame.Surface, position: tuple, 
+                 size: tuple, image_file: str, damage: int, speed: int, 
+                 ratio: tuple):
+                 
+        super().__init__(surface, position, size, speed=speed,
                          image_file=image_file)
         self.damage = damage
         self.x_ratio, self.y_ratio = ratio
