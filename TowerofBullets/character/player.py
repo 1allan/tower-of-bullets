@@ -40,7 +40,7 @@ class Player(Character):
         self.rect.top += speed * direction[1]
 
     def shoot(self):
-        self.weapon.shoot()
+        self.weapon.shoot(pygame.mouse.get_pos())
 
     def update(self):
         self.weapon.rect.left = self.rect.left

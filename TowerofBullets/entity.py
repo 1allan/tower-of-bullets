@@ -24,5 +24,5 @@ class Entity:
         pass
 
     def draw(self):
-        self.update()
         self.surface.blit(self.image, (self.rect.left, self.rect.top))
+        self.update()

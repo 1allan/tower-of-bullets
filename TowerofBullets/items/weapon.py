@@ -16,8 +16,8 @@ class Weapon(Entity):
         self.damage = damage
         self.bullets = []
 
-    def shoot(self):
-        x_mouse, y_mouse = pygame.mouse.get_pos()
+    def shoot(self, coordinates):
+        x_mouse, y_mouse = coordinates
         x_player, y_player = self.rect.left, self.rect.top
         distance = ((y_mouse - y_player)**2 + (x_mouse - x_player)**2) ** 0.5
         
@@ -32,7 +32,6 @@ class Weapon(Entity):
         self.bullets.append(bullet)
  
     def update(self):
-        print(len(self.bullets))
         for b in self.bullets:
             width, height = b.surface.get_size()
             x, y = b.rect.left, b.rect.top

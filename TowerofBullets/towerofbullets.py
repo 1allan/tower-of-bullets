@@ -22,9 +22,7 @@ class TowerOfBullets:
         pygame.display.set_caption("Tower of Bullets")
         
         # setar elementos principais
-        self.room = Room(self.screen, (0, 0), (self.width, self.height),
-                         'scenery/01.png', 0, 0, False)
-        
+        self.room = Room(self.screen, (0, 0), (self.width, self.height), 0, False)
         self.player = Player(self.screen, (self.width/2, self.height/2),
                              (70, 70), 5, 200, 200, 200)
         
@@ -63,8 +61,8 @@ class TowerOfBullets:
             elif self.player.rect.colliderect(pad) and index == 3:
                 self.player.move((0, -1))
 
-    def render(self):
-        self.room.draw()
+    def render(self):        
+        self.room.draw((self.player.rect.left, self.player.rect.top))
         self.player.draw()
         pygame.display.update()
 
