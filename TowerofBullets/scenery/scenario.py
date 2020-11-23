@@ -1,7 +1,8 @@
-from abc import ABC, abstractmethod
-from utils import *
-
 import pygame
+
+from abc import ABC, abstractmethod
+from util.functions import load_image
+
 
 class Scenario(ABC):
 

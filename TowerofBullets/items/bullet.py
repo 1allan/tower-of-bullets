@@ -2,14 +2,16 @@ import math
 import pygame
 
 from entity import Entity
-from utils import *
+from util.functions import load_image
+
+IMAGE = 'misc/projectiles/default/01.png'
 
 
 class Bullet(Entity):
 
     def __init__(self, surface: pygame.Surface, position: tuple, 
-                 size: tuple, image_file: str, damage: int, speed: int, 
-                 ratio: tuple):
+                 size: tuple, damage: int, speed: int, ratio: tuple,
+                 image_file: str=IMAGE):
                  
         super().__init__(surface, position, size, speed=speed,
                          image_file=image_file)

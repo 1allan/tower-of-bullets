@@ -1,6 +1,6 @@
 import pygame
 
-from utils import load_image
+from util.functions import load_image
 
 from character.player import Player
 from scenery.room import Room
@@ -26,7 +26,7 @@ class TowerOfBullets:
                          'scenery/01.png', 0, 0, False)
         
         self.player = Player(self.screen, (self.width/2, self.height/2),
-                             (70, 70), 5, 'placeholder.png', 200, 200)
+                             (70, 70), 5, 200, 200, 200)
         
         # while do jogo principal
         while True:

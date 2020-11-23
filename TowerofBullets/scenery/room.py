@@ -1,5 +1,7 @@
-from scenery.scenario import Scenario
 import pygame
+
+from scenery.scenario import Scenario
+
 
 class Room(Scenario):
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, image_path: str,

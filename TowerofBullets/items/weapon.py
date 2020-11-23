@@ -4,14 +4,15 @@ import math
 from items.bullet import Bullet
 from entity import Entity
 
+IMAGE = 'items/01.png'
+
+
 class Weapon(Entity):
     
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int, image_weapon: str, image_bullet: str,
-                 damage: int):
+                 damage: int, image_file: str=IMAGE):
 
-        super().__init__(surface, position, size, speed, image_weapon)
-        self.image_bullet = image_bullet
+        super().__init__(surface, position, size, image_file=image_file)
         self.damage = damage
         self.bullets = []
 
@@ -27,20 +28,15 @@ class Weapon(Entity):
         x_ratio *= -1 if x_mouse < x_player else 1
 
         bullet = Bullet(self.surface, (x_player, y_player), (6, 6), 
-                        self.image_bullet, self.damage, 5, (x_ratio, y_ratio))
+                        self.damage, 5, (x_ratio, y_ratio))
         self.bullets.append(bullet)
-
-    def change_image_bullet(self, image_bullet: str):
-        self.image_bullet = image_bullet
-
-    def change_damage(self, damage: int):
-        self.damage = damage
  
     def update(self):
+        print(len(self.bullets))
         for b in self.bullets:
             width, height = b.surface.get_size()
             x, y = b.rect.left, b.rect.top
-            if y < 0 or y > height or x < 0 or x > width:
+            if y <= 40 or y >= height - 49 or x <= 14 or x >= width - 15:
                 self.bullets.remove(b)
             else:
                 b.draw()

@@ -2,7 +2,7 @@ import os
 import math
 import pygame
 
-from utils import load_image
+from util.functions import load_image
 
 class Entity:
 
@@ -19,14 +19,6 @@ class Entity:
         self.y = self.rect.top + self.width/2
         self.speed = speed
 
-    def move(self, direction=None):
-        speed = self.speed
-        # Sets an equivalent speed for diagonals
-        if 0 not in direction:
-            speed = round(((speed**2 + speed**2)**0.5)/2, 1)
-        
-        self.rect.left += speed * direction[0]
-        self.rect.top += speed * direction[1]
 
     def update(self):
         pass

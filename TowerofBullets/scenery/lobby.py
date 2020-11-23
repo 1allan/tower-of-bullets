@@ -1,5 +1,6 @@
-from scenario import Scenario
 import pygame
+
+from scenario import Scenario
 
 
 class Lobby(Scenario):
