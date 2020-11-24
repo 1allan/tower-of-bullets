@@ -1,20 +1,31 @@
 import pygame
 
-from character import Character
+from entity import Entity
 from items.weapon import Weapon
 
+IMAGE = 'misc/placeholder.png'
 
-class Enemy(Character):
+
+class Enemy(Entity):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int, image_file: str, hp: int, weapon: Weapon):
-        super().__init__(surface, position, size, speed, image_file, hp)
-        self.damage = damage
-        self.weapon = weapon
+                 speed: int, hp: int, image_file: str=IMAGE):
+                 
+        super().__init__(surface, position, size, speed, image_file)
+        self.weapon = None
+        self.hp = hp
 
-    def update(self):
+        if self.weapon is None:
+            self.weapon = Weapon(self.surface, (self.rect.left, self.rect.top), 
+                             (10, 10), 2)
+
+    def chase(self, coordinates):
         pass
 
-    def draw(self):
-        self.update()
-        self.surface.blit(self.image, (self.x, self.y))
+    def shoot(self, coordinates):
+        self.weapon.shoot(coordinates)
+
+    def update(self):
+        self.weapon.draw()
+        self.weapon.rect.left = self.rect.left
+        self.weapon.rect.top = self.rect.top

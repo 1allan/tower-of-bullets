@@ -6,15 +6,11 @@ from entity import Entity
 class Character(Entity):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int, image_file: str, hp: int):
+                 speed: int, hp: int, image_file: str):
+                 
         super().__init__(surface, position, size, speed, image_file)
+        self.weapon = None
         self.hp = hp
-    
-    def move(self, position):
-        x, y = position
-
-        self.x += x
-        self.y += y
 
     def shoot(self):
         pass
@@ -29,8 +25,6 @@ class Character(Entity):
         pass
 
     def update(self):
-        pass
-
-    def draw(self):
-        self.update()
-        self.surface.blit(self.image, (self.x, self.y))
+        self.weapon.draw()
+        self.weapon.rect.left = self.rect.left
+        self.weapon.rect.top = self.rect.top
