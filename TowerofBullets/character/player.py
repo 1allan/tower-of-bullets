@@ -6,7 +6,8 @@ from character.character import Character
 from items.weapon import Weapon
 from items.bullet import Bullet
 
-IMAGE = 'characters/01.png'
+# IMAGE = 'characters/01.png'
+IMAGE = 'misc/placeholder.png'
 
 
 class Player(Character):

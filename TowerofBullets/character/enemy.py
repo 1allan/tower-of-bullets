@@ -3,8 +3,9 @@ import pygame
 from entity import Entity
 from items.weapon import Weapon
 
-IMAGE = 'misc/placeholder.png'
+# IMAGE = 'misc/placeholder.png'
 
+IMAGE = 'characters/01.png'
 
 class Enemy(Entity):
 
