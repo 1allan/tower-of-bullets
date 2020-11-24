@@ -21,18 +21,11 @@ class Weapon(Entity):
     def shoot(self, coordinates):
         x_mouse, y_mouse = coordinates
         x_player, y_player = self.rect.left, self.rect.top
-        distance = ((y_mouse - y_player)**2 + (x_mouse - x_player)**2) ** 0.5
-
-        x_ratio = abs(x_mouse - x_player) / distance
-        y_ratio = abs(y_mouse - y_player) / distance
-
-        y_ratio *= -1 if y_mouse < y_player else 1
-        x_ratio *= -1 if x_mouse < x_player else 1
 
         if pygame.time.get_ticks() - self.last_tick >= self.fire_rate_gap:
             self.last_tick = pygame.time.get_ticks()
             bullet = Bullet(self.surface, (x_player, y_player), (6, 6),
-                            self.damage, 5, (x_ratio, y_ratio))
+                            self.damage, 5, (x_mouse, y_mouse))
             self.bullets.append(bullet)
 
     def update(self):
