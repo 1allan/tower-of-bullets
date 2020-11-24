@@ -32,9 +32,9 @@ class Room(Scenario):
         pass
 
     def update(self, player_coordinates):
-        if len(self.enemies) < 5:
-            self.spawn_enemies(5)
-            
+        if len(self.enemies) < 1:
+            self.spawn_enemies(1)
+        
         for enemy in self.enemies:
             enemy.shoot(player_coordinates)
             enemy.draw() 

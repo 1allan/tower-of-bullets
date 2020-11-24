@@ -8,7 +8,7 @@ class Entity:
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
                  speed: int=0, image_file: str='placeholder.png'):
-                 
+
         self.surface = surface
         self.size = size
         self.width, self.height = self.size
@@ -16,7 +16,7 @@ class Entity:
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
         self.x = self.rect.left + self.width/2
-        self.y = self.rect.top + self.width/2
+        self.y = self.rect.top + self.height/2
         self.speed = speed
 
 
@@ -25,4 +25,6 @@ class Entity:
 
     def draw(self):
         self.surface.blit(self.image, (self.rect.left, self.rect.top))
+        self.x = self.rect.left + self.width/2
+        self.y = self.rect.top + self.height/2
         self.update()

@@ -62,7 +62,7 @@ class TowerOfBullets:
                 self.player.move((0, -1))
 
     def render(self):        
-        self.room.draw((self.player.rect.left, self.player.rect.top))
+        self.room.draw((self.player.x, self.player.y))
         self.player.draw()
         pygame.display.update()
 

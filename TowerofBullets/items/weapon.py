@@ -16,18 +16,15 @@ class Weapon(Entity):
         self.damage = damage
         self.bullets = []
         self.last_tick = 0
-        self.fire_rate_gap = 300
+        self.fire_rate_gap = 0
 
     def shoot(self, coordinates):
-        x_mouse, y_mouse = coordinates
-        x_player, y_player = self.rect.left, self.rect.top
-
         if pygame.time.get_ticks() - self.last_tick >= self.fire_rate_gap:
             self.last_tick = pygame.time.get_ticks()
 
-            position = (x_player + self.width/2, y_player + self.height/2)
-            bullet = Bullet(self.surface, position, (6, 6),
-                            self.damage, 5, (x_mouse, y_mouse))
+            position = (self.x, self.y)
+            bullet = Bullet(self.surface, position, (6, 6), self.damage, 5,
+                            coordinates)
             
             self.bullets.append(bullet)
 
