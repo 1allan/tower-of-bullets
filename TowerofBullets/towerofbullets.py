@@ -25,7 +25,7 @@ class TowerOfBullets:
         # setar elementos principais
         self.player = Player(self.screen, (self.width/2, self.height/2),
                              (70, 70), 5, 200, 200, self.sprites, gold=200)
-        self.room = Room(self.screen, (0, 0), (self.width, self.height), 0, False,  self.player)
+        self.room = Room(self.screen, (0, 0), (self.width, self.height), 0, False,  self.player, self.sprites)
         self.sprites.add(self.room)
         self.sprites.add(self.player)
        
@@ -64,10 +64,9 @@ class TowerOfBullets:
             elif self.player.rect.colliderect(pad) and index == 3:
                 self.player.move((0, -1))
 
-    def render(self):        
-        # self.room.draw((self.player.x, self.player.y))
-        # self.player.draw()
+    def render(self):
         self.sprites.draw(self.screen)
+        self.sprites.update()
         pygame.display.update()
 
     def handle_input(self):

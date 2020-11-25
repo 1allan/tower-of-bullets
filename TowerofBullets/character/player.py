@@ -6,7 +6,6 @@ from character.character import Character
 from items.weapon import Weapon
 from items.bullet import Bullet
 
-# IMAGE = 'characters/01.png'
 IMAGE = 'misc/placeholder.png'
 
 
@@ -23,7 +22,7 @@ class Player(Character):
         
         if self.weapon is None:
             self.weapon = Weapon(self.surface, (self.x, self.y), 
-                             (30, 30), 2, sprite_group)
+                             (60, 30), 2, sprite_group)
             sprite_group.add(self.weapon)
 
     def move(self, direction=None):
@@ -45,6 +44,6 @@ class Player(Character):
         self.weapon.shoot(pygame.mouse.get_pos())
 
     def update(self):
-        self.weapon.x = self.x
-        self.weapon.y = self.y
+        self.weapon.rect.left = self.rect.left
+        self.weapon.rect.top = self.rect.top
         self.weapon.draw()
