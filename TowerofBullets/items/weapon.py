@@ -16,7 +16,7 @@ class Weapon(Entity):
         self.damage = damage
         self.bullets = pygame.sprite.Group()
         self.last_tick = 0
-        self.fire_rate_gap = 0
+        self.fire_rate_gap = 1000
         self.sprite_group = sprite_group
         
 
@@ -25,7 +25,7 @@ class Weapon(Entity):
             self.last_tick = pygame.time.get_ticks()
 
             position = (self.x, self.y)
-            bullet = Bullet(self.surface, position, (6, 6), self.damage, 5,
+            bullet = Bullet(self.surface, position, (6, 6), self.damage, 1,
                             coordinates)
             
             self.bullets.add(bullet)

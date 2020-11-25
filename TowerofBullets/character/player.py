@@ -15,7 +15,7 @@ class Player(Character):
                  speed:int, hp: int, energy: int, sprite_group, gold: int=0,
                  weapon: Weapon=None, image_file: str=IMAGE):
                  
-        super().__init__(surface, position, size, speed, hp, image_file)
+        super().__init__(surface, position, size, speed, hp, sprite_group, image_file)
         self.energy = energy
         self.gold = gold
         self.last_direction = [1, 0]
@@ -23,7 +23,7 @@ class Player(Character):
         if self.weapon is None:
             self.weapon = Weapon(self.surface, (self.x, self.y), 
                              (60, 30), 2, sprite_group)
-            sprite_group.add(self.weapon)
+            self.sprite_group.add(self.weapon)
 
     def move(self, direction=None):
         if direction[0] == self.last_direction[0] * -1:
@@ -44,6 +44,9 @@ class Player(Character):
         self.weapon.shoot(pygame.mouse.get_pos())
 
     def update(self):
+        self.x = self.rect.left + self.width/2
+        self.y = self.rect.top + self.height/2
+
         self.weapon.rect.left = self.rect.left
         self.weapon.rect.top = self.rect.top
         self.weapon.draw()

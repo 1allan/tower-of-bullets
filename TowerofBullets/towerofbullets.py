@@ -24,7 +24,7 @@ class TowerOfBullets:
         
         # setar elementos principais
         self.player = Player(self.screen, (self.width/2, self.height/2),
-                             (70, 70), 5, 200, 200, self.sprites, gold=200)
+                             (70, 70), 3, 200, 200, self.sprites, gold=200)
         self.room = Room(self.screen, (0, 0), (self.width, self.height), 0, False,  self.player, self.sprites)
         self.sprites.add(self.room)
         self.sprites.add(self.player)
@@ -38,6 +38,9 @@ class TowerOfBullets:
             # personagem colisão parede
             self.collide_walls()
 
+            # colisão bullet player / enemy
+            self.detect_collision()
+
             # ver se não está pausado, para renderizar o principal do jogo
             if not self.paused:
                 self.render()
@@ -45,6 +48,17 @@ class TowerOfBullets:
             # handle key events
             self.handle_input()
     
+    def detect_collision(self):
+        # dettect collision with each enemy
+        for enemy in self.room.enemies:
+            # bullet enemy with player
+            if pygame.sprite.spritecollideany(self.player, enemy.weapon.bullets):
+                print('bala enemy bateu no player')
+
+            # bullet player with enemies
+            if pygame.sprite.spritecollideany(enemy, self.player.weapon.bullets):
+                print(f'hittou o enemy {enemy}')
+
     # colisão com paredes
     def collide_walls(self):
         for index, pad in enumerate(self.room.pads):

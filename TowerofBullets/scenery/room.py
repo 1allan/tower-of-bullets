@@ -23,10 +23,10 @@ class Room(Scenario):
         pass
 
     def spawn_enemies(self, quantity):
-        print('chamou spawn_enemies')
         for _ in range(quantity):
             position = randint(0, self.width), randint(0, self.height)
-            self.enemies.add(Enemy(self.surface, position, (30, 30), 0, 0)) #self.enemies.add(Enemy)
+            self.enemies.add(Enemy(self.surface, position, (30, 30), 0, 0, self.sprite_group)) #self.enemies.add(Enemy)
+            self.sprite_group.add(self.enemies)
 
     def check_enemies(self):
         pass
@@ -38,14 +38,6 @@ class Room(Scenario):
         if len(self.enemies) == 0:
             self.spawn_enemies(1)
 
-        self.enemies.update()
-        self.enemies.draw(self.surface)
-        # for enemy in self.enemies:
-        #     enemy.shoot((self.player.x, self.player.y))
-        #     enemy.draw()
-
-        
-
-
-
-
+        for enemy in self.enemies:
+            enemy.shoot((self.player.x, self.player.y))
+            enemy.draw()
