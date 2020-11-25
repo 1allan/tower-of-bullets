@@ -8,13 +8,15 @@ IMAGE = 'scenery/01.png'
 
 
 class Room(Scenario):
+
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 traps: int, chest: bool, image_path: str=IMAGE):
+                 traps: int, chest: bool, player, image_path: str=IMAGE):
         
         super().__init__(surface, position, size, traps, chest, image_path)
-        self.enemies = []
+        self.enemies = pygame.sprite.Group()
         self.traps = traps
         self.chest = chest
+        self.player = player
 
     def lock_doors(self):
         pass
@@ -23,7 +25,7 @@ class Room(Scenario):
         
         for _ in range(quantity):
             position = randint(0, self.width), randint(0, self.height)
-            self.enemies.append(Enemy(self.surface, position, (30, 30), 0, 0))
+            self.enemies.append(self.enemies.add(Enemy(self.surface, position, (30, 30), 0, 0))) #self.enemies.add(Enemy)
 
     def check_enemies(self):
         pass
@@ -31,15 +33,15 @@ class Room(Scenario):
     def open_doors(self):
         pass
 
-    def update(self, player_coordinates):
-        if len(self.enemies) < 1:
+    def update(self):
+        if len(self.enemies) < 0:
             self.spawn_enemies(1)
         
         for enemy in self.enemies:
-            enemy.shoot(player_coordinates)
-            enemy.draw() 
+            enemy.shoot((self.player.x, self.player.y))
+            enemy.draw()
 
-
+        
 
 
 

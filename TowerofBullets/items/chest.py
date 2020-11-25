@@ -10,12 +10,12 @@ class Chest(Entity):
                  
         super().__init__(surface, position, size, speed=speed, 
                          image_file=image_file)
-        self.items = []
+        self.items = pygame.sprite.Group()
 
     def get_items(self, item: Items):
-        self.items.pop(item)
+        self.items.remove(item)
         return item
 
     def set_items(self,item: Items):
-        self.items.append(item)
+        self.items.add(item)
         

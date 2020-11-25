@@ -4,11 +4,12 @@ from abc import ABC, abstractmethod
 from util.functions import load_image
 
 
-class Scenario(ABC):
+class Scenario(pygame.sprite.Sprite):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, 
                  traps: int, chest: bool, image_path: str):
-        
+        pygame.sprite.Sprite.__init__(self)
+
         self.width, self.height = size
         self.surface = surface
         self.image = load_image(image_path, size)
