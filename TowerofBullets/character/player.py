@@ -22,7 +22,7 @@ class Player(Character):
         
         if self.weapon is None:
             self.weapon = Weapon(self.surface, (self.x, self.y), 
-                             (60, 30), 2, sprite_group)
+                             (60, 30), 50, sprite_group)
             self.sprite_group.add(self.weapon)
 
     def move(self, direction=None):
@@ -42,11 +42,3 @@ class Player(Character):
 
     def shoot(self):
         self.weapon.shoot(pygame.mouse.get_pos())
-
-    def update(self):
-        self.x = self.rect.left + self.width/2
-        self.y = self.rect.top + self.height/2
-
-        self.weapon.rect.left = self.rect.left
-        self.weapon.rect.top = self.rect.top
-        self.weapon.draw()

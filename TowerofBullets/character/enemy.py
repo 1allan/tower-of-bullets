@@ -24,11 +24,3 @@ class Enemy(Character):
 
     def shoot(self, coordinates):
         self.weapon.shoot(coordinates)
-
-    def update(self):
-        self.x = self.rect.left + self.width/2
-        self.y = self.rect.top + self.height/2
-
-        self.weapon.draw()
-        self.weapon.rect.left = self.rect.left
-        self.weapon.rect.top = self.rect.top

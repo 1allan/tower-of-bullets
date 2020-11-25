@@ -52,12 +52,16 @@ class TowerOfBullets:
         # dettect collision with each enemy
         for enemy in self.room.enemies:
             # bullet enemy with player
-            if pygame.sprite.spritecollideany(self.player, enemy.weapon.bullets):
-                print('bala enemy bateu no player')
+            collisionPlayer = pygame.sprite.spritecollideany(self.player, enemy.weapon.bullets)
+            if collisionPlayer:
+                self.player.be_hit(enemy.weapon.damage)
+                collisionPlayer.kill()
 
             # bullet player with enemies
-            if pygame.sprite.spritecollideany(enemy, self.player.weapon.bullets):
-                print(f'hittou o enemy {enemy}')
+            collisionEnemy = pygame.sprite.spritecollideany(enemy, self.player.weapon.bullets)
+            if collisionEnemy:
+                enemy.be_hit(self.player.weapon.damage)
+                collisionEnemy.kill()
 
     # colisão com paredes
     def collide_walls(self):

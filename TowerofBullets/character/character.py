@@ -19,13 +19,22 @@ class Character(Entity):
     def interact(self):
         pass
 
-    def be_hit(self, bullet):
-        self.hp -= bullet.damage
-    
+    def be_hit(self, damage):
+        self.hp -= damage
+        print(self.hp)
+
     def die(self):
-        pass
+        print('chamou o die de character')
+        self.kill()
 
     def update(self):
+        if self.hp <= 0:
+            self.weapon.kill()
+            self.die()
+
+        self.x = self.rect.left + self.width/2
+        self.y = self.rect.top + self.height/2
+
         self.weapon.draw()
         self.weapon.rect.left = self.rect.left
         self.weapon.rect.top = self.rect.top
