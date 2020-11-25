@@ -26,5 +26,5 @@ class Character(Entity):
 
     def update(self):
         self.weapon.draw()
-        self.weapon.rect.left = self.rect.left
-        self.weapon.rect.top = self.rect.top
+        self.weapon.rect.left = self.x
+        self.weapon.rect.top = self.y

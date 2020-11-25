@@ -15,6 +15,7 @@ class TowerOfBullets:
         self.room = None
         self.player = None
         self.paused = False
+        self.sprites = pygame.sprite.Group()
     
     def run(self):
         pygame.init()
@@ -22,10 +23,12 @@ class TowerOfBullets:
         pygame.display.set_caption("Tower of Bullets")
         
         # setar elementos principais
-        self.room = Room(self.screen, (0, 0), (self.width, self.height), 0, False)
         self.player = Player(self.screen, (self.width/2, self.height/2),
-                             (70, 70), 5, 200, 200, 200)
-        
+                             (70, 70), 5, 200, 200, self.sprites, gold=200)
+        self.room = Room(self.screen, (0, 0), (self.width, self.height), 0, False,  self.player)
+        self.sprites.add(self.room)
+        self.sprites.add(self.player)
+       
         # while do jogo principal
         while True:
             for event in pygame.event.get():
@@ -62,8 +65,9 @@ class TowerOfBullets:
                 self.player.move((0, -1))
 
     def render(self):        
-        self.room.draw((self.player.rect.left, self.player.rect.top))
-        self.player.draw()
+        # self.room.draw((self.player.x, self.player.y))
+        # self.player.draw()
+        self.sprites.draw(self.screen)
         pygame.display.update()
 
     def handle_input(self):
