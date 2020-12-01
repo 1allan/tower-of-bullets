@@ -21,6 +21,7 @@ class Hud:
         self.font = pygame.font.SysFont('Arial', 30)
 
         self.pause_button = None
+        self.pause_button_rect = pygame.Rect((750, 15), (30, 30))
 
     def update(self):
         pass

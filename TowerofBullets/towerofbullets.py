@@ -94,6 +94,7 @@ class TowerOfBullets:
     def handle_input(self):
         keyboard = pygame.key.get_pressed()
         mouse = pygame.mouse.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
 
         direction = [0, 0]
         if keyboard[pygame.K_a]:
@@ -108,12 +109,20 @@ class TowerOfBullets:
         
         self.player.move(direction)
 
-        if mouse[0]:
+        # testa se não clicou em pause
+        collide_pause = self.hud.pause_button_rect.collidepoint(mouse_pos)
+
+        if mouse[0] and not collide_pause:
             self.player.shoot()
+        elif mouse[0] and collide_pause:
+            self.pause()
+    
+    def pause(self):
+        # self.paused = True
+        print('pausou')
 
     def quit(self):
         pygame.quit()
-
 
 if __name__ == '__main__':
     game = TowerOfBullets((800, 600))

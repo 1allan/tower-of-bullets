@@ -24,7 +24,7 @@ class Room(Scenario):
 
     def spawn_enemies(self, quantity):
         for _ in range(quantity):
-            position = randint(15, self.width - 20), randint(15, self.height - 50)
+            position = randint(15, self.width - 20), randint(30, self.height - 50)
             self.enemies.add(Enemy(self.surface, position, (30, 30), 1, 100, self.sprite_group)) #self.enemies.add(Enemy)
             self.sprite_group.add(self.enemies)
 
