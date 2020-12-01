@@ -1,4 +1,5 @@
 import pygame
+import pickle
 
 from util.functions import load_image
 
@@ -131,8 +132,7 @@ class TowerOfBullets:
             self.pause()
 
     def pause(self):
-        # self.paused = Trueaa
-        print('pausou')
+        pass
 
     def quit(self):
         pygame.quit()

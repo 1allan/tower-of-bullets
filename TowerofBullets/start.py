@@ -1,19 +1,18 @@
 import pygame
 
-from entity import *
+from entity import Entity
 from util.functions import *
 
 from towerofbullets import TowerOfBullets
+from config import ConfigView
 
 
 class StartView:
 
-    def __init__(self, screen_size, fps=60):
+    def __init__(self, screen_size: tuple, fps=60):
         self.width, self.height = screen_size
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.fps = fps
-
-        self.rodando = True
 
         self.bg = load_image('misc/start/bg.png', screen_size)
         self.play = Entity(self.screen, (170, 300),
@@ -28,7 +27,7 @@ class StartView:
         pygame.display.init()
         pygame.display.set_caption("Tower of Bullets - Start")
 
-        while self.rodando:
+        while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
@@ -48,12 +47,12 @@ class StartView:
 
         elif self.config.rect.collidepoint(x, y):
             # iniciar config
-            pass
+            config = ConfigView((800, 600))
+            config.run()
+
         elif self.exit.rect.collidepoint(x, y):
             # sair do programa
             self.quit()
-        else:
-            pass
 
     def render(self):
         self.screen.blit(self.bg, (0, 0))
@@ -64,7 +63,6 @@ class StartView:
         pygame.display.update()
 
     def quit(self):
-        self.screen.quit()
         pygame.quit()
 
 
