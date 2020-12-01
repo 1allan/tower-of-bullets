@@ -33,7 +33,8 @@ class Hud:
         porcent = (hp_now / self.hp_start)
         width = int(width * porcent)
         color = COLOR_LIFEBAR if (porcent * 100) > 50 else COLOR_LIFEBAR_CRITIC
-        pygame.draw.rect(self.surface, color, pygame.Rect((15, 15), (width, 30), border_radius=5))
+        if hp_now >=0:
+            pygame.draw.rect(self.surface, color, pygame.Rect((15, 15), (width, 30), border_radius=5))
 
         # gold
         imageGold = load_image('items/coin.png', (15, 15))

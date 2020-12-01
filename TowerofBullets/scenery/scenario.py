@@ -19,7 +19,7 @@ class Scenario(pygame.sprite.Sprite):
         self.walkablePad = [14, 14, 780, 553] # pode andar
         self.pads = [
             pygame.Rect(0, 0, 14, 600),
-            pygame.Rect(0, 0, 800, 14),
+            pygame.Rect(0, 30, 800, 14),
             pygame.Rect(786, 0, 14, 600),
             pygame.Rect(0, 560, 800, 42)
         ]
