@@ -4,7 +4,7 @@ import math
 from items.bullet import Bullet
 from entity import Entity
 
-IMAGE = 'items/01.png'
+IMAGE = 'items/weapon.png'
 
 
 class Weapon(Entity):

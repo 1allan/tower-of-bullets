@@ -16,7 +16,7 @@ class Enemy(Character):
 
         if self.weapon is None:
             self.weapon = Weapon(self.surface, (self.rect.left, self.rect.top), 
-                             (10, 10), 2, sprite_group)
+                             (20, 10), 2, sprite_group)
             self.sprite_group.add(self.weapon)
 
     def chase(self, coordinates):

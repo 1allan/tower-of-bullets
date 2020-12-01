@@ -3,6 +3,7 @@ import pygame
 from util.functions import load_image
 
 from character.player import Player
+from character.hud import Hud
 from scenery.room import Room
 
 
@@ -24,8 +25,10 @@ class TowerOfBullets:
         
         # setar elementos principais
         self.player = Player(self.screen, (self.width/2, self.height/2),
-                             (70, 70), 3, 200, 200, self.sprites, gold=200)
+                             (70, 70), 3, 20, 200, self.sprites, gold=200)
         self.room = Room(self.screen, (0, 0), (self.width, self.height), 0, False,  self.player, self.sprites)
+        self.hud = Hud(self.screen, self.player)
+
         self.sprites.add(self.room)
         self.sprites.add(self.player)
        
@@ -85,6 +88,7 @@ class TowerOfBullets:
     def render(self):
         self.sprites.draw(self.screen)
         self.sprites.update()
+        self.hud.draw()
         pygame.display.update()
 
     def handle_input(self):

@@ -12,6 +12,22 @@ class Character(Entity):
         self.weapon = None
         self.hp = hp
         self.sprite_group = sprite_group
+        self.last_direction = [1, 0]
+
+    def move(self, direction=None):
+        if direction[0] == self.last_direction[0] * -1:
+            self.last_direction = direction
+            self.image = pygame.transform.flip(self.image, True, False)
+            self.weapon.image = pygame.transform.flip(self.weapon.image, True,
+                                                      False)
+        
+        speed = self.speed
+        # Sets an equivalent speed for diagonals
+        if 0 not in direction:
+            speed = round(((speed**2 + speed**2)**0.5)/2, 1)
+        
+        self.rect.left += speed * direction[0]
+        self.rect.top += speed * direction[1]
 
     def shoot(self):
         pass
@@ -21,10 +37,8 @@ class Character(Entity):
 
     def be_hit(self, damage):
         self.hp -= damage
-        print(self.hp)
 
     def die(self):
-        print('chamou o die de character')
         self.kill()
 
     def update(self):
@@ -36,5 +50,9 @@ class Character(Entity):
         self.y = self.rect.top + self.height/2
 
         self.weapon.draw()
-        self.weapon.rect.left = self.rect.left
-        self.weapon.rect.top = self.rect.top
+        
+        if self.last_direction[0] == 1:
+            self.weapon.rect.left = self.x
+        elif self.last_direction[0] == -1:
+            self.weapon.rect.left = self.x - 60
+        self.weapon.rect.top = self.y
