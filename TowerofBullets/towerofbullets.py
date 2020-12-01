@@ -15,6 +15,7 @@ class TowerOfBullets:
         self.fps = fps
         self.room = None
         self.player = None
+        self.pause_group = None
         self.paused = False
         self.sprites = pygame.sprite.Group()
     
@@ -109,7 +110,7 @@ class TowerOfBullets:
         
         self.player.move(direction)
 
-        # testa se não clicou em pause
+        # testa se clicou em pause
         collide_pause = self.hud.pause_button_rect.collidepoint(mouse_pos)
 
         if mouse[0] and not collide_pause:
