@@ -3,6 +3,7 @@ from random import randint
 
 from character.enemy import Enemy
 from scenery.scenario import Scenario
+from items.item import Item
 
 IMAGE = 'scenery/01.png'
 
@@ -18,6 +19,7 @@ class Room(Scenario):
         self.chest = chest
         self.player = player
         self.sprite_group = sprite_group
+        self.coins = pygame.sprite.Group()
 
     def lock_doors(self):
         pass
@@ -27,6 +29,14 @@ class Room(Scenario):
             position = randint(15, self.width - 20), randint(30, self.height - 50)
             self.enemies.add(Enemy(self.surface, position, (30, 30), 1, 100, self.sprite_group)) #self.enemies.add(Enemy)
             self.sprite_group.add(self.enemies)
+    
+    def spawn_coins(self, quantity):
+        image_file = "items/coin.png"
+
+        for _ in range(quantity):
+            position = randint(15, self.width - 20), randint(30, self.height - 50)
+            self.coins.add(Item(self.surface, position, (20, 20), image_file, 0)) 
+            self.sprite_group.add(self.coins)
 
     def check_enemies(self):
         pass
@@ -41,3 +51,5 @@ class Room(Scenario):
         for enemy in self.enemies:
             enemy.shoot((self.player.x, self.player.y))
             enemy.draw()
+        if len(self.coins) == 0:
+            self.spawn_coins(1)

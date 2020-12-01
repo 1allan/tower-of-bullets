@@ -119,7 +119,7 @@ class TowerOfBullets:
             self.pause()
     
     def pause(self):
-        # self.paused = True
+        # self.paused = Trueaa
         print('pausou')
 
     def quit(self):

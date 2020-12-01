@@ -10,4 +10,3 @@ class Item(Entity):
                  
         super().__init__(surface, position, size, speed, image_file)
         self.function = None
-
