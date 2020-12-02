@@ -28,6 +28,7 @@ class TowerOfBullets:
         # setar elementos principais
         self.player = Player(self.screen, (self.width/2, self.height/2),
                              (70, 70), 3, 20, 200, self.sprites, gold=200)
+
         self.room = Room(self.screen, (0, 0), (self.width,
                                                self.height), 0, False,  self.player, self.sprites)
         self.hud = Hud(self.screen, self.player)
