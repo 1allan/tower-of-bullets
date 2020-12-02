@@ -12,12 +12,12 @@ class Tile(pygame.sprite.Sprite):
 
         self.size = size
         self.width, self.height = self.size
-        self.image = load_image(image_file, self.size)
+        self.image = load_image(image_file, size)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
         self.x = self.rect.left + self.width/2
         self.y = self.rect.top + self.height/2
-        self.collidable = collideable
+        self.collidable = collidable
 
 
 class Scenario(pygame.sprite.Sprite):
@@ -35,6 +35,8 @@ class Scenario(pygame.sprite.Sprite):
         self.floor_sprites = pygame.sprite.Group()
         self.wall_sprites = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
+        self.generate_layout()
+        
 
         self.walkablePad = [14, 14, 780, 553]  # pode andar
         self.pads = [
@@ -44,7 +46,6 @@ class Scenario(pygame.sprite.Sprite):
             pygame.Rect(0, 560, 800, 42)
         ]
 
-        self.generate_layout()
 
     def __load_layout(self, path):
         file_ = open(os.path.join(os.path.dirname(__file__),
@@ -59,8 +60,8 @@ class Scenario(pygame.sprite.Sprite):
         return matrix
 
     def generate_layout(self):
-        w = self.width/len(self.layout[0]),
-        h = self.height/len(self.layout)
+        w = round(self.width/len(self.layout[0]))
+        h = round(self.height/len(self.layout))
 
         for i in range(len(self.layout)):
             for j in range(len(self.layout[i])):

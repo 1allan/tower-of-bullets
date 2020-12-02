@@ -33,7 +33,7 @@ class TowerOfBullets:
                                                self.height), 0, False,  self.player, self.sprites)
         self.hud = Hud(self.screen, self.player)
 
-        self.sprites.add(self.room)
+        self.sprites.add(self.room.tiles)
         self.sprites.add(self.player)
 
         # while do jogo principal
