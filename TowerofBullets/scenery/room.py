@@ -10,8 +10,8 @@ IMAGE = 'scenery/01.png'
 
 class Room(Scenario):
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 traps: int, chest: bool, player, sprite_group, image_path: str=IMAGE):
+    def __init__(self, surface: pygame.Surface, sprite_group, position: tuple, size: tuple,
+                 traps: int, chest: bool, player, image_path: str=IMAGE):
         
         super().__init__(surface, position, size, traps, chest, image_path)
         self.enemies = pygame.sprite.Group()
@@ -27,7 +27,7 @@ class Room(Scenario):
     def spawn_enemies(self, quantity):
         for _ in range(quantity):
             position = randint(15, self.width - 20), randint(30, self.height - 50)
-            self.enemies.add(Enemy(self.surface, position, (30, 30), 1, 100, self.sprite_group)) #self.enemies.add(Enemy)
+            self.enemies.add(Enemy(self.surface, self.sprite_group, position, (70, 70), 1, 100))
             self.sprite_group.add(self.enemies)
     
     def spawn_coins(self, quantity):

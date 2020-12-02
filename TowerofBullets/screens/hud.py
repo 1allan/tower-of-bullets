@@ -1,7 +1,6 @@
 import pygame
 
-from items.weapon import Weapon
-from character.player import Player
+from .screen import Screen
 from util.functions import *
 
 
@@ -11,14 +10,15 @@ COLOR_COIN_BAR = pygame.Color(255, 255, 0)
 COLOR_SCORE_BAR = pygame.Color(255, 0, 0)
 
 
-class Hud:
-    def __init__(self, surface: pygame.Surface, player: Player):
-        pygame.sprite.Sprite.__init__(self)
+class Hud(Screen):
+    
+    def __init__(self, surface: pygame.Surface, player, position=None, size=None):
+        super().__init__(surface, position, size)
 
-        self.surface = surface
+        # self.surface = surface
         self.player = player
-        self.hp_start = self.player.hp
-        self.gold_start = self.player.gold
+        self.hp = self.player.hp
+        self.gold = self.player.gold
         self.score = self.player.score
 
         pygame.font.init()
@@ -30,11 +30,11 @@ class Hud:
     def update(self):
         pass
 
-    def draw(self):
+    def draw(self, player):
         # lifebar
         width = 200
-        hp_now = self.player.hp
-        porcent = (hp_now / self.hp_start)
+        hp_now = player.hp
+        porcent = (hp_now / self.hp)
         width = int(width * porcent)
         color = COLOR_LIFEBAR if (porcent * 100) > 50 else COLOR_LIFEBAR_CRITIC
         if hp_now >= 0:
@@ -44,13 +44,13 @@ class Hud:
         # gold
         imageGold = load_image('items/coin.png', (15, 15))
         fontGold = self.font.render(
-            str(self.player.gold), True, COLOR_COIN_BAR)
+            str(player.gold), True, COLOR_COIN_BAR)
         self.surface.blit(imageGold, (220, 25))
         self.surface.blit(fontGold, (240, 15))
 
         # score
         font_score = self.font.render(
-            f'Score: {str(self.player.score)}', True, COLOR_SCORE_BAR)
+            f'Score: {str(player.score)}', True, COLOR_SCORE_BAR)
         self.surface.blit(font_score, (350, 15))
 
         # pause button

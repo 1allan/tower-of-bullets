@@ -1,24 +1,28 @@
 import pygame
 import pickle
+from time import time
 
 from util.functions import load_image
 
 from character.player import Player
-from character.hud import Hud
 from scenery.room import Room
+from screens.hud import Hud
+from screens.pause import Pause
 
 
 class TowerOfBullets:
 
-    def __init__(self, screen_size, fps=60):
-        self.width, self.height = screen_size
-        self.screen = pygame.display.set_mode((self.width, self.height))
+    def __init__(self, display_size, fps=60):
+        self.width, self.height = display_size
+        self.display = pygame.display.set_mode((self.width, self.height))
         self.fps = fps
         self.room = None
         self.player = None
         self.pause_group = None
         self.paused = False
         self.sprites = pygame.sprite.Group()
+        self.current_screen = None
+        self.last_pause = 0
 
     def run(self):
         pygame.init()
@@ -26,11 +30,11 @@ class TowerOfBullets:
         pygame.display.set_caption("Tower of Bullets")
 
         # setar elementos principais
-        self.player = Player(self.screen, (self.width/2, self.height/2),
-                             (70, 70), 3, 20, 200, self.sprites, gold=200)
-        self.room = Room(self.screen, (0, 0), (self.width,
-                                               self.height), 0, False,  self.player, self.sprites)
-        self.hud = Hud(self.screen, self.player)
+        self.player = Player(self.display, self.sprites, (self.width/2, self.height/2),
+                             (70, 70), 3, 20, 200, gold=200)
+        self.room = Room(self.display, self.sprites, (0, 0), (self.width,
+                                               self.height), 0, False,  self.player)
+        self.hud = Hud(self.display, self.player)
 
         self.sprites.add(self.room)
         self.sprites.add(self.player)
@@ -99,17 +103,23 @@ class TowerOfBullets:
             elif self.player.rect.colliderect(pad) and index == 3:
                 self.player.move((0, -1))
 
-    def render(self):
-        self.sprites.draw(self.screen)
-        self.sprites.update()
-        self.hud.draw()
-        pygame.display.update()
 
     def handle_input(self):
         keyboard = pygame.key.get_pressed()
         mouse = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
 
+        if keyboard[pygame.K_p]:
+            if time() - self.last_pause > .5:
+                self.last_pause = time()
+                if self.current_screen is None:
+                    self.current_screen = Pause(self.display)
+                else:
+                    self.current_screen = None
+        
+        if self.current_screen is not None:
+            return
+        
         direction = [0, 0]
         if keyboard[pygame.K_a]:
             direction[0] = -1
@@ -123,16 +133,20 @@ class TowerOfBullets:
 
         self.player.move(direction)
 
-        # testa se clicou em pause
-        collide_pause = self.hud.pause_button_rect.collidepoint(mouse_pos)
-
-        if mouse[0] and not collide_pause:
+        if mouse[0]:
             self.player.shoot()
-        elif mouse[0] and collide_pause:
-            self.pause()
 
-    def pause(self):
-        pass
+    def render(self):
+        if self.current_screen is not None:
+            next_screen = self.current_screen.draw()
+            print(next_screen)
+            pygame.display.update()
+            return
+            
+        self.sprites.draw(self.display)
+        self.sprites.update()
+        self.hud.draw(self.player)
+        pygame.display.update()
 
     def quit(self):
         pygame.quit()

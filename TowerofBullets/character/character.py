@@ -5,8 +5,8 @@ from entity import Entity
 
 class Character(Entity):
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int, hp: int, sprite_group, image_file: str):
+    def __init__(self, surface: pygame.Surface, sprite_group, position: tuple, size: tuple,
+                 speed: int, hp: int, image_file: str):
 
         super().__init__(surface, position, size, speed, image_file)
         self.weapon = None

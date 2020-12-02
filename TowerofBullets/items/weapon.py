@@ -9,19 +9,19 @@ IMAGE = 'items/weapon.png'
 
 class Weapon(Entity):
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 damage: int, sprite_group, image_file: str = IMAGE):
+    def __init__(self, surface: pygame.Surface, sprite_group, position: tuple, size: tuple,
+                 damage: int, fire_rate: int=500, image_file: str = IMAGE):
 
         super().__init__(surface, position, size, image_file=image_file)
         self.damage = damage
         self.bullets = pygame.sprite.Group()
         self.last_tick = 0
-        self.fire_rate_gap = 1000
+        self.fire_rate = fire_rate
         self.sprite_group = sprite_group
         
 
     def shoot(self, coordinates):
-        if pygame.time.get_ticks() - self.last_tick >= self.fire_rate_gap:
+        if pygame.time.get_ticks() - self.last_tick >= self.fire_rate:
             self.last_tick = pygame.time.get_ticks()
 
             position = (self.x, self.y)
