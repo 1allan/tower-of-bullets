@@ -13,5 +13,5 @@ class Screen:
     def update(self, data):
         pass
 
-    def draw(self):
+    def render(self):
         pass

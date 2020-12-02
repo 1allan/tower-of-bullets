@@ -12,9 +12,9 @@ from screens.pause import Pause
 
 class TowerOfBullets:
 
-    def __init__(self, display_size, fps=60):
-        self.width, self.height = display_size
-        self.display = pygame.display.set_mode((self.width, self.height))
+    def __init__(self, display, fps=60):
+        self.surface = display
+        self.width, self.height = self.surface.get_size()
         self.fps = fps
         self.room = None
         self.player = None
@@ -25,40 +25,18 @@ class TowerOfBullets:
         self.last_pause = 0
 
     def run(self):
-        pygame.init()
-        pygame.display.init()
-        pygame.display.set_caption("Tower of Bullets")
-
         # setar elementos principais
-        self.player = Player(self.display, self.sprites, (self.width/2, self.height/2),
+        self.player = Player(self.surface, self.sprites, (self.width/2, self.height/2),
                              (70, 70), 3, 20, 200, gold=200)
-        self.room = Room(self.display, self.sprites, (0, 0), (self.width,
+        self.room = Room(self.surface, self.sprites, (0, 0), (self.width,
                                                self.height), 0, False,  self.player)
-        self.hud = Hud(self.display, self.player)
+        self.hud = Hud(self.surface, self.player)
 
         self.sprites.add(self.room)
         self.sprites.add(self.player)
 
-        # while do jogo principal
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.quit()
-
-            # personagem colisão parede
-            self.collide_walls()
-
-            # colisão bullet player / enemy / items
-            self.detect_collision()
-
-            # ver se não está pausado, para renderizar o principal do jogo
-            if not self.paused:
-                self.render()
-
-            # handle key events
-            self.handle_input()
-
     def detect_collision(self):
+        self.collide_walls()
         # detect collision with each enemy
         for enemy in self.room.enemies:
             # bullet enemy with player
@@ -108,17 +86,6 @@ class TowerOfBullets:
         keyboard = pygame.key.get_pressed()
         mouse = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
-
-        if keyboard[pygame.K_p]:
-            if time() - self.last_pause > .5:
-                self.last_pause = time()
-                if self.current_screen is None:
-                    self.current_screen = Pause(self.display)
-                else:
-                    self.current_screen = None
-        
-        if self.current_screen is not None:
-            return
         
         direction = [0, 0]
         if keyboard[pygame.K_a]:
@@ -137,21 +104,8 @@ class TowerOfBullets:
             self.player.shoot()
 
     def render(self):
-        if self.current_screen is not None:
-            next_screen = self.current_screen.draw()
-            print(next_screen)
-            pygame.display.update()
-            return
-            
-        self.sprites.draw(self.display)
+        self.sprites.draw(self.surface)
         self.sprites.update()
-        self.hud.draw(self.player)
-        pygame.display.update()
-
-    def quit(self):
-        pygame.quit()
+        self.hud.render(self.player)
 
 
-if __name__ == '__main__':
-    game = TowerOfBullets((800, 600))
-    game.run()

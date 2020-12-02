@@ -30,7 +30,7 @@ class Hud(Screen):
     def update(self):
         pass
 
-    def draw(self, player):
+    def render(self, player):
         # lifebar
         width = 200
         hp_now = player.hp

@@ -15,17 +15,14 @@ class Pause(Screen):
         self.play = Entity(self.surface, (344, 170),
                            (102, 117), 0, 'misc/pause/play.png')
 
-    def draw(self):
-        click = pygame.mouse.get_pressed()[0]
-        mouse_pos = pygame.mouse.get_pos()
-
-        if click:
-            if mouse_pos[0] > self.inicio.rect.left and mouse_pos[0] < self.inicio.rect.left + self.inicio.width and mouse_pos[1] > self.inicio.rect.top and mouse_pos[1] < self.inicio.rect.top + self.inicio.height:
-                return 'inicio'
-        
+    def render(self):       
         self.surface.blit(self.inicio.image, (170, 300))
         self.surface.blit(self.loja.image, (420, 300))
         self.surface.blit(self.play.image, (344, 170))
+        
+        if pygame.key.get_pressed()[pygame.K_p]:
+            return 0
+ 
 
 if __name__ == '__main__':
     pause = Pause((800, 600))
