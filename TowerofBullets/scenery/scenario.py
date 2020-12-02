@@ -75,7 +75,7 @@ class Scenario(pygame.sprite.Sprite):
 
     def update(self):
         pass
-
+        
     def draw(self):
         # self.surface.blit(self.image, (self.rect.left, self.rect.top))
         self.tiles.draw()

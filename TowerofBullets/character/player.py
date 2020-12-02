@@ -11,18 +11,21 @@ IMAGE = 'misc/placeholder.png'
 
 class Player(Character):
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int, hp: int, energy: int, sprite_group, gold: int = 0, score: int = 0,
-                 weapon: Weapon = None, image_file: str = IMAGE):
+    def __init__(self, surface: pygame.Surface, 
+                 sprite_group: pygame.sprite.Group, position: tuple,
+                 size: tuple, speed: int, hp: int, energy: int, gold: int = 0,
+                 score: int = 0, weapon: Weapon = None, image_file: str=IMAGE):
 
-        super().__init__(surface, position, size, speed, hp, sprite_group, image_file)
+        super().__init__(surface, sprite_group, position, size, speed, hp,
+                         image_file)
+        
         self.energy = energy
         self.gold = gold
         self.score = score
 
         if self.weapon is None:
-            self.weapon = Weapon(self.surface, (self.x, self.y),
-                                 (60, 30), 50, sprite_group)
+            self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y),
+                                 (60, 30), 5, fire_rate=100)
             self.sprite_group.add(self.weapon)
 
     def shoot(self):

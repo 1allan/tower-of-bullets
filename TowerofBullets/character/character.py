@@ -5,16 +5,18 @@ from entity import Entity
 
 class Character(Entity):
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int, hp: int, sprite_group, image_file: str):
+    def __init__(self, surface: pygame.Surface, 
+                 sprite_group: pygame.sprite.Group, position: tuple,
+                 size: tuple, speed: int, hp: int, image_file: str):
 
         super().__init__(surface, position, size, speed, image_file)
+
         self.weapon = None
         self.hp = hp
         self.sprite_group = sprite_group
         self.last_direction = [1, 0]
 
-    def move(self, direction=None):
+    def move(self, direction: tuple=None):
         if direction[0] == self.last_direction[0] * -1:
             self.last_direction = direction
             self.image = pygame.transform.flip(self.image, True, False)
@@ -22,6 +24,7 @@ class Character(Entity):
                                                       False)
 
         speed = self.speed
+        
         # Sets an equivalent speed for diagonals
         if 0 not in direction:
             speed = round(((speed**2 + speed**2)**0.5)/2, 1)
@@ -35,7 +38,7 @@ class Character(Entity):
     def interact(self):
         pass
 
-    def be_hit(self, damage):
+    def be_hit(self, damage: int):
         self.hp -= damage
 
     def die(self):
