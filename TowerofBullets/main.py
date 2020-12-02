@@ -13,6 +13,7 @@ class Game:
         self.__screen = None
         self.game = TowerOfBullets(self.display)
         self.game.run()
+        self.hud = Hud(self.display, self.game.player)
         self.last_pause = 0
         
     @property
@@ -21,7 +22,6 @@ class Game:
 
     @screen.setter
     def screen(self, value):
-        print(pygame.time.get_ticks() - self.last_pause)
         if pygame.time.get_ticks() - self.last_pause > 200:
             self.__screen = value
             self.last_pause = pygame.time.get_ticks()
@@ -45,6 +45,7 @@ class Game:
                 self.game.render()
                 self.game.detect_collision()
                 self.game.handle_input()
+                self.hud.render(self.game.player)
             else:
                 next_ = self.screen.render()
                 if next_ is not None:

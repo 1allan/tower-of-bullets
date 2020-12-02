@@ -12,10 +12,10 @@ class Chest(Entity):
                          image_file=image_file)
         self.items = pygame.sprite.Group()
 
-    def get_items(self, item: Items):
+    def get_items(self, item: Item):
         self.items.remove(item)
         return item
 
-    def set_items(self,item: Items):
+    def set_items(self,item: Item):
         self.items.add(item)
         

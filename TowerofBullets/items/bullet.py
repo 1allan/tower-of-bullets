@@ -10,19 +10,19 @@ IMAGE = 'misc/projectiles/default/01.png'
 class Bullet(Entity):
 
     def __init__(self, surface: pygame.Surface, position: tuple, 
-                 size: tuple, damage: int, speed: int, ratio: tuple,
+                 size: tuple, damage: int, speed: int, destination: tuple,
                  image_file: str=IMAGE):
                  
         super().__init__(surface, position, size, speed=speed,
                          image_file=image_file)
+
         self.damage = damage
 
-        self.start_x, self.start_y = position
         self.floating_point_x, self.floating_point_y = position
-        self.dest_x, self.dest_y = ratio
+        self.dest_x, self.dest_y = destination
 
-        x_diff = self.dest_x - self.start_x
-        y_diff = self.dest_y - self.start_y
+        x_diff = self.dest_x - self.rect.left
+        y_diff = self.dest_y - self.rect.top
         angle = math.atan2(y_diff, x_diff)
 
         self.change_x = math.cos(angle) * self.speed

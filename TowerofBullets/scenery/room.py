@@ -1,4 +1,5 @@
 import pygame
+
 from random import randint
 
 from character.enemy import Enemy
@@ -10,8 +11,10 @@ IMAGE = 'scenery/01.png'
 
 class Room(Scenario):
 
-    def __init__(self, surface: pygame.Surface, sprite_group, position: tuple, size: tuple,
-                 traps: int, chest: bool, player, image_path: str=IMAGE):
+    def __init__(self, surface: pygame.Surface, 
+                 sprite_group: pygame.sprite.Group, position: tuple,
+                 size: tuple, traps: int, chest: bool, player,
+                 image_path: str=IMAGE):
         
         super().__init__(surface, position, size, traps, chest, image_path)
         self.enemies = pygame.sprite.Group()
@@ -24,18 +27,22 @@ class Room(Scenario):
     def lock_doors(self):
         pass
 
-    def spawn_enemies(self, quantity):
+    def spawn_enemies(self, quantity: int):
         for _ in range(quantity):
-            position = randint(15, self.width - 20), randint(30, self.height - 50)
-            self.enemies.add(Enemy(self.surface, self.sprite_group, position, (70, 70), 1, 100))
+            position = (randint(15, self.width - 20), 
+                       randint(30, self.height - 50))
+            self.enemies.add(Enemy(self.surface, self.sprite_group, position, 
+                                  (70, 70), 1, 100))
             self.sprite_group.add(self.enemies)
     
-    def spawn_coins(self, quantity):
+    def spawn_coins(self, quantity: int):
         image_file = "items/coin.png"
 
         for _ in range(quantity):
-            position = randint(15, self.width - 20), randint(30, self.height - 50)
-            self.coins.add(Item(self.surface, position, (20, 20), image_file, 0)) 
+            position = (randint(15, self.width - 20), 
+                       randint(30, self.height - 50))
+            self.coins.add(Item(self.surface, position, (20, 20), image_file, 
+                                0)) 
             self.sprite_group.add(self.coins)
 
     def check_enemies(self):

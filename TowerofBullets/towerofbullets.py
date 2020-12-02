@@ -6,7 +6,6 @@ from util.functions import load_image
 
 from character.player import Player
 from scenery.room import Room
-from screens.hud import Hud
 from screens.pause import Pause
 
 
@@ -30,7 +29,6 @@ class TowerOfBullets:
                              (70, 70), 3, 20, 200, gold=200)
         self.room = Room(self.surface, self.sprites, (0, 0), (self.width,
                                                self.height), 0, False,  self.player)
-        self.hud = Hud(self.surface, self.player)
 
         self.sprites.add(self.room)
         self.sprites.add(self.player)
@@ -106,6 +104,4 @@ class TowerOfBullets:
     def render(self):
         self.sprites.draw(self.surface)
         self.sprites.update()
-        self.hud.render(self.player)
-
 

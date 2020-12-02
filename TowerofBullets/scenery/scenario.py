@@ -26,14 +26,7 @@ class Scenario(pygame.sprite.Sprite):
 
     def update(self):
         pass
-    
-    def update(self, player_coordinates):
-        pass
         
     def draw(self):
         self.surface.blit(self.image, (self.rect.left, self.rect.top))
         self.update()
-
-    def draw(self, player_coordinates):
-        self.surface.blit(self.image, (self.rect.left, self.rect.top))
-        self.update(player_coordinates)
