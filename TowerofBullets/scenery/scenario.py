@@ -7,9 +7,10 @@ from util.functions import load_image
 
 class Tile(pygame.sprite.Sprite):
 
-    def __init__(self, position, size, collidable=False, image_file=''):
+    def __init__(self, surface: pygame.Surface, position, size, collidable, image_file: str):
         pygame.sprite.Sprite.__init__(self)
 
+        self.surface = surface
         self.size = size
         self.width, self.height = self.size
         self.image = load_image(image_file, size)
@@ -18,6 +19,10 @@ class Tile(pygame.sprite.Sprite):
         self.x = self.rect.left + self.width/2
         self.y = self.rect.top + self.height/2
         self.collidable = collidable
+
+    def draw(self):
+        print('draw de Tile')
+        self.surface.blit(self.image, (self.rect.left, self.rect.top))
 
 
 class Scenario(pygame.sprite.Sprite):
@@ -32,19 +37,10 @@ class Scenario(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
         self.layout = self.__load_layout(layout_path)
-        self.floor_sprites = pygame.sprite.Group()
-        self.wall_sprites = pygame.sprite.Group()
+        self.floor_sprites = pygame.sprite.Group()      #nao ta usando
+        self.wall_sprites = pygame.sprite.Group()       #nao ta usando
         self.tiles = pygame.sprite.Group()
         self.generate_layout()
-        
-
-        self.walkablePad = [14, 14, 780, 553]  # pode andar
-        self.pads = [
-            pygame.Rect(0, 0, 14, 600),
-            pygame.Rect(0, 30, 800, 14),
-            pygame.Rect(786, 0, 14, 600),
-            pygame.Rect(0, 560, 800, 42)
-        ]
 
 
     def __load_layout(self, path):
@@ -55,7 +51,6 @@ class Scenario(pygame.sprite.Sprite):
         matrix = []
         for line in layout.split('\n'):
             matrix.append(line.split(' '))
-            print(line.split(' '))
 
         return matrix
 
@@ -65,18 +60,24 @@ class Scenario(pygame.sprite.Sprite):
 
         for i in range(len(self.layout)):
             for j in range(len(self.layout[i])):
-                image = 'scenery/'
-                if self.layout[i][j] == '1':
-                    image += 'wall.png'
+                image = 'scenery/01.png'
+                collidable = False
+
+                if self.layout[i][j] == '1':        #fazer um img_floor e um wall
+                    img_wall = 'scenery/wall.png'  #image
+                    collidable = True
+                    self.wall_sprites.add(Tile(self.surface, (w * i, h * j), (w, h), collidable, image_file=img_wall))
                 else:
-                    image += 'floor.png'
-
-                self.tiles.add(Tile((w * i, h * j), (w, h), image_file=image))
-
+                    img_floor = 'scenery/floor.png'    #image
+                    self.floor_sprites.add(Tile(self.surface, (w * i, h * j), (w, h), collidable, image_file=img_floor))
+                
+                # self.tiles.add(Tile(self.surface, (w * i, h * j), (w, h), collidable, image_file=image))    ##
+    
     def update(self):
         pass
-        
+
     def draw(self):
-        # self.surface.blit(self.image, (self.rect.left, self.rect.top))
-        self.tiles.draw()
+        self.wall_sprites.draw(self.surface)
+        self.floor_sprites.draw(self.surface)
+        # self.tiles.draw(self.surface)
         self.update()

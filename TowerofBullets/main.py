@@ -1,10 +1,16 @@
 import pygame
 
 from towerofbullets import TowerOfBullets
-
 from screens.hud import Hud
-from screens.pause import Pause
+from screens.pause import PauseView
+from screens.start import StartView
 
+
+views = {
+    'CLOSE': None,
+    'PAUSE': PauseView,
+    'START': StartView
+}
 
 class Game:
 
@@ -13,9 +19,9 @@ class Game:
         self.__screen = None
         self.game = TowerOfBullets(self.display)
         self.game.run()
-        self.hud = Hud(self.display, self.game.player)
+        self.hud = Hud(self.display, self.game.room.player)
         self.last_pause = 0
-        
+
     @property
     def screen(self):
         return self.__screen
@@ -36,20 +42,23 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.quit()
 
-            keyboard = pygame.key.get_pressed()
-            if keyboard[pygame.K_p]:
-                if self.screen is None:
-                    self.screen = Pause(self.display)
-
             if self.screen is None:
                 self.game.render()
-                self.game.detect_collision()
                 self.game.handle_input()
-                self.hud.render(self.game.player)
+
+                next_ = self.hud.render(self.game.room.player)
+                try:
+                    self.screen = views.get(next_, None)(self.display)
+                except:
+                    self.screen = None
             else:
                 next_ = self.screen.render()
                 if next_ is not None:
-                    self.screen = None
+                    try:
+                        self.screen = views.get(next_, None)(self.display)
+                    except:
+                        self.screen = None
+
             pygame.display.update()
 
         

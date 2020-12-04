@@ -27,6 +27,15 @@ class Hud(Screen):
         self.pause_button = None
         self.pause_button_rect = pygame.Rect((750, 15), (30, 30))
 
+    def handle_pause(self):
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_click = pygame.mouse.get_pressed()
+
+        if self.pause_button_rect.collidepoint(mouse_pos) and mouse_click[0]:
+            return 'PAUSE'
+        elif pygame.key.get_pressed()[pygame.K_p]:
+            return 'PAUSE'
+
     def update(self):
         pass
 
@@ -54,7 +63,9 @@ class Hud(Screen):
         self.surface.blit(font_score, (350, 15))
 
         # pause button
+
         self.pause_button = load_image('misc/pause.png', (30, 30))
         self.surface.blit(self.pause_button, (750, 15))
 
         self.update()
+        return self.handle_pause()

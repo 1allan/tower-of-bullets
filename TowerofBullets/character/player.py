@@ -13,11 +13,11 @@ class Player(Character):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, speed: int, hp: int, energy: int, gold: int = 0,
+                 size: tuple, speed: int, hp: int, energy: int, wall_sprites: pygame.sprite.Group, gold: int = 0,
                  score: int = 0, weapon: Weapon = None, image_file: str=IMAGE):
 
-        super().__init__(surface, sprite_group, position, size, speed, hp,
-                         image_file)
+        super().__init__(surface=surface, sprite_group=sprite_group, position=position, size=size, speed=speed, hp=hp,
+                         image_file=image_file, wall_sprites=wall_sprites)
         
         self.energy = energy
         self.gold = gold
