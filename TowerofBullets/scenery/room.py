@@ -69,8 +69,6 @@ class Room(Scenario):
             self.enemies.add(Enemy(self.surface, self.sprite_group, position, 
                                   (70, 70), 2, 100, self.wall_sprites))
             self.sprite_group.add(self.enemies)
-
-            print(self.sprite_group)
     
     def spawn_coins(self, quantity: int):
         image_file = "items/coin.png"

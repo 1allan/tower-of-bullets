@@ -21,9 +21,7 @@ class Tile(pygame.sprite.Sprite):
         self.collidable = collidable
 
     def draw(self):
-        print('draw de Tile')
         self.surface.blit(self.image, (self.rect.left, self.rect.top))
-
 
 class Scenario(pygame.sprite.Sprite):
 
