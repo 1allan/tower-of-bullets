@@ -35,11 +35,10 @@ class Scenario(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
         self.layout = self.__load_layout(layout_path)
-        self.floor_sprites = pygame.sprite.Group()      #nao ta usando
-        self.wall_sprites = pygame.sprite.Group()       #nao ta usando
+        self.floor_sprites = pygame.sprite.Group()
+        self.wall_sprites = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
         self.generate_layout()
-
 
     def __load_layout(self, path):
         file_ = open(os.path.join(os.path.dirname(__file__),
@@ -61,21 +60,20 @@ class Scenario(pygame.sprite.Sprite):
                 image = 'scenery/01.png'
                 collidable = False
 
-                if self.layout[i][j] == '1':        #fazer um img_floor e um wall
-                    img_wall = 'scenery/wall.png'  #image
+                if self.layout[i][j] == '1':
+                    img_wall = 'scenery/wall.png'
                     collidable = True
-                    self.wall_sprites.add(Tile(self.surface, (w * i, h * j), (w, h), collidable, image_file=img_wall))
+                    self.wall_sprites.add(Tile(self.surface, (w * i, h * j), (w, h),
+                                                 collidable,image_file=img_wall))
                 else:
-                    img_floor = 'scenery/floor.png'    #image
-                    self.floor_sprites.add(Tile(self.surface, (w * i, h * j), (w, h), collidable, image_file=img_floor))
-                
-                # self.tiles.add(Tile(self.surface, (w * i, h * j), (w, h), collidable, image_file=image))    ##
-    
+                    img_floor = 'scenery/floor.png'
+                    self.floor_sprites.add(Tile(self.surface, (w * i, h * j), (w, h),
+                                                 collidable, image_file=img_floor))
+                    
     def update(self):
         pass
 
     def draw(self):
         self.wall_sprites.draw(self.surface)
         self.floor_sprites.draw(self.surface)
-        # self.tiles.draw(self.surface)
         self.update()

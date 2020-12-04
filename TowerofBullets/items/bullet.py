@@ -17,7 +17,6 @@ class Bullet(Entity):
                          image_file=image_file)
 
         self.damage = damage
-
         self.floating_point_x, self.floating_point_y = position
         self.dest_x, self.dest_y = destination
 
@@ -34,3 +33,4 @@ class Bullet(Entity):
 
         self.rect.left = int(self.floating_point_x)
         self.rect.top = int(self.floating_point_y)
+        

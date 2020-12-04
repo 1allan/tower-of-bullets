@@ -8,6 +8,7 @@ from character.player import Player
 
 IMAGE = 'characters/01.png'
 
+
 class Enemy(Character):
 
     def __init__(self, surface: pygame.Surface, 
@@ -48,3 +49,4 @@ class Enemy(Character):
 
     def shoot(self, coordinates: tuple):
         self.weapon.shoot(coordinates)
+        

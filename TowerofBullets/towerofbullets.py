@@ -16,7 +16,6 @@ class TowerOfBullets:
         self.width, self.height = self.surface.get_size()
         self.fps = fps
         self.room = None
-        # self.player = None
         self.pause_group = None
         self.paused = False
         self.sprites = pygame.sprite.Group()
@@ -24,19 +23,8 @@ class TowerOfBullets:
         self.last_pause = 0
 
     def run(self):
-        # setar elementos principais
-        # self.player = Player(self.surface, self.sprites, (self.width/2, self.height/2),
-        #                      (70, 70), 3, 20, 200, gold=200)
         self.room = Room(self.surface, self.sprites, (0, 0), (self.width,
                                                self.height), 0, False)
-
-    # # colisão com paredes           #usar self.wall_sprites
-    # def collide_walls(self):
-    #     collisionWall = pygame.sprite.spritecollideany(self.player, self.room.wall_sprites)
-
-    #     if collisionWall:
-    #         print(collisionWall.rect.left)
-
 
     def handle_input(self):
         keyboard = pygame.key.get_pressed()
@@ -64,29 +52,3 @@ class TowerOfBullets:
         self.room.draw()
         self.sprites.draw(self.surface)
         self.sprites.update()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

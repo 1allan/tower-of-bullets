@@ -63,7 +63,6 @@ class Hud(Screen):
         self.surface.blit(font_score, (350, 15))
 
         # pause button
-
         self.pause_button = load_image('misc/pause.png', (30, 30))
         self.surface.blit(self.pause_button, (750, 15))
 

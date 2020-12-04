@@ -60,7 +60,6 @@ class Game:
                         self.screen = None
 
             pygame.display.update()
-
         
     def quit(self):
         pygame.quit()

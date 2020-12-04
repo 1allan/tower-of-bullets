@@ -20,15 +20,13 @@ class Weapon(Entity):
         self.last_tick = 0
         self.fire_rate = fire_rate
         self.sprite_group = sprite_group
-        
         self.bullets = pygame.sprite.Group()
         
-
     def shoot(self, coordinates: tuple):
         if pygame.time.get_ticks() - self.last_tick >= self.fire_rate:
             self.last_tick = pygame.time.get_ticks()
 
-            position = (self.x, self.y)
+            position = (((self.x)+15), ((self.y)-7))
             bullet = Bullet(self.surface, position, (8, 8), self.damage, 1,
                             coordinates)
             

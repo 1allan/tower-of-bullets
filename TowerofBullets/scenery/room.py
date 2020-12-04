@@ -23,8 +23,10 @@ class Room(Scenario):
         self.chest = chest
         self.sprite_group = sprite_group
         self.coins = pygame.sprite.Group()
+        self.hearts = pygame.sprite.Group()
+        self.cont = 0
         self.player = Player(self.surface, self.sprite_group, (size[0]/2, size[1]/2),
-                             (70, 70), 3, 20, 200, self.wall_sprites, gold=200)
+                             (70, 70), 3, 20, 200, self.wall_sprites, gold=0)
 
     def detect_collision(self):
         # detect collision with each enemy
@@ -54,12 +56,18 @@ class Room(Scenario):
         if collisionGold:
             self.player.gold += 1
             collisionGold.kill()
+        
+        # detect collision hearts
+        collisionHeart = pygame.sprite.spritecollideany(
+            self.player, self.hearts)
+        if collisionHeart:
+            self.player.hp += 10
+            if self.player.hp > 20:
+                self.player.hp = 20
+            collisionHeart.kill()
 
         # detect collision bullet player walls
         collisionWallsPlayer = pygame.sprite.groupcollide(self.player.weapon.bullets, self.wall_sprites, True, False)
-
-    def lock_doors(self):
-        pass
 
     def spawn_enemies(self, quantity: int):
         for _ in range(quantity):
@@ -67,7 +75,7 @@ class Room(Scenario):
             position = (chosen.rect.left, chosen.rect.top)
 
             self.enemies.add(Enemy(self.surface, self.sprite_group, position, 
-                                  (70, 70), 2, 100, self.wall_sprites))
+                                  (70, 70), 1, 100, self.wall_sprites))
             self.sprite_group.add(self.enemies)
     
     def spawn_coins(self, quantity: int):
@@ -80,24 +88,30 @@ class Room(Scenario):
             self.coins.add(Item(self.surface, position, (20, 20), image_file, 
                                 0)) 
             self.sprite_group.add(self.coins)
+    
+    def spawn_hearts(self, quantity: int):
+        image_file = "items/ui_heart_full.png"
 
-    def check_enemies(self):
-        pass
+        for _ in range(quantity):
+            chosen = choice(list(self.floor_sprites))
+            position = (chosen.rect.left, chosen.rect.top)
 
-    def open_doors(self):
-        pass
+            self.hearts.add(Item(self.surface, position, (20, 20), image_file, 
+                                0)) 
+            self.sprite_group.add(self.hearts)
 
     def update(self):
         self.player.draw()
 
-        cont = 0
         if len(self.enemies) == 0:
+            print(self.cont)
+            self.cont+=1
             self.spawn_enemies(1)
-            self.spawn_coins(1)     # spawn moeda a cada morte
-
+            if self.cont%2==0:
+                self.spawn_coins(2)
+            elif self.cont%3==0:
+                self.spawn_hearts(1)
         for enemy in self.enemies:
             enemy.shoot((self.player.x, self.player.y))
             enemy.chase((self.player.x, self.player.y))
             enemy.draw()
-        #if len(self.coins) == 0:
-        #    self.spawn_coins(1)

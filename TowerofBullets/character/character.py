@@ -49,6 +49,7 @@ class Character(Entity):
     def be_hit(self, damage: int):
         self.hp -= damage
         if self.hp <= 0:
+            self.hp = 0
             self.weapon.kill()
             self.kill()
 

@@ -28,7 +28,7 @@ class PauseView(Screen):
         elif self.play.rect.collidepoint(mouse_pos) and mouse_click[0]:
             return 'CLOSE'
  
-
+ 
 if __name__ == '__main__':
     pause = PauseView((800, 600))
     pause.run()
