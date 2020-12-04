@@ -75,7 +75,7 @@ class Room(Scenario):
             position = (chosen.rect.left, chosen.rect.top)
 
             self.enemies.add(Enemy(self.surface, self.sprite_group, position, 
-                                  (70, 70), 1, 100, self.wall_sprites))
+                                  (70, 70), 2, 100, self.wall_sprites))
             self.sprite_group.add(self.enemies)
     
     def spawn_coins(self, quantity: int):
@@ -96,7 +96,7 @@ class Room(Scenario):
             chosen = choice(list(self.floor_sprites))
             position = (chosen.rect.left, chosen.rect.top)
 
-            self.hearts.add(Item(self.surface, position, (20, 20), image_file, 
+            self.hearts.add(Item(self.surface, position, (30, 30), image_file, 
                                 0)) 
             self.sprite_group.add(self.hearts)
 
@@ -104,13 +104,14 @@ class Room(Scenario):
         self.player.draw()
 
         if len(self.enemies) == 0:
-            print(self.cont)
             self.cont+=1
             self.spawn_enemies(1)
+
             if self.cont%2==0:
                 self.spawn_coins(2)
             elif self.cont%3==0:
                 self.spawn_hearts(1)
+                
         for enemy in self.enemies:
             enemy.shoot((self.player.x, self.player.y))
             enemy.chase((self.player.x, self.player.y))
