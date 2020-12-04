@@ -26,7 +26,7 @@ class Weapon(Entity):
         if pygame.time.get_ticks() - self.last_tick >= self.fire_rate:
             self.last_tick = pygame.time.get_ticks()
 
-            position = (((self.x)+15), ((self.y)-7))
+            position = (((self.x)-10), ((self.y)-10))
             bullet = Bullet(self.surface, position, (8, 8), self.damage, 1,
                             coordinates)
             
