@@ -7,17 +7,15 @@ from character.player import Player
 from scenery.scenario import Scenario
 from items.item import Item
 
-IMAGE = 'scenery/01.png'
-
 
 class Room(Scenario):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, traps: int, chest: bool,
-                 image_path: str=IMAGE):
+                 size: tuple, traps: int, chest: bool):
         
-        super().__init__(surface, position, size, traps, chest, image_path)
+        super().__init__(surface, position, size, traps, chest)
+        
         self.enemies = pygame.sprite.Group()
         self.traps = traps
         self.chest = chest
@@ -42,6 +40,7 @@ class Room(Scenario):
             collisionEnemy = pygame.sprite.spritecollideany(
                 enemy, self.player.weapon.bullets)
             if collisionEnemy:
+                print('yay')
                 enemy.be_hit(self.player.weapon.damage)
                 if enemy.hp <= 0:
                     self.player.score += 10
@@ -104,12 +103,12 @@ class Room(Scenario):
         self.player.draw()
 
         if len(self.enemies) == 0:
-            self.cont+=1
+            self.cont += 1
             self.spawn_enemies(1)
 
-            if self.cont%2==0:
+            if self.cont % 2 == 0:
                 self.spawn_coins(2)
-            elif self.cont%3==0:
+            elif self.cont % 3 == 0:
                 self.spawn_hearts(1)
                 
         for enemy in self.enemies:

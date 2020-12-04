@@ -48,6 +48,7 @@ class TowerOfBullets:
             self.room.player.shoot()
 
     def render(self):
+        self.handle_input()
         self.room.detect_collision()
         self.room.draw()
         self.sprites.draw(self.surface)

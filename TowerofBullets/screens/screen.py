@@ -11,7 +11,7 @@ class Screen:
         self.duration = -1
         self.data = None
 
-    def update(self):
+    def event_listener(self):
         pass
 
     def render(self):

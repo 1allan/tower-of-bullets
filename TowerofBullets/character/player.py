@@ -25,7 +25,7 @@ class Player(Character):
 
         if self.weapon is None:
             self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y),
-                                 (60, 30), 5, fire_rate=100)
+                                 (60, 30), 5, bullet_speed=5, fire_rate=150)
             self.sprite_group.add(self.weapon)
 
     def shoot(self):

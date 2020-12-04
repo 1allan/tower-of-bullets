@@ -1,71 +1,41 @@
 import pygame
 
+from util.functions import load_image
+from util.constants import CLOSEVIEW_ID
+
 from entity import Entity
-from util.functions import *
-
+from .screen import Screen
 from towerofbullets import TowerOfBullets
-from config import ConfigView
 
 
-class StartView:
+class StartView(Screen):
 
-    def __init__(self, screen_size: tuple, fps=60):
-        self.width, self.height = screen_size
-        self.screen = pygame.display.set_mode((self.width, self.height))
-        self.fps = fps
+    def __init__(self, surface: pygame.Surface, position=None, size=None):
+        super().__init__(surface, position, size)
+        self.width, self.height = surface.get_size() if size is None else size
+        self.surface = pygame.display.set_mode((self.width, self.height))
 
-        self.bg = load_image('misc/start/bg.png', screen_size)
-        self.play = Entity(self.screen, (170, 300),
+        self.bg = load_image('misc/start/bg.png', (self.width, self.height))
+        self.play = Entity(self.surface, (170, 300),
                            (200, 75), 0, 'misc/start/play.png')
-        self.config = Entity(self.screen, (420, 300),
+        self.config = Entity(self.surface, (420, 300),
                              (200, 75), 0, 'misc/start/config.png')
-        self.exit = Entity(self.screen, (680, 100),
+        self.exit = Entity(self.surface, (680, 100),
                            (60, 60), 0, 'misc/start/exit.png')
 
-    def run(self):
-        pygame.init()
-        pygame.display.init()
-        pygame.display.set_caption("Tower of Bullets - Start")
-
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.quit()
-
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.handlePress(event.pos)
-
-            self.render()
-
-    def handlePress(self, pos_mouse):
-        x, y = pos_mouse
-
-        if self.play.rect.collidepoint(x, y):
-            # iniciar towerofbullets
-            game = TowerOfBullets((800, 600))
-            game.run()
-
-        elif self.config.rect.collidepoint(x, y):
-            # iniciar config
-            config = ConfigView((800, 600))
-            config.run()
-
-        elif self.exit.rect.collidepoint(x, y):
-            # sair do programa
-            self.quit()
+    def event_listener(self):
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_click = pygame.mouse.get_pressed()
+        emit = None
+        
+        if self.play.rect.collidepoint(*mouse_pos) and mouse_click[0]:
+            emit = CLOSEVIEW_ID
+        
+        return emit
 
     def render(self):
-        self.screen.blit(self.bg, (0, 0))
-
-        self.screen.blit(self.play.image, (170, 300))
-        self.screen.blit(self.config.image, (420, 300))
-        self.screen.blit(self.exit.image, (680, 100))
-        pygame.display.update()
-
-    def quit(self):
-        pygame.quit()
-
-
-if __name__ == '__main__':
-    start = StartView((800, 600))
-    start.run()
+        self.surface.blit(self.bg, (0, 0))
+        self.surface.blit(self.play.image, (170, 300))
+        self.surface.blit(self.config.image, (420, 300))
+        self.surface.blit(self.exit.image, (680, 100))
+        return self.event_listener()

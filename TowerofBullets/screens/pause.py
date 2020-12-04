@@ -1,7 +1,8 @@
 import pygame
 
-from .screen import Screen
 from entity import Entity
+from .screen import Screen
+from util.constants import CLOSEVIEW_ID, STARTVIEW_ID
 
 
 class PauseView(Screen):
@@ -15,18 +16,24 @@ class PauseView(Screen):
         self.play = Entity(self.surface, (344, 170),
                            (102, 117), 0, 'misc/pause/play.png')
 
+    def event_listener(self):
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_click = pygame.mouse.get_pressed()
+
+        emit = None
+        if (pygame.key.get_pressed()[pygame.K_p] or 
+           self.play.rect.collidepoint(mouse_pos) and mouse_click[0]):
+            emit = CLOSEVIEW_ID
+        elif self.inicio.rect.collidepoint(mouse_pos) and mouse_click[0]:
+            emit = STARTVIEW_ID
+
+        return emit
+
     def render(self):
         self.surface.blit(self.inicio.image, (170, 300))
         self.surface.blit(self.loja.image, (420, 300))
         self.surface.blit(self.play.image, (344, 170))
-        
-        mouse_pos = pygame.mouse.get_pos()
-        mouse_click = pygame.mouse.get_pressed()
-
-        if pygame.key.get_pressed()[pygame.K_p]:
-            return 'CLOSE'
-        elif self.play.rect.collidepoint(mouse_pos) and mouse_click[0]:
-            return 'CLOSE'
+        return self.event_listener()
  
  
 if __name__ == '__main__':

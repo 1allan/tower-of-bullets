@@ -26,15 +26,14 @@ class Tile(pygame.sprite.Sprite):
 class Scenario(pygame.sprite.Sprite):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 traps: int, chest: bool, image_path: str, layout_path='1.txt'):
+                 traps: int, chest: bool, layout_file='2.txt'):
         pygame.sprite.Sprite.__init__(self)
 
         self.width, self.height = size
         self.surface = surface
-        self.image = load_image(image_path, size)
-        self.rect = self.image.get_rect()
+        self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
         self.rect.left, self.rect.top = position
-        self.layout = self.__load_layout(layout_path)
+        self.layout = self.__load_layout(layout_file)
         self.floor_sprites = pygame.sprite.Group()
         self.wall_sprites = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
@@ -59,16 +58,17 @@ class Scenario(pygame.sprite.Sprite):
             for j in range(len(self.layout[i])):
                 image = 'scenery/01.png'
                 collidable = False
+                group = self.wall_sprites
 
                 if self.layout[i][j] == '1':
-                    img_wall = 'scenery/wall.png'
+                    image = 'scenery/wall.png'
                     collidable = True
-                    self.wall_sprites.add(Tile(self.surface, (w * i, h * j), (w, h),
-                                                 collidable,image_file=img_wall))
                 else:
-                    img_floor = 'scenery/floor.png'
-                    self.floor_sprites.add(Tile(self.surface, (w * i, h * j), (w, h),
-                                                 collidable, image_file=img_floor))
+                    image = 'scenery/floor.png'
+                    group = self.floor_sprites
+                
+                group.add(Tile(self.surface, (w * i, h * j), (w, h), 
+                               collidable, image_file=image))
                     
     def update(self):
         pass
