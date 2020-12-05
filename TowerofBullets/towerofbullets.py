@@ -2,6 +2,7 @@ import pygame
 from time import time
 
 from util.functions import load_image
+from util.constants import ROOMS_DB
 from scenery.room import Room
 
 
@@ -20,7 +21,7 @@ class TowerOfBullets:
 
     def run(self):
         self.room = Room(self.surface, self.sprites, (0, 0), (self.width,
-                                               self.height), 0, False)
+                                               self.height), ROOMS_DB['SALA1'])
 
     def handle_input(self):
         keyboard = pygame.key.get_pressed()

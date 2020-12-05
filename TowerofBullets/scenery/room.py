@@ -7,8 +7,6 @@ from character.player import Player
 from scenery.scenario import Scenario
 from items.item import Item
 
-from util.constants import *
-
 
 class Room(Scenario):
 
@@ -16,18 +14,15 @@ class Room(Scenario):
                  sprite_group: pygame.sprite.Group, position: tuple,
                  size: tuple, args):
         
-        super().__init__(surface, position, size, args)
+        super().__init__(surface, position, size, sprite_group, args)
         
-        self.sprite_group = sprite_group
-        self.enemies = pygame.sprite.Group()
+        # self.enemies = pygame.sprite.Group()
+        self.timeout = False
         self.coins = pygame.sprite.Group()
         self.hearts = pygame.sprite.Group()
+        self.last_wave = 0
         self.player = Player(self.surface, self.sprite_group, (size[0]/2, size[1]/2),
                              (70, 70), 3, 20, 200, self.wall_sprites, gold=0)
-
-        self.amountEnemies = randint(10, 25)
-        self.enemiesDropped = 0
-        self.boss = None
 
     def detect_collision(self):
         # detect collision with each enemy
@@ -70,15 +65,6 @@ class Room(Scenario):
         # detect collision bullet player walls
         collisionWallsPlayer = pygame.sprite.groupcollide(self.player.weapon.bullets, self.wall_sprites, True, False)
     
-    def spawn_enemies(self, quantity: int, hp: int = 100, damage: int = 1, image_file: str = 'characters/01.png'):
-        for _ in range(quantity):
-            chosen = choice(list(self.floor_sprites))
-            position = (chosen.rect.left, chosen.rect.top)
-
-            self.enemies.add(Enemy(self.surface, self.sprite_group, position, 
-                                  (70, 70), 2, hp, self.wall_sprites, damage, image_file))
-            self.sprite_group.add(self.enemies)
-    
     def spawn_coins(self, quantity: int):
         image_file = "items/coin.png"
 
@@ -104,21 +90,22 @@ class Room(Scenario):
     def update(self):
         self.player.draw()
 
-        if self.amountEnemies != self.enemiesDropped:
-            if len(self.enemies) == 0:
-                self.enemiesDropped += 1
-                self.spawn_enemies(1)
+        if (len(self.enemies) == 0 and self.wave_now <= self.waves[self.wave_now]["AMOUNT"] and not self.timeout):
+            self.timeout = True
+            self.last_wave = pygame.time.get_ticks()
+            self.spawn_coins(2)
+            self.spawn_hearts(1)
 
-                if self.enemiesDropped % 2 == 0:
-                    self.spawn_coins(2)
-                elif self.enemiesDropped % 3 == 0:
-                    self.spawn_hearts(1)
-        else:
-            pass
-            # droppar boss
-            # self.boss = Enemy(BOSS1)
-            # self.enemies.add(self.boss)
-                
+        elif len(self.enemies) == 0 and self.wave_now > self.waves[self.wave_now]["AMOUNT"]:
+            # handle carinha passou de nível
+            print('carinha passou de nível')
+
+        # timeout between waves
+        if self.timeout and (pygame.time.get_ticks() - self.last_wave > 3000):
+            self.timeout = False
+            self.last_wave = pygame.time.get_ticks()
+            self.start_wave()
+
         for enemy in self.enemies:
             enemy.shoot((self.player.x, self.player.y))
             enemy.chase((self.player.x, self.player.y))

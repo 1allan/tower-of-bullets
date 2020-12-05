@@ -24,8 +24,8 @@ class Bullet(Entity):
         y_diff = self.dest_y - self.rect.top
         angle = math.atan2(y_diff, x_diff)
 
-        self.change_x = math.cos(angle) * self.speed
-        self.change_y = math.sin(angle) * self.speed
+        self.change_x = math.cos(angle) * int(self.speed)
+        self.change_y = math.sin(angle) * int(self.speed)
 
     def update(self):
         self.floating_point_y += self.change_y
