@@ -4,13 +4,16 @@ from towerofbullets import TowerOfBullets
 from screens.hud import Hud
 from screens.pause import PauseView
 from screens.start import StartView
+from screens.config import ConfigView
 
-from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID
+from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID
+from dao.saveDAO import SaveDAO
 
 
 views = {
     PAUSEVIEW_ID: PauseView,
-    STARTVIEW_ID: StartView
+    STARTVIEW_ID: StartView,
+    CONFIGVIEW_ID: ConfigView
 }
 
 class Game:
@@ -23,6 +26,8 @@ class Game:
         self.hud = Hud(self.display, self.game.room.player)
         self.last_pause = 0
 
+        self.save_dao = SaveDAO('save_info.pkl')
+
     @property
     def overlay(self):
         return self.__overlay
@@ -32,6 +37,10 @@ class Game:
         if pygame.time.get_ticks() - self.last_pause > 200:
             self.__overlay = value
             self.last_pause = pygame.time.get_ticks()
+
+    # salvar score no pickle
+    def save(self):
+        saved_score = self.save_dao.add(self.game.room.player)
 
     def start(self):
         pygame.init()

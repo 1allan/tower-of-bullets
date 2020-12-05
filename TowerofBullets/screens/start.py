@@ -1,7 +1,7 @@
 import pygame
 
 from util.functions import load_image
-from util.constants import CLOSEVIEW_ID
+from util.constants import CLOSEVIEW_ID, CONFIGVIEW_ID
 
 from entity import Entity
 from .screen import Screen
@@ -27,10 +27,14 @@ class StartView(Screen):
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
         emit = None
-        
+
         if self.play.rect.collidepoint(*mouse_pos) and mouse_click[0]:
             emit = CLOSEVIEW_ID
-        
+        elif self.config.rect.collidepoint(*mouse_pos) and mouse_click[0]:
+            emit = CONFIGVIEW_ID
+        elif self.exit.rect.collidepoint(*mouse_pos) and mouse_click[0]:
+            pygame.quit()
+
         return emit
 
     def render(self):

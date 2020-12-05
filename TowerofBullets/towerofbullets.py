@@ -1,12 +1,8 @@
 import pygame
-import pickle
 from time import time
 
 from util.functions import load_image
-
-from character.player import Player
 from scenery.room import Room
-from screens.pause import PauseView
 
 
 class TowerOfBullets:

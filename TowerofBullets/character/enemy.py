@@ -8,19 +8,22 @@ from character.player import Player
 
 IMAGE = 'characters/01.png'
 
-
 class Enemy(Character):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, speed: int, hp: int, wall_sprites: pygame.sprite.Group, image_file: str=IMAGE):
-                 
-        super().__init__(surface, sprite_group, position, size, speed, hp, wall_sprites, image_file)
+                 size: tuple, wall_sprites, args):
 
-        if self.weapon is None:
-            self.weapon = Weapon(self.surface, sprite_group, 
-                                (self.rect.left, self.rect.top), (20, 10), 2)
-            self.sprite_group.add(self.weapon)
+        # speed, hp, weapon, image_file
+        super().__init__(surface, sprite_group, position, size, args["SPEED"], args["HP"], args["IMAGE_FILE"], wall_sprites=wall_sprites)
+
+        self.weapon = Weapon(self.surface, sprite_group, (self.rect.left, self.rect.top), (20, 10), args["WEAPON"]["DAMAGE"], args["WEAPON"]["IMAGE_FILE"])
+        self.sprite_group.add(self.weapon)
+        
+        # if self.weapon is None:
+        #     self.weapon = Weapon(self.surface, sprite_group, 
+        #                         (self.rect.left, self.rect.top), (20, 10), self.damage)
+        #     self.sprite_group.add(self.weapon)
 
     def chase(self, destination: tuple, flag = False):
         self.floating_point_x, self.floating_point_y = [self.rect.left, self.rect.top]
@@ -35,7 +38,7 @@ class Enemy(Character):
 
         self.floating_point_y += self.change_y
         self.floating_point_x += self.change_x
-        
+
         positionBefore = (self.rect.left, self.rect.top)
         collision = pygame.sprite.spritecollideany(self, self.wall_sprites)
 

@@ -26,8 +26,11 @@ class Tile(pygame.sprite.Sprite):
 class Scenario(pygame.sprite.Sprite):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 traps: int, chest: bool, layout_file='2.txt'):
+                 args, layout_file='2.txt'):
         pygame.sprite.Sprite.__init__(self)
+
+        self.structure = args['STRUCTURE']
+        self.waves = args['WAVES']
 
         self.width, self.height = size
         self.surface = surface

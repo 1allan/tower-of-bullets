@@ -7,24 +7,27 @@ from character.player import Player
 from scenery.scenario import Scenario
 from items.item import Item
 
+from util.constants import *
+
 
 class Room(Scenario):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, traps: int, chest: bool):
+                 size: tuple, args):
         
-        super().__init__(surface, position, size, traps, chest)
+        super().__init__(surface, position, size, args)
         
-        self.enemies = pygame.sprite.Group()
-        self.traps = traps
-        self.chest = chest
         self.sprite_group = sprite_group
+        self.enemies = pygame.sprite.Group()
         self.coins = pygame.sprite.Group()
         self.hearts = pygame.sprite.Group()
-        self.cont = 0
         self.player = Player(self.surface, self.sprite_group, (size[0]/2, size[1]/2),
                              (70, 70), 3, 20, 200, self.wall_sprites, gold=0)
+
+        self.amountEnemies = randint(10, 25)
+        self.enemiesDropped = 0
+        self.boss = None
 
     def detect_collision(self):
         # detect collision with each enemy
@@ -40,7 +43,6 @@ class Room(Scenario):
             collisionEnemy = pygame.sprite.spritecollideany(
                 enemy, self.player.weapon.bullets)
             if collisionEnemy:
-                print('yay')
                 enemy.be_hit(self.player.weapon.damage)
                 if enemy.hp <= 0:
                     self.player.score += 10
@@ -67,14 +69,14 @@ class Room(Scenario):
 
         # detect collision bullet player walls
         collisionWallsPlayer = pygame.sprite.groupcollide(self.player.weapon.bullets, self.wall_sprites, True, False)
-
-    def spawn_enemies(self, quantity: int):
+    
+    def spawn_enemies(self, quantity: int, hp: int = 100, damage: int = 1, image_file: str = 'characters/01.png'):
         for _ in range(quantity):
             chosen = choice(list(self.floor_sprites))
             position = (chosen.rect.left, chosen.rect.top)
 
             self.enemies.add(Enemy(self.surface, self.sprite_group, position, 
-                                  (70, 70), 2, 100, self.wall_sprites))
+                                  (70, 70), 2, hp, self.wall_sprites, damage, image_file))
             self.sprite_group.add(self.enemies)
     
     def spawn_coins(self, quantity: int):
@@ -87,7 +89,7 @@ class Room(Scenario):
             self.coins.add(Item(self.surface, position, (20, 20), image_file, 
                                 0)) 
             self.sprite_group.add(self.coins)
-    
+
     def spawn_hearts(self, quantity: int):
         image_file = "items/ui_heart_full.png"
 
@@ -102,14 +104,20 @@ class Room(Scenario):
     def update(self):
         self.player.draw()
 
-        if len(self.enemies) == 0:
-            self.cont += 1
-            self.spawn_enemies(1)
+        if self.amountEnemies != self.enemiesDropped:
+            if len(self.enemies) == 0:
+                self.enemiesDropped += 1
+                self.spawn_enemies(1)
 
-            if self.cont % 2 == 0:
-                self.spawn_coins(2)
-            elif self.cont % 3 == 0:
-                self.spawn_hearts(1)
+                if self.enemiesDropped % 2 == 0:
+                    self.spawn_coins(2)
+                elif self.enemiesDropped % 3 == 0:
+                    self.spawn_hearts(1)
+        else:
+            pass
+            # droppar boss
+            # self.boss = Enemy(BOSS1)
+            # self.enemies.add(self.boss)
                 
         for enemy in self.enemies:
             enemy.shoot((self.player.x, self.player.y))

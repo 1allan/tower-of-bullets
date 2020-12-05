@@ -34,8 +34,3 @@ class PauseView(Screen):
         self.surface.blit(self.loja.image, (420, 300))
         self.surface.blit(self.play.image, (344, 170))
         return self.event_listener()
- 
- 
-if __name__ == '__main__':
-    pause = PauseView((800, 600))
-    pause.run()
