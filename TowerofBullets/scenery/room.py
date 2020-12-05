@@ -10,19 +10,30 @@ from items.item import Item
 
 class Room(Scenario):
 
-    def __init__(self, surface: pygame.Surface, 
+    def __init__(self, surface: pygame.Surface,
                  sprite_group: pygame.sprite.Group, position: tuple,
                  size: tuple, args):
-        
+
         super().__init__(surface, position, size, sprite_group, args)
-        
+
         # self.enemies = pygame.sprite.Group()
         self.timeout = False
         self.coins = pygame.sprite.Group()
         self.hearts = pygame.sprite.Group()
+        self.portal = pygame.sprite.Group()
         self.last_wave = 0
         self.player = Player(self.surface, self.sprite_group, (size[0]/2, size[1]/2),
                              (70, 70), 3, 20, 200, self.wall_sprites, gold=0)
+
+    def spawn_portal(self):
+        image_file = 'misc/portal.png'
+
+        chosen = choice(list(self.floor_sprites))
+        position = (chosen.rect.left, chosen.rect.top)
+
+        self.portal.add(Item(self.surface, position, (32, 64), image_file, 0))
+
+        self.sprite_group.add(self.portal)
 
     def detect_collision(self):
         # detect collision with each enemy
@@ -42,9 +53,10 @@ class Room(Scenario):
                 if enemy.hp <= 0:
                     self.player.score += 10
                 collisionEnemy.kill()
-            
+
             # bullet with walls
-            collisionWallsEnemy = pygame.sprite.groupcollide(enemy.weapon.bullets, self.wall_sprites, True, False)
+            collisionWallsEnemy = pygame.sprite.groupcollide(
+                enemy.weapon.bullets, self.wall_sprites, True, False)
 
         # detect collision coins
         collisionGold = pygame.sprite.spritecollideany(
@@ -52,7 +64,7 @@ class Room(Scenario):
         if collisionGold:
             self.player.gold += 1
             collisionGold.kill()
-        
+
         # detect collision hearts
         collisionHeart = pygame.sprite.spritecollideany(
             self.player, self.hearts)
@@ -63,8 +75,16 @@ class Room(Scenario):
             collisionHeart.kill()
 
         # detect collision bullet player walls
-        collisionWallsPlayer = pygame.sprite.groupcollide(self.player.weapon.bullets, self.wall_sprites, True, False)
-    
+        collisionWallsPlayer = pygame.sprite.groupcollide(
+            self.player.weapon.bullets, self.wall_sprites, True, False)
+
+        # detect collision portal
+        collisionPortal = pygame.sprite.spritecollideany(
+            self.player, self.portal)
+        if collisionPortal:
+            pass
+            # new room logic
+
     def spawn_coins(self, quantity: int):
         image_file = "items/coin.png"
 
@@ -72,8 +92,8 @@ class Room(Scenario):
             chosen = choice(list(self.floor_sprites))
             position = (chosen.rect.left, chosen.rect.top)
 
-            self.coins.add(Item(self.surface, position, (20, 20), image_file, 
-                                0)) 
+            self.coins.add(Item(self.surface, position, (20, 20), image_file,
+                                0))
             self.sprite_group.add(self.coins)
 
     def spawn_hearts(self, quantity: int):
@@ -83,8 +103,8 @@ class Room(Scenario):
             chosen = choice(list(self.floor_sprites))
             position = (chosen.rect.left, chosen.rect.top)
 
-            self.hearts.add(Item(self.surface, position, (30, 30), image_file, 
-                                0)) 
+            self.hearts.add(Item(self.surface, position, (30, 30), image_file,
+                                 0))
             self.sprite_group.add(self.hearts)
 
     def update(self):
@@ -99,6 +119,7 @@ class Room(Scenario):
         elif len(self.enemies) == 0 and self.wave_now > self.waves[self.wave_now]["AMOUNT"]:
             # handle carinha passou de nível
             print('carinha passou de nível')
+            self.spawn_portal()
 
         # timeout between waves
         if self.timeout and (pygame.time.get_ticks() - self.last_wave > 3000):

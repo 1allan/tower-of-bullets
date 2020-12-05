@@ -6,25 +6,29 @@ from items.weapon import Weapon
 from character.character import Character
 from character.player import Player
 
+
 class Enemy(Character):
 
-    def __init__(self, surface: pygame.Surface, 
+    def __init__(self, surface: pygame.Surface,
                  sprite_group: pygame.sprite.Group, position: tuple,
                  size: tuple, wall_sprites, args):
 
         # speed, hp, weapon, image_file
-        super().__init__(surface, sprite_group, position, size, args["SPEED"], args["HP"], wall_sprites, args["IMAGE_FILE"])
+        super().__init__(surface, sprite_group, position, size,
+                         args["SPEED"], args["HP"], wall_sprites, args["IMAGE_FILE"])
 
-        self.weapon = Weapon(self.surface, sprite_group, (self.rect.left, self.rect.top), (20, 10), args["WEAPON"]["DAMAGE"], args["WEAPON"]["BULLET_SPEED"], args["WEAPON"]["FIRE_RATE"], args["WEAPON"]["IMAGE_FILE"])
+        self.weapon = Weapon(self.surface, sprite_group, (self.rect.left, self.rect.top), (20, 10),
+                             args["WEAPON"]["DAMAGE"], args["WEAPON"]["BULLET_SPEED"], args["WEAPON"]["FIRE_RATE"], args["WEAPON"]["IMAGE_FILE"])
         self.sprite_group.add(self.weapon)
-        
+
         # if self.weapon is None:
-        #     self.weapon = Weapon(self.surface, sprite_group, 
+        #     self.weapon = Weapon(self.surface, sprite_group,
         #                         (self.rect.left, self.rect.top), (20, 10), self.damage)
         #     self.sprite_group.add(self.weapon)
 
-    def chase(self, destination: tuple, flag = False):
-        self.floating_point_x, self.floating_point_y = [self.rect.left, self.rect.top]
+    def chase(self, destination: tuple, flag=False):
+        self.floating_point_x, self.floating_point_y = [
+            self.rect.left, self.rect.top]
         self.dest_x, self.dest_y = destination
 
         x_diff = self.dest_x - self.rect.left
@@ -50,4 +54,3 @@ class Enemy(Character):
 
     def shoot(self, coordinates: tuple):
         self.weapon.shoot(coordinates)
-        
