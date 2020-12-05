@@ -22,6 +22,7 @@ class Player(Character):
         self.energy = energy
         self.gold = gold
         self.score = score
+        # self.image.set_alpha(0)
 
         if self.weapon is None:
             self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y),

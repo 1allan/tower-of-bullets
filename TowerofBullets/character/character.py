@@ -3,6 +3,13 @@ import pygame
 
 from entity import Entity
 
+# Checks if sprite1 minus an offset (in this case 20%) is colliding with
+# sprite2
+def walls_collide(sprite1, sprite2):
+    offset = sprite1.width * 0.2, sprite1.height * 0.2
+    coord = sprite1.rect.left + offset[0], sprite1.rect.top + offset[1]
+    size = sprite1.width - offset[0] * 2, sprite1.height - offset[1] * 2
+    return pygame.Rect(coord, size).colliderect(sprite2)
 
 class Character(Entity):
 
@@ -33,12 +40,12 @@ class Character(Entity):
         positionBefore = (self.rect.left, self.rect.top)
 
         self.rect.left += speed * direction[0]
-        collision = pygame.sprite.spritecollideany(self, self.wall_sprites)
+        collision = pygame.sprite.spritecollideany(self, self.wall_sprites, collided=walls_collide)
         if collision:
             self.rect.left = positionBefore[0]
         
         self.rect.top += speed * direction[1]
-        collision = pygame.sprite.spritecollideany(self, self.wall_sprites)
+        collision = pygame.sprite.spritecollideany(self, self.wall_sprites, collided=walls_collide)
         if collision:
             self.rect.top = positionBefore[1]
 

@@ -26,6 +26,7 @@ class Game:
         self.game.run()
         self.__overlay = StartView(self.display)
         self.last_pause = 0
+        self.clock = pygame.time.Clock()
 
         self.save_dao = SaveDAO('save_info.pkl')
 
@@ -64,7 +65,7 @@ class Game:
                     self.overlay = None
                 elif next_ is not None:
                     self.overlay = views[next_](self.display)
-
+            self.clock.tick(60)
             pygame.display.update()
         
     def quit(self):
