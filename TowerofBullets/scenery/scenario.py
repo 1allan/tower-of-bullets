@@ -76,7 +76,7 @@ class Scenario(pygame.sprite.Sprite):
                 else:
                     image = 'floors/' + self.layout[i][j]
                     group = self.floor_sprites
-                
+
                 group.add(Tile(self.surface, (w * i, h * j), (w, h), 
                                collidable, image_file=image))
 

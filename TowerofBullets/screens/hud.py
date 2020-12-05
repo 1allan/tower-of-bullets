@@ -18,9 +18,10 @@ class Hud(Screen):
 
         # self.surface = surface
         self.player = player
-        self.hp = self.player.hp
-        self.gold = self.player.gold
-        self.score = self.player.score
+
+        self.hp_start = self.player.hp
+        self.gold_start = self.player.gold
+        self.score_start = self.player.score
 
         pygame.font.init()
         self.font = pygame.font.SysFont('Arial', 30)
@@ -39,27 +40,26 @@ class Hud(Screen):
             
         return emit
 
-    def render(self, player):
+    def render(self):
         # lifebar
         width = 200
-        hp_now = player.hp
-        porcent = (hp_now / self.hp)
+        porcent = (self.player.hp / self.hp_start)
         width = int(width * porcent)
         color = COLOR_LIFEBAR if (porcent * 100) > 50 else COLOR_LIFEBAR_CRITIC
-        if hp_now >= 0:
+        if self.player.hp >= 0:
             pygame.draw.rect(self.surface, color, pygame.Rect(
                 (15, 15), (width, 30), border_radius=5))
 
         # gold
         imageGold = load_image('items/coin.png', (15, 15))
         fontGold = self.font.render(
-            str(player.gold), True, COLOR_COIN_BAR)
+            str(self.player.gold), True, COLOR_COIN_BAR)
         self.surface.blit(imageGold, (220, 25))
         self.surface.blit(fontGold, (240, 15))
 
         # score
         font_score = self.font.render(
-            f'Score: {str(player.score)}', True, COLOR_SCORE_BAR)
+            f'Score: {str(self.player.score)}', True, COLOR_SCORE_BAR)
         self.surface.blit(font_score, (350, 15))
 
         # pause button

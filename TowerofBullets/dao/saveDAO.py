@@ -5,6 +5,7 @@ from dao.DAO import DAO
 
 
 class SaveDAO(DAO):
+    
     def __init__(self, arquivo):
         super().__init__(arquivo)
 
@@ -16,7 +17,7 @@ class SaveDAO(DAO):
             gold: 'y'
           }
         '''
-        payload.timestamp = time.time()
+        payload["timestamp"] = time.time()
         super().add(payload)
 
     def get(self, timestamp):

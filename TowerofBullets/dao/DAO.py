@@ -19,7 +19,8 @@ class DAO(ABC):
         self.cache = pickle.load(open(self.datasource, 'rb'))
 
     def add(self, obj):
-        self.cache[obj.timestamp] = obj
+        print(obj)
+        self.cache[obj['timestamp']] = obj
         self.dump()
 
     def get(self, key):

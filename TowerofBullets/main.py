@@ -5,15 +5,17 @@ from screens.hud import Hud
 from screens.pause import PauseView
 from screens.start import StartView
 from screens.config import ConfigView
+from screens.dead import DeadView
 
-from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID
+from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID, DEADVIEW_ID
 from dao.saveDAO import SaveDAO
 
 
 views = {
     PAUSEVIEW_ID: PauseView,
     STARTVIEW_ID: StartView,
-    CONFIGVIEW_ID: ConfigView
+    CONFIGVIEW_ID: ConfigView,
+    DEADVIEW_ID: DeadView
 }
 
 class Game:
@@ -23,7 +25,6 @@ class Game:
         self.game = TowerOfBullets(self.display)
         self.game.run()
         self.__overlay = StartView(self.display)
-        self.hud = Hud(self.display, self.game.room.player)
         self.last_pause = 0
 
         self.save_dao = SaveDAO('save_info.pkl')
@@ -53,9 +54,8 @@ class Game:
                     self.quit()
 
             if self.overlay is None:
-                self.game.render()
+                next_ = self.game.render()
 
-                next_ = self.hud.render(self.game.room.player)
                 if next_ is not None:
                     self.overlay = views[next_](self.display)
             else:
