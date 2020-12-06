@@ -47,6 +47,7 @@ class Game:
     def start(self):
         pygame.init()
         pygame.display.init()
+        pygame.font.init()
         pygame.display.set_caption("Tower of Bullets")
         
         while True:

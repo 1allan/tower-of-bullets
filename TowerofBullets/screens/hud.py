@@ -5,10 +5,9 @@ from util.functions import *
 from util.constants import PAUSEVIEW_ID
 
 
-COLOR_LIFEBAR = pygame.Color(0, 200, 0)
-COLOR_LIFEBAR_CRITIC = pygame.Color(255, 0, 0)
-COLOR_COIN_BAR = pygame.Color(255, 255, 0)
-COLOR_SCORE_BAR = pygame.Color(255, 0, 0)
+COLOR_RED = pygame.Color(237, 28, 36)
+COLOR_BLUE = pygame.Color(0, 162, 232)
+COLOR_YELLOW = pygame.Color(250, 203, 62)
 
 
 class Hud(Screen):
@@ -20,14 +19,11 @@ class Hud(Screen):
         self.player = player
 
         self.hp_start = self.player.hp
+        self.energy_start = self.player.energy
         self.gold_start = self.player.gold
         self.score_start = self.player.score
-
-        pygame.font.init()
-        self.font = pygame.font.SysFont('Arial', 30)
-
-        self.pause_button = None
-        self.pause_button_rect = pygame.Rect((750, 15), (30, 30))
+        
+        self.pause_button_rect = pygame.Rect((720, 15), (40, 40))
 
     def event_listener(self):
         mouse_pos = pygame.mouse.get_pos()
@@ -41,29 +37,22 @@ class Hud(Screen):
         return emit
 
     def render(self):
-        # lifebar
-        width = 200
-        porcent = (self.player.hp / self.hp_start)
-        width = int(width * porcent)
-        color = COLOR_LIFEBAR if (porcent * 100) > 50 else COLOR_LIFEBAR_CRITIC
-        if self.player.hp >= 0:
-            pygame.draw.rect(self.surface, color, pygame.Rect(
-                (15, 15), (width, 30), border_radius=5))
+        # Life bar
+        current_hp = 150 * self.player.hp / self.hp_start
+        pygame.draw.rect(self.surface, (0, 0, 0), (17, 8, 154, 19))
+        pygame.draw.rect(self.surface, COLOR_RED, (20, 10, current_hp, 15))
 
-        # gold
-        imageGold = load_image('items/coin.png', (15, 15))
-        fontGold = self.font.render(
-            str(self.player.gold), True, COLOR_COIN_BAR)
-        self.surface.blit(imageGold, (220, 25))
-        self.surface.blit(fontGold, (240, 15))
+        # Energy bar
+        current_energy = 150 * self.player.energy / self.energy_start
+        pygame.draw.rect(self.surface, (0, 0, 0), (17, 33, 154, 19))
+        pygame.draw.rect(self.surface, COLOR_BLUE, (20, 35, 150, 15))
 
-        # score
-        font_score = self.font.render(
-            f'Score: {str(self.player.score)}', True, COLOR_SCORE_BAR)
-        self.surface.blit(font_score, (350, 15))
+        # Coins display
+        font = pygame.font.SysFont('Arial', 15)
+        gold = font.render(str(self.player.gold), True, COLOR_YELLOW)
+        self.surface.blit(load_image('items/coin.png', (15, 15)), (20, 55))
+        self.surface.blit(gold, (40, 55))
 
-        # pause button
-        self.pause_button = load_image('misc/pause.png', (30, 30))
-        self.surface.blit(self.pause_button, (750, 15))
-
+        self.surface.blit(load_image('misc/pause.png', (40, 40)), (720, 15))
+        
         return self.event_listener()
