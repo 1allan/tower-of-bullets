@@ -13,21 +13,18 @@ class Player(Character):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, speed: int, hp: int, energy: int, wall_sprites: pygame.sprite.Group, gold: int = 0,
+                 size: tuple, speed: int, hp: int, energy: int, 
+                 wall_sprites: pygame.sprite.Group, gold: int = 0,
                  score: int = 0, weapon: Weapon = None, image_file: str=IMAGE):
 
-        super().__init__(surface=surface, sprite_group=sprite_group, position=position, size=size, speed=speed, hp=hp,
+        super().__init__(surface=surface, sprite_group=sprite_group, 
+                         position=position, size=size, speed=speed, hp=hp,
                          image_file=image_file, wall_sprites=wall_sprites)
         
         self.energy = energy
         self.gold = gold
         self.score = score
-        # self.image.set_alpha(0)
 
         if self.weapon is None:
             self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y),
                                  (60, 30), 5, bullet_speed=5, fire_rate=150)
-            self.sprite_group.add(self.weapon)
-
-    def shoot(self):
-        self.weapon.shoot(pygame.mouse.get_pos())

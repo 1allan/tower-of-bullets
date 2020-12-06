@@ -30,7 +30,11 @@ class Bullet(Entity):
     def update(self):
         self.floating_point_y += self.change_y
         self.floating_point_x += self.change_x
-
+        
         self.rect.left = int(self.floating_point_x)
         self.rect.top = int(self.floating_point_y)
+
+    # def draw(self):
+    #     self.update()
+    #     self.surface.blit(self.image, (self.rect.left, self.rect.top))
         

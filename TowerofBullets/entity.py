@@ -27,7 +27,7 @@ class Entity(pygame.sprite.Sprite):
         pass
 
     def draw(self):
-        self.surface.blit(self.image, (self.rect.left, self.rect.top))
         self.x = self.rect.left + self.width/2
         self.y = self.rect.top + self.height/2
+        self.surface.blit(self.image, (self.rect.left, self.rect.top))
         self.update()
