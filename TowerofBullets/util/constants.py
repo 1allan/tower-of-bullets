@@ -161,24 +161,25 @@ BOSS_DB = {
 
 ROOMS_DB = {
     'SALA1': {
+        'SPAWN_POINT': (100, 400),
         'STRUCTURE': {
-            'LAYOUT': '1607133545.txt'
+            'LAYOUT': '01.txt'
         },
         'WAVES': [
             {
-                "AMOUNT": 1,
+                "QUANTITY": 1,
                 "ENEMIES": [ENEMIES_DB['WOGOL'], ENEMIES_DB['SWAMPY']],
             },
             {
-                "AMOUNT": 1,
+                "QUANTITY": 1,
                 "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
             },
             {
-                "AMOUNT": 4,
+                "QUANTITY": 4,
                 "ENEMIES": [ENEMIES_DB['GOBLIN'], ENEMIES_DB['NECROMANCER']]
             },
             {
-                "AMOUNT": 1,
+                "QUANTITY": 1,
                 "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
             }
         ]
@@ -189,15 +190,15 @@ ROOMS_DB = {
         },
         'WAVES': [
             {
-                "AMOUNT": 5,
+                "QUANTITY": 5,
                 "ENEMIES": [ENEMIES_DB['SKELETON'], ENEMIES_DB['NECROMANCER']],
             },
             {
-                "AMOUNT": 1,
+                "QUANTITY": 1,
                 "ENEMIES": [ENEMIES_DB['IMP'], ENEMIES_DB['ORC_WARRIOR']]
             },
             {
-                "AMOUNT": 1,
+                "QUANTITY": 1,
                 "ENEMIES": [BOSS_DB['KNIGHT']]
             }
         ]

@@ -3,8 +3,10 @@ from time import time
 
 from util.functions import load_image
 from util.constants import ROOMS_DB, DEADVIEW_ID
+
 from scenery.room import Room
 from screens.hud import Hud
+from character.player import Player
 from dao.saveDAO import SaveDAO
 
 
@@ -16,13 +18,19 @@ class TowerOfBullets:
         self.fps = fps
 
         self.room = None
+        self.player = None
         self.sprites = pygame.sprite.Group()
         self.save_dao = SaveDAO('save_info.pkl')
 
     def run(self):
         self.room = Room(self.surface, self.sprites, (0, 0), (self.width,
                                                self.height), ROOMS_DB['SALA1'])
-        self.hud = Hud(self.surface, self.room.player)
+        self.player = Player(self.surface, self.sprites, 
+                            (self.width/2, self.height/2 - 10), (70, 70), 3, 
+                             20, 200, self.room.walls, gold=0)
+        
+        self.room.spawn_player(self.player)
+        self.hud = Hud(self.surface, self.player)
 
     def handle_input(self):
         keyboard = pygame.key.get_pressed()
@@ -40,11 +48,11 @@ class TowerOfBullets:
         elif keyboard[pygame.K_s]:
             direction[1] = 1
 
-        self.room.player.move(direction)
+        self.player.move(direction)
 
         if mouse[0]:
-            self.room.player.attack(mouse_pos)
-            self.sprites.add(self.room.player.bullets)
+            self.player.attack(mouse_pos)
+            self.sprites.add(self.player.bullets)
 
     def __collide_with(self, target):
         def callback(spr1, spr2):
@@ -66,22 +74,22 @@ class TowerOfBullets:
 
     def collision(self):
         bullets = pygame.sprite.Group()
-        bullets.add(self.room.player.bullets)
-        bullets.add(self.room.enemy_bullets)
+        bullets.add(self.player.bullets)
+        bullets.add(self.room.enemies_bullets)
 
         pygame.sprite.groupcollide(bullets, self.room.walls, True, False)
-        pygame.sprite.spritecollideany(self.room.player, 
-                                       self.room.enemy_bullets, 
+        pygame.sprite.spritecollideany(self.player, 
+                                       self.room.enemies_bullets, 
                                        collided=self.__collide_with('bullet'))
-        pygame.sprite.groupcollide(self.room.enemies, self.room.player.bullets,
+        pygame.sprite.groupcollide(self.room.enemies, self.player.bullets,
                                    False, False, 
                                    collided=self.__collide_with('bullet'))
         
-        pygame.sprite.spritecollideany(self.room.player, self.room.hearts, 
+        pygame.sprite.spritecollideany(self.player, self.room.hearts, 
                                        collided=self.__collide_with('heart'))
-        pygame.sprite.spritecollideany(self.room.player, self.room.coins, 
+        pygame.sprite.spritecollideany(self.player, self.room.coins, 
                                        collided=self.__collide_with('coin'))
-        pygame.sprite.spritecollideany(self.room.player, self.room.portal,
+        pygame.sprite.spritecollideany(self.player, self.room.portal,
                                        collided=self.__collide_with('portal'))
 
     def update(self):
@@ -99,16 +107,16 @@ class TowerOfBullets:
 
         hud_render = self.hud.render()
         # ver se o jogador ganhou ou perdeu
-        if self.room.player.hp <= 0:
+        if self.player.hp <= 0:
             player = {
-                "score": self.room.player.score,
-                "gold": self.room.player.gold
+                "score": self.player.score,
+                "gold": self.player.gold
             }
 
             self.save_dao.add(player)
             return DEADVIEW_ID
         elif( len(self.room.enemies) == 0 and 
-            self.room.wave_now > self.room.waves[self.room.wave_now]["AMOUNT"]):
+            self.room.wave_now > self.room.waves[self.room.wave_now]["QUANTITY"]):
             print('ganhou!')
         else:
             return hud_render
