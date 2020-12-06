@@ -7,7 +7,7 @@ def load_image(path, size, convert=False):
     image = pygame.image.load(path)
     if convert:
         image = image.convert()
-    else:
-        image = image.convert_alpha()
+    else: 
+        image = image.convert_alpha() 
 
     return pygame.transform.scale(image, size)

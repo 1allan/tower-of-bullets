@@ -47,7 +47,7 @@ class Scenario(pygame.sprite.Sprite):
         self.floor_sprites = pygame.sprite.Group()
         self.wall_sprites = pygame.sprite.Group()
         self.overlay_sprites = pygame.sprite.Group()
-        self.generate_layout(self.overlay, overlay=True, offset=(0, -20))
+        self.generate_layout(self.overlay, overlay=True, offset=(0, -15))
         self.generate_layout(self.structure)
         self.start_wave()
 
