@@ -34,7 +34,4 @@ class Bullet(Entity):
         self.rect.left = int(self.floating_point_x)
         self.rect.top = int(self.floating_point_y)
 
-    # def draw(self):
-    #     self.update()
-    #     self.surface.blit(self.image, (self.rect.left, self.rect.top))
         

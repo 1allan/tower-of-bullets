@@ -1,4 +1,5 @@
 import pygame
+from pygame.sprite import Group, groupcollide, spritecollide, spritecollideany
 from time import time
 
 from util.functions import load_image
@@ -19,14 +20,13 @@ class TowerOfBullets:
 
         self.room = None
         self.player = None
-        self.sprites = pygame.sprite.Group()
+        self.sprites = Group()
         self.save_dao = SaveDAO('save_info.pkl')
 
     def run(self):
         self.room = Room(self.surface, self.sprites, (0, 0), (self.width,
                                                self.height), ROOMS_DB['SALA1'])
-        self.player = Player(self.surface, self.sprites, 
-                            (self.width/2, self.height/2 - 10), (70, 70), 3, 
+        self.player = Player(self.surface, self.sprites, (0, 0), (70, 70), 3, 
                              20, 200, self.room.walls, gold=0)
         
         self.room.spawn_player(self.player)
@@ -49,6 +49,9 @@ class TowerOfBullets:
             direction[1] = 1
 
         self.player.move(direction)
+
+        if keyboard[pygame.K_q]:
+            self.player.swap_weapons()
 
         if mouse[0]:
             self.player.attack(mouse_pos)
@@ -73,24 +76,22 @@ class TowerOfBullets:
         return callback
 
     def collision(self):
-        bullets = pygame.sprite.Group()
+        bullets = Group()
         bullets.add(self.player.bullets)
         bullets.add(self.room.enemies_bullets)
 
-        pygame.sprite.groupcollide(bullets, self.room.walls, True, False)
-        pygame.sprite.spritecollideany(self.player, 
-                                       self.room.enemies_bullets, 
-                                       collided=self.__collide_with('bullet'))
-        pygame.sprite.groupcollide(self.room.enemies, self.player.bullets,
-                                   False, False, 
-                                   collided=self.__collide_with('bullet'))
+        groupcollide(bullets, self.room.walls, True, False)
+        spritecollideany(self.player, self.room.enemies_bullets, 
+                         collided=self.__collide_with('bullet'))
+        groupcollide(self.room.enemies, self.player.bullets, False, False, 
+                     collided=self.__collide_with('bullet'))
         
-        pygame.sprite.spritecollideany(self.player, self.room.hearts, 
-                                       collided=self.__collide_with('heart'))
-        pygame.sprite.spritecollideany(self.player, self.room.coins, 
-                                       collided=self.__collide_with('coin'))
-        pygame.sprite.spritecollideany(self.player, self.room.portal,
-                                       collided=self.__collide_with('portal'))
+        spritecollideany(self.player, self.room.hearts, 
+                         collided=self.__collide_with('heart'))
+        spritecollideany(self.player, self.room.coins, 
+                         collided=self.__collide_with('coin'))
+        spritecollideany(self.player, self.room.portal,
+                         collided=self.__collide_with('portal'))
 
     def update(self):
         self.handle_input()

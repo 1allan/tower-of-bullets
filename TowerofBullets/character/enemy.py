@@ -19,10 +19,7 @@ class Enemy(Character):
 
         self.weapon = Weapon(self.surface, sprite_group, 
                             (self.rect.left, self.rect.top), (20, 10),
-                             args["WEAPON"]["DAMAGE"], 
-                             args["WEAPON"]["BULLET_SPEED"], 
-                             args["WEAPON"]["FIRE_RATE"], 
-                             args["WEAPON"]["IMAGE_FILE"])
+                             args["WEAPON"])
         
         self.sprite_group.add(self.weapon)
 

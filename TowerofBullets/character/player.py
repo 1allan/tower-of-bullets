@@ -2,6 +2,7 @@ import math
 import pygame
 
 from util.functions import load_image
+from util.constants import WEAPONS_DB
 from character.character import Character
 from items.weapon import Weapon
 from items.bullet import Bullet
@@ -15,7 +16,7 @@ class Player(Character):
                  sprite_group: pygame.sprite.Group, position: tuple,
                  size: tuple, speed: int, hp: int, energy: int, 
                  wall_sprites: pygame.sprite.Group, gold: int = 0,
-                 score: int = 0, weapon: Weapon = None, image_file: str=IMAGE):
+                 score: int = 0, image_file: str=IMAGE):
 
         super().__init__(surface=surface, sprite_group=sprite_group, 
                          position=position, size=size, speed=speed, hp=hp,
@@ -24,7 +25,16 @@ class Player(Character):
         self.energy = energy
         self.gold = gold
         self.score = score
+        self.last_weapon_change = 0
+        self.weapon2 = Weapon(self.surface, sprite_group, (self.x, self.y), 
+                              (80, 80), WEAPONS_DB['CAULE'])
 
-        if self.weapon is None:
-            self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y),
-                                 (60, 30), 5, bullet_speed=5, fire_rate=150)
+        self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y), 
+                             (80, 80), WEAPONS_DB['AK47'])
+        
+
+    def swap_weapons(self):
+        current_tick = pygame.time.get_ticks()
+        if current_tick - self.last_weapon_change > 300:
+            self.last_weapon_change = current_tick
+            self.weapon, self.weapon2 = self.weapon2, self.weapon

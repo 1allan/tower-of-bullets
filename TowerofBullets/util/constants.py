@@ -7,9 +7,9 @@ DEADVIEW_ID = 'DEAD'
 
 WEAPONS_DB = {
     'CAULE': {
-        'DAMAGE': 1,
-        'FIRE_RATE': 200,
-        'BULLET_SPEED': 4,
+        'DAMAGE': 5,
+        'FIRE_RATE': 80,
+        'BULLET_SPEED': 7,
         'IMAGE_FILE': 'items/weapons/caule.png'
     },
     'BAMBUZINHO': {
@@ -19,7 +19,7 @@ WEAPONS_DB = {
         'IMAGE_FILE': 'items/weapons/bambuzinho.png'
     },
     'AK47': {
-        'DAMAGE': 1,
+        'DAMAGE': 5,
         'FIRE_RATE': 250,
         'BULLET_SPEED': 4,
         'IMAGE_FILE': 'items/weapons/ak47.png'
