@@ -149,12 +149,10 @@ class Room(pygame.sprite.Sprite):
             self.spawn_coins(2)
             self.spawn_hearts(1)
 
-        elif (len(self.enemies) == 0 and 
-            self.wave_now > self.waves[self.wave_now]['QUANTITY']):
-            
-            # handle carinha passou de nível
-            print('carinha passou de nível')
-            self.spawn_portal()
+        elif len(self.enemies) == 0 and self.wave_now > self.waves[self.wave_now]["QUANTITY"]:
+            if not self.is_portal_spawned:
+                self.spawn_portal()
+                self.is_portal_spawned = True
 
         # wave_break between waves
         if (self.wave_break and 
