@@ -12,7 +12,9 @@ COLOR_YELLOW = pygame.Color(250, 203, 62)
 
 class Hud(Screen):
     
-    def __init__(self, surface: pygame.Surface, player, position=None, size=None):
+    def __init__(self, surface: pygame.Surface, player, position=None, 
+                 size=None):
+                 
         super().__init__(surface, position, size)
 
         # self.surface = surface
@@ -30,7 +32,8 @@ class Hud(Screen):
         mouse_click = pygame.mouse.get_pressed()
 
         emit = None
-        if (self.pause_button_rect.collidepoint(mouse_pos) and mouse_click[0] or
+        if (self.pause_button_rect.collidepoint(mouse_pos) and 
+           mouse_click[0] or
            pygame.key.get_pressed()[pygame.K_p]):
             emit =  PAUSEVIEW_ID
             
@@ -45,7 +48,8 @@ class Hud(Screen):
         # Energy bar
         current_energy = 150 * self.player.energy / self.energy_start
         pygame.draw.rect(self.surface, (0, 0, 0), (17, 33, 154, 19))
-        pygame.draw.rect(self.surface, COLOR_BLUE, (20, 35, 150, 15))
+        pygame.draw.rect(self.surface, COLOR_BLUE, (20, 35, current_energy, 
+                         15))
 
         # Coins display
         font = pygame.font.SysFont('Arial', 15)

@@ -27,7 +27,7 @@ class TowerOfBullets:
         self.room = Room(self.surface, self.sprites, (0, 0), (self.width,
                                                self.height), ROOMS_DB['SALA1'])
         self.player = Player(self.surface, self.sprites, (0, 0), (70, 70), 3, 
-                             20, 200, self.room.walls, gold=0)
+                             40, 200, self.room.walls, gold=0)
         
         self.room.spawn_player(self.player)
         self.hud = Hud(self.surface, self.player)

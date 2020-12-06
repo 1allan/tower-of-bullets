@@ -7,42 +7,49 @@ DEADVIEW_ID = 'DEAD'
 
 WEAPONS_DB = {
     'CAULE': {
+        'COST': 1,
         'DAMAGE': 5,
         'FIRE_RATE': 80,
         'BULLET_SPEED': 7,
         'IMAGE_FILE': 'items/weapons/caule.png'
     },
     'BAMBUZINHO': {
+        'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
         'IMAGE_FILE': 'items/weapons/bambuzinho.png'
     },
     'AK47': {
+        'COST': 0,
         'DAMAGE': 5,
         'FIRE_RATE': 250,
         'BULLET_SPEED': 4,
         'IMAGE_FILE': 'items/weapons/ak47.png'
     },
     'BAD_PISTOL': {
+        'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 150,
         'BULLET_SPEED': 4,
         'IMAGE_FILE': 'items/weapons/bad_pistol.png'
     },
     'BUBBLE_GUN': {
+        'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
         'IMAGE_FILE': 'items/weapons/bubble_gun.png'
     },
     'CHERRY_BLOSSOM': {
+        'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
         'IMAGE_FILE': 'items/weapons/cherry_blossom.png'
     },
     'SNOW_FOX': {
+        'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,

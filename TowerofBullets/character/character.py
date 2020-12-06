@@ -14,7 +14,7 @@ class Character(Entity):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, speed: int, hp: int, 
+                 size: tuple, speed: int, hp: int,
                  wall_sprites: pygame.sprite.Group, image_file: str):
 
         super().__init__(surface, position, size, speed, image_file)

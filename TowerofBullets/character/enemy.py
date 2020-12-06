@@ -20,6 +20,7 @@ class Enemy(Character):
         self.weapon = Weapon(self.surface, sprite_group, 
                             (self.rect.left, self.rect.top), (20, 10),
                              args["WEAPON"])
+        self.weapon.cost = 0
         
         self.sprite_group.add(self.weapon)
 

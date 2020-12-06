@@ -11,11 +11,13 @@ class Weapon(Entity):
                  sprite_group: pygame.sprite.Group, position: tuple,
                  size: tuple, args):
 
-        super().__init__(surface, position, size, image_file=args['IMAGE_FILE'])
+        super().__init__(surface, position, size, 
+                         image_file=args['IMAGE_FILE'])
         
         self.damage = args['DAMAGE']
         self.fire_rate = args['FIRE_RATE']
         self.bullet_speed = args['BULLET_SPEED']
+        self.cost = args['COST']
         self.last_tick = 0
         self.sprite_group = sprite_group
         

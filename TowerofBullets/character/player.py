@@ -18,9 +18,8 @@ class Player(Character):
                  wall_sprites: pygame.sprite.Group, gold: int = 0,
                  score: int = 0, image_file: str=IMAGE):
 
-        super().__init__(surface=surface, sprite_group=sprite_group, 
-                         position=position, size=size, speed=speed, hp=hp,
-                         image_file=image_file, wall_sprites=wall_sprites)
+        super().__init__(surface, sprite_group, position, size, speed, hp, 
+                         wall_sprites, image_file)
         
         self.energy = energy
         self.gold = gold
@@ -32,6 +31,14 @@ class Player(Character):
         self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y), 
                              (80, 80), WEAPONS_DB['AK47'])
         
+    def attack(self, coordinates: tuple=None):
+        if coordinates is not None and self.energy - self.weapon.cost >= 0:
+            bullet = self.weapon.shoot(coordinates)
+            if bullet is not None:
+                self.bullets.add(bullet)
+                print(self.energy)
+                self.energy -= self.weapon.cost
+                return bullet
 
     def swap_weapons(self):
         current_tick = pygame.time.get_ticks()
