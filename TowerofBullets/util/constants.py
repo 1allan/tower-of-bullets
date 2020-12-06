@@ -174,7 +174,7 @@ ROOMS_DB = {
                 "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
             },
             {
-                "AMOUNT": 4,
+                "AMOUNT": 1,
                 "ENEMIES": [ENEMIES_DB['GOBLIN'], ENEMIES_DB['NECROMANCER']]
             },
             {

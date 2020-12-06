@@ -24,6 +24,7 @@ class Room(Scenario):
         self.last_wave = 0
         self.player = Player(self.surface, self.sprite_group, (size[0]/2, size[1]/2),
                              (70, 70), 3, 20, 200, self.wall_sprites, gold=0)
+        self.is_portal_spawned = False
 
     def spawn_portal(self):
         image_file = 'misc/portal.png'
@@ -117,9 +118,9 @@ class Room(Scenario):
             self.spawn_hearts(1)
 
         elif len(self.enemies) == 0 and self.wave_now > self.waves[self.wave_now]["AMOUNT"]:
-            # handle carinha passou de nível
-            print('carinha passou de nível')
-            self.spawn_portal()
+            if not self.is_portal_spawned:
+                self.spawn_portal()
+                self.is_portal_spawned = True
 
         # timeout between waves
         if self.timeout and (pygame.time.get_ticks() - self.last_wave > 3000):
