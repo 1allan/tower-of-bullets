@@ -8,7 +8,6 @@ from screens.config import ConfigView
 from screens.dead import DeadView
 
 from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID, DEADVIEW_ID
-from dao.saveDAO import SaveDAO
 
 
 views = {
@@ -28,8 +27,6 @@ class Game:
         self.last_pause = 0
         self.clock = pygame.time.Clock()
 
-        self.save_dao = SaveDAO('save_info.pkl')
-
     @property
     def overlay(self):
         return self.__overlay
@@ -39,10 +36,6 @@ class Game:
         if pygame.time.get_ticks() - self.last_pause > 200:
             self.__overlay = value
             self.last_pause = pygame.time.get_ticks()
-
-    # salvar score no pickle
-    def save(self):
-        saved_score = self.save_dao.add(self.game.room.player)
 
     def start(self):
         pygame.init()
@@ -57,7 +50,6 @@ class Game:
 
             if self.overlay is None:
                 next_ = self.game.render()
-
                 if next_ is not None:
                     self.overlay = views[next_](self.display)
             else:

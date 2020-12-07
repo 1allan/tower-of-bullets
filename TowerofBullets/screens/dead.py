@@ -13,9 +13,9 @@ class DeadView(Screen):
         self.bg = Entity(self.surface, (0, 0), self.surface.get_size(), 0, 'misc/config/bg.png')
 
         self.game_over = Entity(self.surface, (240, 60), (320, 202), 0, 'misc/game_over/gameOver.png')
-        self.inicio = Entity(self.surface, (170, 300),
+        self.inicio = Entity(self.surface, (100, 400),
                              (200, 75), 0, 'misc/inicio.png')
-        self.config = Entity(self.surface, (420, 300),
+        self.config = Entity(self.surface, (500, 400),
                              (200, 75), 0, 'misc/start/config.png')
         
         pygame.font.init()
@@ -42,14 +42,14 @@ class DeadView(Screen):
 
         font_score = self.font.render(
             f'Score: {str(orderedScores[len(orderedScores) - 1]["score"])} | Gold: {str(orderedScores[len(orderedScores) - 1]["gold"])}', True, COLOR_WHITE)
-        self.surface.blit(font_score, (350, 300))
+        self.surface.blit(font_score, (300, 300))
 
     def render(self):
         self.surface.blit(self.bg.image, (0, 0))
         self.surface.blit(self.game_over.image, (240, 60))
 
         self.surface.blit(self.inicio.image, (100, 400))
-        self.surface.blit(self.config.image, (300, 400))
+        self.surface.blit(self.config.image, (500, 400))
 
         self.get_score()
 
