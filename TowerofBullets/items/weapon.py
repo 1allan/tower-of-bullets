@@ -8,10 +8,9 @@ from entity import Entity
 class Weapon(Entity):
 
     def __init__(self, surface: pygame.Surface, 
-                 sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, args):
+                 sprite_group: pygame.sprite.Group, position: tuple, args):
 
-        super().__init__(surface, position, size, 
+        super().__init__(surface, position, args['SIZE'], 
                          image_file=args['IMAGE_FILE'])
         
         self.damage = args['DAMAGE']

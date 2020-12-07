@@ -11,6 +11,7 @@ WEAPONS_DB = {
         'DAMAGE': 5,
         'FIRE_RATE': 150,
         'BULLET_SPEED': 7,
+        'SIZE': (80, 80),
         'IMAGE_FILE': 'items/weapons/caule.png'
     },
     'BAMBUZINHO': {
@@ -18,6 +19,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
+        'SIZE': (40, 40),
         'IMAGE_FILE': 'items/weapons/bambuzinho.png'
     },
     'AK47': {
@@ -25,6 +27,7 @@ WEAPONS_DB = {
         'DAMAGE': 50,
         'FIRE_RATE': 100,
         'BULLET_SPEED': 4,
+        'SIZE': (80, 40),
         'IMAGE_FILE': 'items/weapons/ak47.png'
     },
     'BAD_PISTOL': {
@@ -32,6 +35,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 150,
         'BULLET_SPEED': 4,
+        'SIZE': (40, 40),
         'IMAGE_FILE': 'items/weapons/bad_pistol.png'
     },
     'BUBBLE_GUN': {
@@ -39,6 +43,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
+        'SIZE': (40, 40),
         'IMAGE_FILE': 'items/weapons/bubble_gun.png'
     },
     'CHERRY_BLOSSOM': {
@@ -46,6 +51,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
+        'SIZE': (40, 40),
         'IMAGE_FILE': 'items/weapons/cherry_blossom.png'
     },
     'SNOW_FOX': {
@@ -53,6 +59,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
+        'SIZE': (40, 40),
         'IMAGE_FILE': 'items/weapons/snow_fox.png'
     }
 }

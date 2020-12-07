@@ -26,11 +26,11 @@ class Player(Character):
         self.gold = gold
         self.score = score
         self.last_weapon_change = 0
-        self.weapon2 = Weapon(self.surface, sprite_group, (self.x, self.y), 
-                              (80, 80), WEAPONS_DB['CAULE'])
+        self.weapon2 = Weapon(self.surface, sprite_group, (self.x, self.y),
+                              WEAPONS_DB['CAULE'])
 
         self.weapon = Weapon(self.surface, sprite_group, (self.x, self.y), 
-                             (80, 80), WEAPONS_DB['AK47'])
+                             WEAPONS_DB['AK47'])
         
     def attack(self, coordinates: tuple=None):
         if coordinates is not None and self.energy - self.weapon.cost >= 0:
