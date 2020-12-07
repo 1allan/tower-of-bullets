@@ -22,6 +22,8 @@ class Character(Entity):
         self.weapon = None
         self.max_hp = max_hp
         self.hp = self.max_hp
+        self.inv_time = 1000
+        self.last_hit = pygame.time.get_ticks()
         self.bullets = pygame.sprite.Group()
         self.sprite_group = sprite_group
         self.wall_sprites = wall_sprites
@@ -60,13 +62,22 @@ class Character(Entity):
                 return bullet
 
     def be_hit(self, damage: int):
-        self.hp -= damage
-        if self.hp <= 0:
-            self.hp = 0
-            self.weapon.kill()
-            self.kill()
+        tick = pygame.time.get_ticks()
+        if tick - self.last_hit > self.inv_time:
+            self.last_hit = tick
+            self.hp -= damage
+            if self.hp <= 0:
+                self.hp = 0
+                self.weapon.kill()
+                self.kill()
+        else:
+            self.image.set_alpha(155)
 
     def update(self):
+        if pygame.time.get_ticks() - self.last_hit < self.inv_time:
+            self.image.set_alpha(155)
+        else:
+            self.image.set_alpha(255)
         if self.last_direction[0] == 1:
             self.weapon.rect.left = self.x
         elif self.last_direction[0] == -1:
