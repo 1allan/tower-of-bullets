@@ -116,6 +116,7 @@ class TowerOfBullets:
         self.handle_input()
         self.collision()
         self.sprites.update()
+        self.player.weapon.update(pygame.mouse.get_pos())
 
     def render(self):
         self.update()

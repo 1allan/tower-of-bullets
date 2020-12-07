@@ -21,7 +21,6 @@ class Enemy(Character):
                             (self.rect.left, self.rect.top), args["WEAPON"])
         self.weapon.cost = 0
         self.inv_time = 0
-        self.sprite_group.add(self.weapon)
 
     def chase(self, destination: tuple, flag=False):
         self.floating_point_x, self.floating_point_y = [

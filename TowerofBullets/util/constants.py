@@ -19,7 +19,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
-        'SIZE': (40, 40),
+        'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/bambuzinho.png'
     },
     'AK47': {
@@ -35,7 +35,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 150,
         'BULLET_SPEED': 4,
-        'SIZE': (40, 40),
+        'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/bad_pistol.png'
     },
     'BUBBLE_GUN': {
@@ -43,7 +43,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
-        'SIZE': (40, 40),
+        'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/bubble_gun.png'
     },
     'CHERRY_BLOSSOM': {
@@ -51,7 +51,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
-        'SIZE': (40, 40),
+        'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/cherry_blossom.png'
     },
     'SNOW_FOX': {
@@ -59,7 +59,7 @@ WEAPONS_DB = {
         'DAMAGE': 1,
         'FIRE_RATE': 200,
         'BULLET_SPEED': 4,
-        'SIZE': (40, 40),
+        'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/snow_fox.png'
     }
 }
@@ -184,18 +184,18 @@ ROOMS_DB = {
                 "ENEMY_QUANTITY": 1,
                 "ENEMIES": [ENEMIES_DB['WOGOL'], ENEMIES_DB['SWAMPY']],
             },
-            # {
-            #     "ENEMY_QUANTITY": 1,
-            #     "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
-            # },
-            # {
-            #     "ENEMY_QUANTITY": 4,
-            #     "ENEMIES": [ENEMIES_DB['GOBLIN'], ENEMIES_DB['NECROMANCER']]
-            # },
-            # {
-            #     "ENEMY_QUANTITY": 1,
-            #     "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
-            # }
+            {
+                "ENEMY_QUANTITY": 1,
+                "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
+            },
+            {
+                "ENEMY_QUANTITY": 4,
+                "ENEMIES": [ENEMIES_DB['GOBLIN'], ENEMIES_DB['NECROMANCER']]
+            },
+            {
+                "ENEMY_QUANTITY": 1,
+                "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
+            }
         ]
     },
     'SALA2': {

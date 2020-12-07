@@ -170,6 +170,7 @@ class Room(pygame.sprite.Sprite):
             if bullet is not None:
                 self.enemies_bullets.add(bullet)
             enemy.chase((self.player.x, self.player.y))
+            enemy.weapon.update((self.player.x, self.player.y))
             enemy.draw()
 
     def draw(self):
