@@ -130,7 +130,6 @@ class TowerOfBullets:
         # ver se o jogador ganhou ou perdeu
         if self.player.hp <= 0:
             player = {
-                "score": self.player.score,
                 "gold": self.player.gold
             }
 

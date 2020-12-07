@@ -41,8 +41,8 @@ class DeadView(Screen):
         orderedScores = sorted(scores, key=lambda k: k['timestamp'])
 
         font_score = self.font.render(
-            f'Score: {str(orderedScores[len(orderedScores) - 1]["score"])} | Gold: {str(orderedScores[len(orderedScores) - 1]["gold"])}', True, COLOR_WHITE)
-        self.surface.blit(font_score, (300, 300))
+            f'Gold: {str(orderedScores[len(orderedScores) - 1]["gold"])}', True, COLOR_WHITE)
+        self.surface.blit(font_score, (345, 300))
 
     def render(self):
         self.surface.blit(self.bg.image, (0, 0))

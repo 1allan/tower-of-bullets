@@ -21,7 +21,6 @@ class Hud(Screen):
         self.player = player
 
         self.gold_start = self.player.gold
-        self.score_start = self.player.score
         
         self.pause_button_rect = pygame.Rect((720, 15), (40, 40))
 
