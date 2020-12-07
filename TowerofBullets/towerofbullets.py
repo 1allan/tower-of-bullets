@@ -25,10 +25,10 @@ class TowerOfBullets:
         self.save_dao = SaveDAO('save_info.pkl')
 
     def run(self):
-        self.player = Player(self.surface, self.sprites, (0, 0), (70, 70), 5, 
+        self.player = Player(self.surface, self.sprites, (0, 0), (70, 70), 5,
                              40, 200, Group(), gold=0)
         self.new_room()
-        
+
         self.room.spawn_player(self.player)
         self.hud = Hud(self.surface, self.player)
 
@@ -56,13 +56,13 @@ class TowerOfBullets:
         if mouse[0]:
             self.player.attack(mouse_pos)
             self.sprites.add(self.player.bullets)
-    
+
     def new_room(self):
         if self.room is not None:
             self.room.kill()
         room_data = ROOMS_DB[choice(list(ROOMS_DB.keys()))]
-        self.room = Room(self.surface, self.sprites, (0, 0), 
-                        (self.width, self.height), room_data)
+        self.room = Room(self.surface, self.sprites, (0, 0),
+                         (self.width, self.height), room_data)
         self.player.wall_sprites = self.room.walls
         self.room.player = self.player
         self.player.rect.left, self.player.rect.top = self.room.spawn_point
@@ -81,6 +81,10 @@ class TowerOfBullets:
                     spr1.gold += 1
                 elif target == 'portal':
                     pass
+                elif target == 'energy_orb':
+                    spr1.energy += 10
+                    if spr1.energy > spr1.max_energy:
+                        spr1.energy = spr1.max_energy
                 spr2.kill()
             return hited
         return callback
@@ -91,21 +95,23 @@ class TowerOfBullets:
         bullets.add(self.room.enemies_bullets)
 
         groupcollide(bullets, self.room.walls, True, False)
-        spritecollideany(self.player, self.room.enemies_bullets, 
+        spritecollideany(self.player, self.room.enemies_bullets,
                          collided=self.__collide_with('bullet'))
-        groupcollide(self.room.enemies, self.player.bullets, False, False, 
+        groupcollide(self.room.enemies, self.player.bullets, False, False,
                      collided=self.__collide_with('bullet'))
-        
-        spritecollideany(self.player, self.room.hearts, 
+
+        spritecollideany(self.player, self.room.hearts,
                          collided=self.__collide_with('heart'))
-        spritecollideany(self.player, self.room.coins, 
+        spritecollideany(self.player, self.room.coins,
                          collided=self.__collide_with('coin'))
+        spritecollideany(self.player, self.room.energy_orbs,
+                         collided=self.__collide_with('energy_orb'))
 
         if self.room.portal is not None:
             entered = self.player.rect.colliderect(self.room.portal.rect)
             if entered:
                 self.new_room()
-                
+
     def update(self):
         self.handle_input()
         self.collision()
@@ -116,7 +122,7 @@ class TowerOfBullets:
 
         self.room.draw()
         self.sprites.draw(self.surface)
-        
+
         self.room.overlay.draw(self.surface)
 
         hud_render = self.hud.render()
@@ -129,8 +135,8 @@ class TowerOfBullets:
 
             self.save_dao.add(player)
             return DEADVIEW_ID
-        elif( len(self.room.enemies) == 0 and 
-            self.room.wave_now > len(self.room.waves)):
+        elif(len(self.room.enemies) == 0 and
+             self.room.wave_now > len(self.room.waves)):
             print('ganhou!')
         else:
             return hud_render

@@ -29,16 +29,17 @@ class Room(pygame.sprite.Sprite):
         self.portal = None
 
         layer1, layer2 = self.__load_layout(args['STRUCTURE']['LAYOUT'])
-        self.overlay = self.__generate_layout(layer2, overlay=True, 
+        self.overlay = self.__generate_layout(layer2, overlay=True,
                                               offset=(0, -15))
         self.floors, self.walls = self.__generate_layout(layer1)
-    
+
         self.wave_now = 0
         self.last_wave = pygame.time.get_ticks()
         self.waves = args['WAVES']
-        self.rewarded = False 
+        self.rewarded = False
 
         self.coins = pygame.sprite.Group()
+        self.energy_orbs = pygame.sprite.Group()
         self.hearts = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.enemies_bullets = pygame.sprite.Group()
@@ -79,8 +80,8 @@ class Room(pygame.sprite.Sprite):
                     group = floors
                     image = 'floors/' + matrix[i][j]
 
-                group.add(Tile(self.surface, 
-                              (w * i + offset[0], h * j + offset[1]), (w, h), 
+                group.add(Tile(self.surface,
+                               (w * i + offset[0], h * j + offset[1]), (w, h),
                                collidable, image_file=image, convert=convert))
         if overlay:
             group = pygame.sprite.Group()
@@ -96,14 +97,15 @@ class Room(pygame.sprite.Sprite):
             chosen = choice(list(self.floors))
             position = (chosen.rect.left, chosen.rect.top)
 
-            self.enemies.add(Enemy(self.surface, self.sprite_group, position, 
-                            (70, 70), self.walls, enemy_type))
+            self.enemies.add(Enemy(self.surface, self.sprite_group, position,
+                                   (70, 70), self.walls, enemy_type))
         self.wave_now += 1
 
     def spawn_portal(self):
         image_file = 'misc/portal.png'
 
-        self.portal = Item(self.surface, self.spawn_point, (32, 64), image_file, 0)
+        self.portal = Item(self.surface, self.spawn_point,
+                           (32, 64), image_file, 0)
 
     def spawn_coins(self, quantity: int):
         image_file = "items/coin.png"
@@ -115,6 +117,16 @@ class Room(pygame.sprite.Sprite):
             self.coins.add(Item(self.surface, position, (20, 20), image_file,
                                 0))
 
+    def spawn_energy_orbs(self, quantity: int):
+        image_file = "items/energy_orb.png"
+
+        for _ in range(quantity):
+            chosen = choice(list(self.floors))
+            position = (chosen.rect.left, chosen.rect.top)
+
+            self.energy_orbs.add(Item(self.surface, position, (20, 20), image_file,
+                                      0))
+
     def spawn_hearts(self, quantity: int):
         image_file = "items/ui_heart_full.png"
 
@@ -124,7 +136,7 @@ class Room(pygame.sprite.Sprite):
 
             self.hearts.add(Item(self.surface, position, (30, 30), image_file,
                                  0))
-    
+
     def spawn_player(self, player):
         player.rect.left, player.rect.top = self.spawn_point
         self.player = player
@@ -139,8 +151,9 @@ class Room(pygame.sprite.Sprite):
             if not self.rewarded:
                 self.spawn_hearts(2)
                 self.spawn_coins(10)
+                self.spawn_energy_orbs(5)
                 self.rewarded = True
-        
+
             if self.wave_now < len(self.waves) and tick - self.last_wave > 3000:
                 self.last_wave = tick
                 self.rewarded = False
@@ -148,7 +161,7 @@ class Room(pygame.sprite.Sprite):
             elif self.wave_now >= len(self.waves) and tick - self.last_wave > 2000:
                 self.last_wave = tick
                 self.spawn_portal()
-        
+
         else:
             self.last_wave = pygame.time.get_ticks()
 
@@ -158,11 +171,11 @@ class Room(pygame.sprite.Sprite):
                 self.enemies_bullets.add(bullet)
             enemy.chase((self.player.x, self.player.y))
             enemy.draw()
-        
 
     def draw(self):
         self.floors.draw(self.surface)
         self.hearts.draw(self.surface)
+        self.energy_orbs.draw(self.surface)
         self.coins.draw(self.surface)
         if self.portal is not None:
             self.portal.draw()
