@@ -20,8 +20,6 @@ class Hud(Screen):
         # self.surface = surface
         self.player = player
 
-        self.hp_start = self.player.hp
-        self.energy_start = self.player.energy
         self.gold_start = self.player.gold
         self.score_start = self.player.score
         
@@ -41,12 +39,12 @@ class Hud(Screen):
 
     def render(self):
         # Life bar
-        current_hp = 150 * self.player.hp / self.hp_start
+        current_hp = 150 * self.player.hp / self.player.max_hp
         pygame.draw.rect(self.surface, (0, 0, 0), (17, 8, 154, 19))
         pygame.draw.rect(self.surface, COLOR_RED, (20, 10, current_hp, 15))
 
         # Energy bar
-        current_energy = 150 * self.player.energy / self.energy_start
+        current_energy = 150 * self.player.energy / self.player.max_energy
         pygame.draw.rect(self.surface, (0, 0, 0), (17, 33, 154, 19))
         pygame.draw.rect(self.surface, COLOR_BLUE, (20, 35, current_energy, 
                          15))

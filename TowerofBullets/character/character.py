@@ -14,13 +14,14 @@ class Character(Entity):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, speed: int, hp: int,
+                 size: tuple, speed: int, max_hp: int,
                  wall_sprites: pygame.sprite.Group, image_file: str):
 
         super().__init__(surface, position, size, speed, image_file)
 
         self.weapon = None
-        self.hp = hp
+        self.max_hp = max_hp
+        self.hp = self.max_hp
         self.bullets = pygame.sprite.Group()
         self.sprite_group = sprite_group
         self.wall_sprites = wall_sprites

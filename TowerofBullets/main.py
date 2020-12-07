@@ -56,6 +56,8 @@ class Game:
                 next_ = self.overlay.render()
                 if next_ == CLOSEVIEW_ID:
                     self.overlay = None
+                elif next_ == STARTVIEW_ID:
+                    self.overlay = None
                 elif next_ is not None:
                     self.overlay = views[next_](self.display)
             self.clock.tick(60)

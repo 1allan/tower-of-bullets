@@ -26,6 +26,7 @@ class Room(pygame.sprite.Sprite):
 
         self.player = None
         self.spawn_point = args['SPAWN_POINT']
+        self.portal = None
 
         layer1, layer2 = self.__load_layout(args['STRUCTURE']['LAYOUT'])
         self.overlay = self.__generate_layout(layer2, overlay=True, 
@@ -33,14 +34,12 @@ class Room(pygame.sprite.Sprite):
         self.floors, self.walls = self.__generate_layout(layer1)
     
         self.wave_now = 0
-        self.last_wave = 0
-        self.wave_break = False
+        self.last_wave = pygame.time.get_ticks()
         self.waves = args['WAVES']
-        self.enemies_quantity = self.waves[self.wave_now]['QUANTITY']
+        self.rewarded = False 
 
         self.coins = pygame.sprite.Group()
         self.hearts = pygame.sprite.Group()
-        self.portal = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.enemies_bullets = pygame.sprite.Group()
 
@@ -52,7 +51,7 @@ class Room(pygame.sprite.Sprite):
         layout = file_.read()
         file_.close()
         output = []
-        for i, matrix in enumerate(layout.split('\n=overlay=\n')):
+        for i, matrix in enumerate(layout.split('\n\n')):
             output.append([])
             for line in matrix.split('\n'):
                 output[i].append(line.split(' '))
@@ -92,7 +91,7 @@ class Room(pygame.sprite.Sprite):
             return floors, walls
 
     def start_wave(self):
-        for i in range(self.waves[self.wave_now]['QUANTITY']):
+        for i in range(self.waves[self.wave_now]['ENEMY_QUANTITY']):
             enemy_type = choice(self.waves[self.wave_now]['ENEMIES'])
             chosen = choice(list(self.floors))
             position = (chosen.rect.left, chosen.rect.top)
@@ -104,12 +103,7 @@ class Room(pygame.sprite.Sprite):
     def spawn_portal(self):
         image_file = 'misc/portal.png'
 
-        chosen = choice(list(self.floors))
-        position = (chosen.rect.left, chosen.rect.top)
-
-        self.portal.add(Item(self.surface, position, (32, 64), image_file, 0))
-
-        self.sprite_group.add(self.portal)
+        self.portal = Item(self.surface, self.spawn_point, (32, 64), image_file, 0)
 
     def spawn_coins(self, quantity: int):
         image_file = "items/coin.png"
@@ -120,7 +114,6 @@ class Room(pygame.sprite.Sprite):
 
             self.coins.add(Item(self.surface, position, (20, 20), image_file,
                                 0))
-            self.sprite_group.add(self.coins)
 
     def spawn_hearts(self, quantity: int):
         image_file = "items/ui_heart_full.png"
@@ -131,7 +124,6 @@ class Room(pygame.sprite.Sprite):
 
             self.hearts.add(Item(self.surface, position, (30, 30), image_file,
                                  0))
-            self.sprite_group.add(self.hearts)
     
     def spawn_player(self, player):
         player.rect.left, player.rect.top = self.spawn_point
@@ -140,27 +132,25 @@ class Room(pygame.sprite.Sprite):
     def update(self):
 
         self.enemies_bullets.update()
-        if (len(self.enemies) == 0 and 
-            self.wave_now <= self.waves[self.wave_now]['QUANTITY'] and 
-            not self.wave_break):
 
-            self.wave_break = True
-            self.last_wave = pygame.time.get_ticks()
-            self.spawn_coins(2)
-            self.spawn_hearts(1)
+        if len(self.enemies) == 0:
+            tick = pygame.time.get_ticks()
 
-        elif len(self.enemies) == 0 and self.wave_now > self.waves[self.wave_now]["QUANTITY"]:
-            if not self.is_portal_spawned:
+            if not self.rewarded:
+                self.spawn_hearts(2)
+                self.spawn_coins(10)
+                self.rewarded = True
+        
+            if self.wave_now < len(self.waves) and tick - self.last_wave > 3000:
+                self.last_wave = tick
+                self.rewarded = False
+                self.start_wave()
+            elif self.wave_now >= len(self.waves) and tick - self.last_wave > 2000:
+                self.last_wave = tick
                 self.spawn_portal()
-                self.is_portal_spawned = True
-
-        # wave_break between waves
-        if (self.wave_break and 
-            pygame.time.get_ticks() - self.last_wave > 3000):
-
-            self.wave_break = False
+        
+        else:
             self.last_wave = pygame.time.get_ticks()
-            self.start_wave()
 
         for enemy in self.enemies:
             bullet = enemy.attack((self.player.x, self.player.y))
@@ -172,6 +162,10 @@ class Room(pygame.sprite.Sprite):
 
     def draw(self):
         self.floors.draw(self.surface)
+        self.hearts.draw(self.surface)
+        self.coins.draw(self.surface)
+        if self.portal is not None:
+            self.portal.draw()
         self.enemies_bullets.draw(self.surface)
         self.walls.draw(self.surface)
         self.player.draw()

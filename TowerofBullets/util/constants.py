@@ -9,7 +9,7 @@ WEAPONS_DB = {
     'CAULE': {
         'COST': 1,
         'DAMAGE': 5,
-        'FIRE_RATE': 80,
+        'FIRE_RATE': 150,
         'BULLET_SPEED': 7,
         'IMAGE_FILE': 'items/weapons/caule.png'
     },
@@ -22,8 +22,8 @@ WEAPONS_DB = {
     },
     'AK47': {
         'COST': 0,
-        'DAMAGE': 5,
-        'FIRE_RATE': 250,
+        'DAMAGE': 50,
+        'FIRE_RATE': 100,
         'BULLET_SPEED': 4,
         'IMAGE_FILE': 'items/weapons/ak47.png'
     },
@@ -174,38 +174,39 @@ ROOMS_DB = {
         },
         'WAVES': [
             {
-                "QUANTITY": 1,
+                "ENEMY_QUANTITY": 1,
                 "ENEMIES": [ENEMIES_DB['WOGOL'], ENEMIES_DB['SWAMPY']],
             },
-            {
-                "QUANTITY": 1,
-                "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
-            },
-            {
-                "QUANTITY": 4,
-                "ENEMIES": [ENEMIES_DB['GOBLIN'], ENEMIES_DB['NECROMANCER']]
-            },
-            {
-                "QUANTITY": 1,
-                "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
-            }
+            # {
+            #     "ENEMY_QUANTITY": 1,
+            #     "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
+            # },
+            # {
+            #     "ENEMY_QUANTITY": 4,
+            #     "ENEMIES": [ENEMIES_DB['GOBLIN'], ENEMIES_DB['NECROMANCER']]
+            # },
+            # {
+            #     "ENEMY_QUANTITY": 1,
+            #     "ENEMIES": [BOSS_DB['BIG_ZOMBIE']]
+            # }
         ]
     },
     'SALA2': {
+        'SPAWN_POINT': (650, 80),
         'STRUCTURE': {
             'LAYOUT': '02.txt'
         },
         'WAVES': [
             {
-                "QUANTITY": 5,
+                "ENEMY_QUANTITY": 5,
                 "ENEMIES": [ENEMIES_DB['SKELETON'], ENEMIES_DB['NECROMANCER']],
             },
             {
-                "QUANTITY": 1,
+                "ENEMY_QUANTITY": 1,
                 "ENEMIES": [ENEMIES_DB['IMP'], ENEMIES_DB['ORC_WARRIOR']]
             },
             {
-                "QUANTITY": 1,
+                "ENEMY_QUANTITY": 1,
                 "ENEMIES": [BOSS_DB['KNIGHT']]
             }
         ]
