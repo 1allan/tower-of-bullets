@@ -7,8 +7,9 @@ from screens.start import StartView
 from screens.config import ConfigView
 from screens.dead import DeadView
 from screens.wait import WaitView
+from screens.choose_weapon import ChooseWeaponView
 
-from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID, DEADVIEW_ID, WAITVIEW_ID
+from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID, DEADVIEW_ID, WAITVIEW_ID, CHOOSEWEAPONVIEW_ID
 
 
 views = {
@@ -16,7 +17,8 @@ views = {
     STARTVIEW_ID: StartView,
     CONFIGVIEW_ID: ConfigView,
     DEADVIEW_ID: DeadView,
-    WAITVIEW_ID: WaitView
+    WAITVIEW_ID: WaitView,
+    CHOOSEWEAPONVIEW_ID: ChooseWeaponView
 }
 
 class Game:
@@ -58,10 +60,15 @@ class Game:
                 next_ = self.overlay.render()
                 if next_ == CLOSEVIEW_ID:
                     self.overlay = None
+
                 elif next_ == STARTVIEW_ID:
                     self.overlay = views[next_](self.display)
                     self.game = TowerOfBullets(self.display)
                     self.game.run()
+
+                elif next_ == CHOOSEWEAPONVIEW_ID:
+                    self.overlay = views[next_](self.display, player=self.game.player)
+
                 elif next_ is not None:
                     self.overlay = views[next_](self.display)
             self.clock.tick(60)
