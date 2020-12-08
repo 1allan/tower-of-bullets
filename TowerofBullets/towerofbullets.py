@@ -26,7 +26,7 @@ class TowerOfBullets:
         self.changed_room = False
 
     def run(self):
-        self.player = Player(self.surface, self.sprites, (0, 0), (70, 70), 5,
+        self.player = Player(self.surface, self.sprites, (0, 0), (40, 70), 5,
                              100, 200, Group(), gold=0, animated=True)
         self.new_room()
 

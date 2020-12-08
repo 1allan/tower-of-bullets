@@ -36,6 +36,7 @@ class Room(pygame.sprite.Sprite):
         self.wave_now = 0
         self.last_wave = pygame.time.get_ticks()
         self.waves = args['WAVES']
+        self.started = False
         self.rewarded = False
 
         self.coins = pygame.sprite.Group()
@@ -142,12 +143,14 @@ class Room(pygame.sprite.Sprite):
         self.player = player
 
     def update(self):
-
+        tick = pygame.time.get_ticks()
+        if tick - self.last_wave < 3000 and not self.started:
+            return
+        else:
+            self.started = True
         self.enemies_bullets.update()
 
         if len(self.enemies) == 0:
-            tick = pygame.time.get_ticks()
-
             if not self.rewarded:
                 self.spawn_hearts(2)
                 self.spawn_coins(5)
