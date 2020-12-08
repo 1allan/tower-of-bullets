@@ -4,35 +4,46 @@ import math
 from items.bullet import Bullet
 from entity import Entity
 
-IMAGE = 'items/01.png'
-
 
 class Weapon(Entity):
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 damage: int, image_file: str = IMAGE):
+    def __init__(self, surface: pygame.Surface, 
+                 sprite_group: pygame.sprite.Group, position: tuple, args):
 
-        super().__init__(surface, position, size, image_file=image_file)
-        self.damage = damage
-        self.bullets = []
+        super().__init__(surface, position, args['SIZE'], 
+                         image_file='items/weapons/' + args['IMAGE_FILE'])
+        
+        self.fire_rate = args['FIRE_RATE']
+        self.cost = args['COST']
+        self.bullet_args = args['BULLET']
         self.last_tick = 0
-        self.fire_rate_gap = 0
-
-    def shoot(self, coordinates):
-        if pygame.time.get_ticks() - self.last_tick >= self.fire_rate_gap:
+        self.sprite_group = sprite_group
+        self.rotated_image = None
+        
+    def shoot(self, coordinates: tuple):
+        if pygame.time.get_ticks() - self.last_tick >= self.fire_rate:
             self.last_tick = pygame.time.get_ticks()
 
-            position = (self.x, self.y)
-            bullet = Bullet(self.surface, position, (6, 6), self.damage, 5,
-                            coordinates)
+            position = (self.rect.left, self.rect.top)
+            bullet = Bullet(self.surface, position, coordinates, self.bullet_args)
             
-            self.bullets.append(bullet)
+            return bullet
+    
+    def update(self, coordinates):
+        radians = math.atan2((coordinates[1] - self.rect.top), 
+                             (coordinates[0] - self.rect.left))
+        degs = radians * (180 / math.pi)
+        image = None
+        if coordinates[0] < self.rect.left:
+            image = pygame.transform.flip(self.image, False, True)
+        else:
+            image = self.image
 
-    def update(self):
-        for b in self.bullets:
-            width, height = b.surface.get_size()
-            x, y = b.rect.left, b.rect.top
-            if y <= 40 or y >= height - 49 or x <= 14 or x >= width - 15:
-                self.bullets.remove(b)
-            else:
-                b.draw()
+        self.rotated_image = pygame.transform.rotate(image, -degs)
+
+    def draw(self):
+        if self.rotated_image is not None:
+            new_rect = self.rotated_image.get_rect(center=(self.rect.left, self.rect.top + 20))
+            self.surface.blit(self.rotated_image, new_rect)
+        else:
+            self.surface.blit(self.image, (self.rect.left, self.rect.top))

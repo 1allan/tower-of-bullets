@@ -1,31 +1,50 @@
 import pygame
+import math
 
 from entity import Entity
 from items.weapon import Weapon
+from character.character import Character
+from character.player import Player
 
-IMAGE = 'misc/placeholder.png'
 
+class Enemy(Character):
 
-class Enemy(Entity):
+    def __init__(self, surface: pygame.Surface,
+                 sprite_group: pygame.sprite.Group, position: tuple,
+                 size: tuple, wall_sprites, args):
 
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int, hp: int, image_file: str=IMAGE):
-                 
-        super().__init__(surface, position, size, speed, image_file)
-        self.weapon = None
-        self.hp = hp
+        super().__init__(surface, sprite_group, position, size,
+                         args["SPEED"], args["HP"], wall_sprites, 
+                         'characters/enemies/' + args["IMAGE_FILE"])
 
-        if self.weapon is None:
-            self.weapon = Weapon(self.surface, (self.rect.left, self.rect.top), 
-                             (10, 10), 2)
+        self.weapon = Weapon(self.surface, sprite_group, 
+                            (self.rect.left, self.rect.top), args["WEAPON"])
+        self.weapon.cost = 0
+        self.inv_time = 0
 
-    def chase(self, coordinates):
-        pass
+    def chase(self, destination: tuple, flag=False):
+        self.floating_point_x, self.floating_point_y = [
+            self.rect.left, self.rect.top]
+        self.dest_x, self.dest_y = destination
 
-    def shoot(self, coordinates):
-        self.weapon.shoot(coordinates)
+        x_diff = self.dest_x - self.rect.left
+        y_diff = self.dest_y - self.rect.top
+        angle = math.atan2(y_diff, x_diff)
 
-    def update(self):
-        self.weapon.draw()
-        self.weapon.rect.left = self.rect.left
-        self.weapon.rect.top = self.rect.top
+        self.change_x = math.cos(angle) * int(self.speed)
+        self.change_y = math.sin(angle) * int(self.speed)
+
+        self.floating_point_y += self.change_y
+        self.floating_point_x += self.change_x
+
+        positionBefore = (self.rect.left, self.rect.top)
+        collision = pygame.sprite.spritecollideany(self, self.wall_sprites)
+
+        # colisao com parede
+        if collision:
+            self.rect.left = positionBefore[0] - 1
+            self.rect.top = positionBefore[1] - 1
+        else:
+            self.rect.left = int(self.floating_point_x)
+            self.rect.top = int(self.floating_point_y)
+
