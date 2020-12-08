@@ -27,8 +27,8 @@ WEAPONS_DB = {
         'BULLET': {
           'DAMAGE': 5,
           'SPEED': 7,
-          'SIZE': (10, 10),
-          'IMAGE_FILE': 'default.png'
+          'SIZE': (18, 18),
+          'IMAGE_FILE': 'green_bullet.png'
         }
     },
     'AK47': {
@@ -39,7 +39,7 @@ WEAPONS_DB = {
         'BULLET': {
           'DAMAGE': 5,
           'SPEED': 5,
-          'SIZE': (10, 10),
+          'SIZE': (15, 15),
           'IMAGE_FILE': 'default.png'
         }
     },
@@ -51,7 +51,7 @@ WEAPONS_DB = {
         'BULLET': {
           'DAMAGE': 5,
           'SPEED': 5,
-          'SIZE': (10, 10),
+          'SIZE': (15, 15),
           'IMAGE_FILE': 'default.png'
         }
     },
@@ -63,8 +63,8 @@ WEAPONS_DB = {
         'BULLET': {
           'DAMAGE': 5,
           'SPEED': 5,
-          'SIZE': (10, 10),
-          'IMAGE_FILE': 'default.png'
+          'SIZE': (15, 15),
+          'IMAGE_FILE': 'bubble.png'
         }
     },
     'CHERRY_BLOSSOM': {
@@ -75,20 +75,20 @@ WEAPONS_DB = {
         'BULLET': {
           'DAMAGE': 5,
           'SPEED': 5,
-          'SIZE': (10, 10),
-          'IMAGE_FILE': 'default.png'
+          'SIZE': (16, 16),
+          'IMAGE_FILE': 'sakura.png'
         }
     },
     'SNOW_FOX': {
         'COST': 0,
-        'FIRE_RATE': 200,
+        'FIRE_RATE': 100,
         'SIZE': (60, 60),
         'IMAGE_FILE': 'snow_fox.png',
         'BULLET': {
-          'DAMAGE': 5,
+          'DAMAGE': 3,
           'SPEED': 5,
-          'SIZE': (10, 10),
-          'IMAGE_FILE': 'default.png'
+          'SIZE': (13, 13),
+          'IMAGE_FILE': 'snowflake.png'
         }
     }
 }
