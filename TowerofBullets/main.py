@@ -7,7 +7,7 @@ from screens.start import StartView
 from screens.config import ConfigView
 from screens.dead import DeadView
 
-from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID, DEADVIEW_ID
+from util.constants import PAUSEVIEW_ID, STARTVIEW_ID, CLOSEVIEW_ID, CONFIGVIEW_ID, DEADVIEW_ID, RESTART_ID
 
 
 views = {
@@ -56,8 +56,10 @@ class Game:
                 next_ = self.overlay.render()
                 if next_ == CLOSEVIEW_ID:
                     self.overlay = None
-                elif next_ == STARTVIEW_ID:
-                    self.overlay = views[next_](self.display)
+                elif next_ == RESTART_ID:
+                    self.overlay = views[STARTVIEW_ID](self.display)
+                    self.game = TowerOfBullets(self.display)
+                    self.game.run()
                 elif next_ is not None:
                     self.overlay = views[next_](self.display)
             self.clock.tick(60)

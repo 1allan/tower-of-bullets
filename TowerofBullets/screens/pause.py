@@ -2,7 +2,7 @@ import pygame
 
 from entity import Entity
 from .screen import Screen
-from util.constants import CLOSEVIEW_ID, STARTVIEW_ID
+from util.constants import CLOSEVIEW_ID, STARTVIEW_ID, RESTART_ID
 
 
 class PauseView(Screen):
@@ -23,7 +23,8 @@ class PauseView(Screen):
            self.play.rect.collidepoint(mouse_pos) and mouse_click[0]):
             emit = CLOSEVIEW_ID
         elif self.inicio.rect.collidepoint(mouse_pos) and mouse_click[0]:
-            emit = STARTVIEW_ID
+            emit = RESTART_ID
+            # emit = STARTVIEW_ID
 
         return emit
 

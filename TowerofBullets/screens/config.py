@@ -36,7 +36,7 @@ class ConfigView(Screen):
     
     def get_score(self):
         scores = self.saveDAO.get_all()
-        orderedScores = sorted(scores, key=lambda k: k['gold'], reverse=True)
+        orderedScores = sorted(scores, key=lambda k: k['rooms'], reverse=True)
 
         x_inicial = 420
         y_inicial = 200
@@ -44,7 +44,7 @@ class ConfigView(Screen):
             if i < 10:
                 y_inicial += 20
                 font_score = self.font.render(
-                f'Gold = {orderedScores[i]["gold"]}', True, COLOR_BLACK)
+                f'Rooms survived = {orderedScores[i]["rooms"]} | Gold = {orderedScores[i]["gold"]}', True, COLOR_BLACK)
 
                 self.surface.blit(font_score, (x_inicial, y_inicial))
 

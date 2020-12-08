@@ -14,14 +14,16 @@ class Player(Character):
 
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, speed: int, max_hp: int, max_energy: int, 
-                 wall_sprites: pygame.sprite.Group, gold: int = 0, image_file: str=IMAGE):
+                 size: tuple, speed: int, max_hp: int, max_energy: int,
+                 wall_sprites: pygame.sprite.Group, rooms_survived: int = 0,
+                 gold: int = 0, image_file: str=IMAGE):
 
         super().__init__(surface, sprite_group, position, size, speed, max_hp, 
                          wall_sprites, image_file)
         
         self.max_energy = max_energy
         self.energy = self.max_energy
+        self.rooms_survived = rooms_survived
         self.gold = gold
         self.last_weapon_change = 0
         self.weapon2 = Weapon(self.surface, sprite_group, (self.x, self.y),

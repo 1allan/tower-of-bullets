@@ -111,6 +111,7 @@ class TowerOfBullets:
             entered = self.player.rect.colliderect(self.room.portal.rect)
             if entered:
                 self.new_room()
+                self.player.rooms_survived += 1
 
     def update(self):
         self.handle_input()
@@ -130,6 +131,7 @@ class TowerOfBullets:
         # ver se o jogador ganhou ou perdeu
         if self.player.hp <= 0:
             player = {
+                "rooms": self.player.rooms_survived,
                 "gold": self.player.gold
             }
 

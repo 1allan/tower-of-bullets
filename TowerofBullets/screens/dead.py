@@ -2,7 +2,7 @@ import pygame
 
 from entity import Entity
 from .screen import Screen
-from util.constants import CONFIGVIEW_ID, STARTVIEW_ID
+from util.constants import CONFIGVIEW_ID, STARTVIEW_ID, RESTART_ID
 from dao.saveDAO import SaveDAO
 
 COLOR_WHITE = pygame.Color(255, 255, 255)
@@ -32,17 +32,17 @@ class DeadView(Screen):
         if self.config.rect.collidepoint(mouse_pos) and mouse_click[0]:
             emit = CONFIGVIEW_ID
         elif self.inicio.rect.collidepoint(mouse_pos) and mouse_click[0]:
-            emit = STARTVIEW_ID
+            emit = RESTART_ID
 
         return emit
 
     def get_score(self):
         scores = self.save_dao.get_all()
-        orderedScores = sorted(scores, key=lambda k: k['timestamp'])
+        orderedScores = sorted(scores, key=lambda k: k['timestamp'], reverse=True)
 
         font_score = self.font.render(
-            f'Gold: {str(orderedScores[len(orderedScores) - 1]["gold"])}', True, COLOR_WHITE)
-        self.surface.blit(font_score, (345, 300))
+            f'Rooms survived: {str(orderedScores[0]["rooms"])} | Gold: {str(orderedScores[0]["gold"])}', True, COLOR_WHITE)
+        self.surface.blit(font_score, (230, 300))
 
     def render(self):
         self.surface.blit(self.bg.image, (0, 0))
