@@ -26,7 +26,7 @@ class Weapon(Entity):
             self.last_tick = pygame.time.get_ticks()
 
             position = (self.rect.left, self.rect.top)
-            bullet = Bullet(self.surface, position, (8, 8), 
+            bullet = Bullet(self.surface, position, (13, 13), 
                             self.damage, self.bullet_speed, coordinates)
             
             return bullet

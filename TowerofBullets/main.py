@@ -56,8 +56,8 @@ class Game:
                 next_ = self.overlay.render()
                 if next_ == CLOSEVIEW_ID:
                     self.overlay = None
-                elif next_ == RESTART_ID:
-                    self.overlay = views[STARTVIEW_ID](self.display)
+                elif next_ == STARTVIEW_ID:
+                    self.overlay = views[next_](self.display)
                     self.game = TowerOfBullets(self.display)
                     self.game.run()
                 elif next_ is not None:

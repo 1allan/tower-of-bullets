@@ -150,8 +150,8 @@ class Room(pygame.sprite.Sprite):
 
             if not self.rewarded:
                 self.spawn_hearts(2)
-                self.spawn_coins(10)
-                self.spawn_energy_orbs(5)
+                self.spawn_coins(5)
+                self.spawn_energy_orbs(3)
                 self.rewarded = True
 
             if self.wave_now < len(self.waves) and tick - self.last_wave > 3000:

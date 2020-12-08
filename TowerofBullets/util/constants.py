@@ -4,14 +4,14 @@ PAUSEVIEW_ID = 'PAUSE'
 STARTVIEW_ID = 'START'
 CONFIGVIEW_ID = 'CONFIG'
 DEADVIEW_ID = 'DEAD',
-RESTART_ID = 'RESTART'
+WAITVIEW_ID = 'WAIT'
 
 WEAPONS_DB = {
     'CAULE': {
-        'COST': 1,
-        'DAMAGE': 5,
-        'FIRE_RATE': 150,
-        'BULLET_SPEED': 7,
+        'COST': 10,
+        'DAMAGE': 10,
+        'FIRE_RATE': 350,
+        'BULLET_SPEED': 13,
         'SIZE': (80, 80),
         'IMAGE_FILE': 'items/weapons/caule.png'
     },
@@ -19,15 +19,15 @@ WEAPONS_DB = {
         'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
-        'BULLET_SPEED': 4,
+        'BULLET_SPEED': 7,
         'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/bambuzinho.png'
     },
     'AK47': {
-        'COST': 0,
-        'DAMAGE': 50,
+        'COST': 1,
+        'DAMAGE': 10,
         'FIRE_RATE': 100,
-        'BULLET_SPEED': 4,
+        'BULLET_SPEED': 7,
         'SIZE': (80, 40),
         'IMAGE_FILE': 'items/weapons/ak47.png'
     },
@@ -35,7 +35,7 @@ WEAPONS_DB = {
         'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 150,
-        'BULLET_SPEED': 4,
+        'BULLET_SPEED': 7,
         'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/bad_pistol.png'
     },
@@ -43,7 +43,7 @@ WEAPONS_DB = {
         'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
-        'BULLET_SPEED': 4,
+        'BULLET_SPEED': 7,
         'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/bubble_gun.png'
     },
@@ -51,7 +51,7 @@ WEAPONS_DB = {
         'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
-        'BULLET_SPEED': 4,
+        'BULLET_SPEED': 7,
         'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/cherry_blossom.png'
     },
@@ -59,7 +59,7 @@ WEAPONS_DB = {
         'COST': 0,
         'DAMAGE': 1,
         'FIRE_RATE': 200,
-        'BULLET_SPEED': 4,
+        'BULLET_SPEED': 7,
         'SIZE': (60, 60),
         'IMAGE_FILE': 'items/weapons/snow_fox.png'
     }

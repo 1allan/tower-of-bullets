@@ -2,7 +2,7 @@ import pygame
 
 from entity import Entity
 from .screen import Screen
-from util.constants import CONFIGVIEW_ID, STARTVIEW_ID, RESTART_ID
+from util.constants import CONFIGVIEW_ID, STARTVIEW_ID
 from dao.saveDAO import SaveDAO
 
 COLOR_WHITE = pygame.Color(255, 255, 255)
@@ -32,7 +32,7 @@ class DeadView(Screen):
         if self.config.rect.collidepoint(mouse_pos) and mouse_click[0]:
             emit = CONFIGVIEW_ID
         elif self.inicio.rect.collidepoint(mouse_pos) and mouse_click[0]:
-            emit = RESTART_ID
+            emit = STARTVIEW_ID
 
         return emit
 
