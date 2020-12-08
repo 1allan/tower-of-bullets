@@ -4,7 +4,7 @@ from pygame.sprite import Group, groupcollide, spritecollide, spritecollideany
 from time import time
 
 from util.functions import load_image
-from util.constants import ROOMS_DB, DEADVIEW_ID
+from util.constants import ROOMS_DB, DEADVIEW_ID, WAITVIEW_ID
 
 from scenery.room import Room
 from screens.hud import Hud
@@ -23,6 +23,7 @@ class TowerOfBullets:
         self.player = None
         self.sprites = Group()
         self.save_dao = SaveDAO('save_info.pkl')
+        self.changed_room = False
 
     def run(self):
         self.player = Player(self.surface, self.sprites, (0, 0), (70, 70), 5,
@@ -66,6 +67,7 @@ class TowerOfBullets:
         self.player.wall_sprites = self.room.walls
         self.room.player = self.player
         self.player.rect.left, self.player.rect.top = self.room.spawn_point
+        self.changed_room = True
 
     def __collide_with(self, target):
         def callback(spr1, spr2):
@@ -121,6 +123,10 @@ class TowerOfBullets:
 
     def render(self):
         self.update()
+
+        if self.changed_room:
+            self.changed_room = False
+            return WAITVIEW_ID
 
         self.room.draw()
         self.sprites.draw(self.surface)
