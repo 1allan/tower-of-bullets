@@ -27,7 +27,7 @@ class TowerOfBullets:
 
     def run(self):
         self.player = Player(self.surface, self.sprites, (0, 0), (70, 70), 5,
-                             40, 200, Group(), gold=0)
+                             100, 200, Group(), gold=0, animated=True)
         self.new_room()
 
         self.room.spawn_player(self.player)

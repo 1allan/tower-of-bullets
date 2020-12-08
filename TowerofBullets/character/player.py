@@ -7,7 +7,7 @@ from character.character import Character
 from items.weapon import Weapon
 from items.bullet import Bullet
 
-IMAGE = 'misc/placeholder.png'
+IMAGE = 'characters/player/'
 
 
 class Player(Character):
@@ -16,10 +16,10 @@ class Player(Character):
                  sprite_group: pygame.sprite.Group, position: tuple,
                  size: tuple, speed: int, max_hp: int, max_energy: int,
                  wall_sprites: pygame.sprite.Group, rooms_survived: int = 0,
-                 gold: int = 0, image_file: str=IMAGE):
+                 gold: int = 0, image_file: str=IMAGE, animated=False):
 
         super().__init__(surface, sprite_group, position, size, speed, max_hp, 
-                         wall_sprites, image_file)
+                         wall_sprites, image_file=image_file, animated=animated)
         
         self.max_energy = max_energy
         self.energy = self.max_energy

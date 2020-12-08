@@ -11,11 +11,11 @@ class Enemy(Character):
 
     def __init__(self, surface: pygame.Surface,
                  sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, wall_sprites, args):
+                 size: tuple, wall_sprites, args, animated=False):
 
         super().__init__(surface, sprite_group, position, size,
                          args["SPEED"], args["HP"], wall_sprites, 
-                         'characters/enemies/' + args["IMAGE_FILE"])
+                         'characters/enemies/' + args["IMAGE_FILE"], animated)
 
         self.weapon = Weapon(self.surface, sprite_group, 
                             (self.rect.left, self.rect.top), args["WEAPON"])

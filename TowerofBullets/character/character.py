@@ -15,9 +15,9 @@ class Character(Entity):
     def __init__(self, surface: pygame.Surface, 
                  sprite_group: pygame.sprite.Group, position: tuple,
                  size: tuple, speed: int, max_hp: int,
-                 wall_sprites: pygame.sprite.Group, image_file: str):
-
-        super().__init__(surface, position, size, speed, image_file)
+                 wall_sprites: pygame.sprite.Group, image_file: str, animated=False):
+        
+        super().__init__(surface, position, size, speed, animated=animated, image_file=image_file)
 
         self.weapon = None
         self.max_hp = max_hp
@@ -29,7 +29,7 @@ class Character(Entity):
         self.wall_sprites = wall_sprites
         self.last_direction = [1, 0]
 
-    def move(self, direction: tuple=None):
+    def move(self, direction: tuple=None):        
         # Sets an equivalent speed for diagonals
         speed = self.speed
         if 0 not in direction:
@@ -72,8 +72,6 @@ class Character(Entity):
         else:
             self.image.set_alpha(255)
             
-        
-
         self.weapon.rect.left = self.x
         self.weapon.rect.top = self.y
         

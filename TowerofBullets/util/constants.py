@@ -98,43 +98,43 @@ ENEMIES_DB = {
     'SPEED': 2,
     'HP': 100,
     'WEAPON': WEAPONS_DB["BAMBUZINHO"],
-    'IMAGE_FILE': 'wogol.png'
+    'IMAGE_FILE': 'wogol/'
   },
   "SWAMPY": {
     'SPEED': 2,
     'HP': 100,
     'WEAPON': WEAPONS_DB["CAULE"],
-    'IMAGE_FILE': 'swampy.png'
+    'IMAGE_FILE': 'swampy/'
   },
   "SKELETON": {
     'SPEED': 2,
     'HP': 100,
     'WEAPON': WEAPONS_DB["SNOW_FOX"],
-    'IMAGE_FILE': 'skelet.png'
+    'IMAGE_FILE': 'skelet/'
   },
   "GOBLIN": {
     'SPEED': 4,
     'HP': 50,
     'WEAPON': WEAPONS_DB["BUBBLE_GUN"],
-    'IMAGE_FILE': 'goblin.png'
+    'IMAGE_FILE': 'goblin/'
   },
   "NECROMANCER": {
     'SPEED': 2,
     'HP': 100,
     'WEAPON': WEAPONS_DB["CHERRY_BLOSSOM"],
-    'IMAGE_FILE': 'necromancer.png'
+    'IMAGE_FILE': 'necromancer/'
   },
   "IMP": {
     'SPEED': 3,
     'HP': 100,
     'WEAPON': WEAPONS_DB["BAMBUZINHO"],
-    'IMAGE_FILE': 'imp.png'
+    'IMAGE_FILE': 'imp/'
   },
   "ORC_WARRIOR": {
     'SPEED': 1,
     'HP': 100,
     'WEAPON': WEAPONS_DB["CAULE"],
-    'IMAGE_FILE': 'orc.png'
+    'IMAGE_FILE': 'orc/'
   }
 }
 
@@ -143,62 +143,62 @@ BOSS_DB = {
     'SPEED': 3,
     'HP': 150,
     'WEAPON': WEAPONS_DB["BAD_PISTOL"],
-    'IMAGE_FILE': 'orc_shaman.png'
+    'IMAGE_FILE': 'orc_shaman/'
   },
   
   "BIG_ZOMBIE": {
     'SPEED': 2,
     'HP': 400,
     'WEAPON': WEAPONS_DB["CAULE"],
-    'IMAGE_FILE': 'zombie.png'
+    'IMAGE_FILE': 'zombie/'
   },
   "OGRE": {
     'SPEED': 2,
     'HP': 300,
     'WEAPON': WEAPONS_DB["BAD_PISTOL"],
-    'IMAGE_FILE': 'ogre.png'
+    'IMAGE_FILE': 'ogre/'
   },
   "MUDDY": {
     'SPEED': 1,
     'HP': 400,
     'WEAPON': WEAPONS_DB["SNOW_FOX"],
-    'IMAGE_FILE': 'muddy.png'
+    'IMAGE_FILE': 'muddy/'
   },
   "LIZARD": {
     'SPEED': 3,
     'HP': 300,
     'WEAPON': WEAPONS_DB["CHERRY_BLOSSOM"],
-    'IMAGE_FILE': 'lizard.png'
+    'IMAGE_FILE': 'lizard/'
   },
   "FROZEN_LIZARD": {
     'SPEED': 1,
     'HP': 100,
     'WEAPON': WEAPONS_DB["BUBBLE_GUN"],
-    'IMAGE_FILE': 'frozen_lizard.png'
+    'IMAGE_FILE': 'frozen_lizard/'
   },
   "KNIGHT":{
     'SPEED': 2,
     'HP': 250,
     'WEAPON': WEAPONS_DB["BAD_PISTOL"],
-    'IMAGE_FILE': 'knight.png'
+    'IMAGE_FILE': 'knight/'
   },
   "ICE_ZOMBIE": {
     'SPEED': 1,
     'HP': 100,
     'WEAPON': WEAPONS_DB["SNOW_FOX"],
-    'IMAGE_FILE': 'ice_zombie.png'
+    'IMAGE_FILE': 'ice_zombie/'
   },
   "CHORT": {
     'SPEED': 1,
     'HP': 100,
     'WEAPON': WEAPONS_DB["BAMBUZINHO"],
-    'IMAGE_FILE': 'chort.png'
+    'IMAGE_FILE': 'chort/'
   },
   "DEMON": {
     'SPEED': 2,
     'HP': 200,
     'WEAPON': WEAPONS_DB["CAULE"],
-    'IMAGE_FILE': 'demon.png'
+    'IMAGE_FILE': 'demon/'
   }
 }
 
@@ -243,7 +243,7 @@ ROOMS_DB = {
             },
             {
                 "ENEMY_QUANTITY": 1,
-                "ENEMIES": [BOSS_DB['KNIGHT']]
+                "ENEMIES": [BOSS_DB['OGRE']]
             }
         ]
     }

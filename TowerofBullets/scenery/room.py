@@ -98,7 +98,7 @@ class Room(pygame.sprite.Sprite):
             position = (chosen.rect.left, chosen.rect.top)
 
             self.enemies.add(Enemy(self.surface, self.sprite_group, position,
-                                   (70, 70), self.walls, enemy_type))
+                                   (70, 70), self.walls, enemy_type, animated=True))
         self.wave_now += 1
 
     def spawn_portal(self):
