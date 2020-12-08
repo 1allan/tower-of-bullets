@@ -42,8 +42,8 @@ class Enemy(Character):
 
         # colisao com parede
         if collision:
-            self.rect.left = positionBefore[0] - 1
-            self.rect.top = positionBefore[1] - 1
+            self.rect.left = positionBefore[0] - 2
+            self.rect.top = positionBefore[1] - 2
         else:
             self.rect.left = int(self.floating_point_x)
             self.rect.top = int(self.floating_point_y)
