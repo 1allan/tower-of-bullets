@@ -15,7 +15,7 @@ class Enemy(Character):
 
         super().__init__(surface, sprite_group, position, size,
                          args["SPEED"], args["HP"], wall_sprites, 
-                         args["IMAGE_FILE"])
+                         'characters/enemies/' + args["IMAGE_FILE"])
 
         self.weapon = Weapon(self.surface, sprite_group, 
                             (self.rect.left, self.rect.top), args["WEAPON"])

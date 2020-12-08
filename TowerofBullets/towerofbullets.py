@@ -124,9 +124,9 @@ class TowerOfBullets:
     def render(self):
         self.update()
 
-        if self.changed_room:
-            self.changed_room = False
-            return WAITVIEW_ID
+        # if self.changed_room:
+        #     self.changed_room = False
+        #     return WAITVIEW_ID
 
         self.room.draw()
         self.sprites.draw(self.surface)

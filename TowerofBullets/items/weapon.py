@@ -11,12 +11,11 @@ class Weapon(Entity):
                  sprite_group: pygame.sprite.Group, position: tuple, args):
 
         super().__init__(surface, position, args['SIZE'], 
-                         image_file=args['IMAGE_FILE'])
+                         image_file='items/weapons/' + args['IMAGE_FILE'])
         
-        self.damage = args['DAMAGE']
         self.fire_rate = args['FIRE_RATE']
-        self.bullet_speed = args['BULLET_SPEED']
         self.cost = args['COST']
+        self.bullet_args = args['BULLET']
         self.last_tick = 0
         self.sprite_group = sprite_group
         self.rotated_image = None
@@ -26,8 +25,7 @@ class Weapon(Entity):
             self.last_tick = pygame.time.get_ticks()
 
             position = (self.rect.left, self.rect.top)
-            bullet = Bullet(self.surface, position, (13, 13), 
-                            self.damage, self.bullet_speed, coordinates)
+            bullet = Bullet(self.surface, position, coordinates, self.bullet_args)
             
             return bullet
     

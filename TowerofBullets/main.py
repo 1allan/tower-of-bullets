@@ -62,8 +62,6 @@ class Game:
                     self.overlay = views[next_](self.display)
                     self.game = TowerOfBullets(self.display)
                     self.game.run()
-                elif next_ == WAITVIEW_ID:
-                    self.overlay = views[next_](self.display)
                 elif next_ is not None:
                     self.overlay = views[next_](self.display)
             self.clock.tick(60)
