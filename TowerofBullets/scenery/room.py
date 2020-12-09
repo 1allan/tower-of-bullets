@@ -12,17 +12,14 @@ from items.item import Item
 
 class Room(pygame.sprite.Sprite):
 
-    def __init__(self, surface: pygame.Surface,
-                 sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, args):
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, 
+                 args):
 
         pygame.sprite.Sprite.__init__(self)
 
-        self.sprite_group = sprite_group
         self.width, self.height = size
         self.surface = surface
         self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
-        self.rect.left, self.rect.top = position
 
         self.player = None
         self.spawn_point = args['SPAWN_POINT']
@@ -98,8 +95,8 @@ class Room(pygame.sprite.Sprite):
             chosen = choice(list(self.floors))
             position = (chosen.rect.left, chosen.rect.top)
 
-            self.enemies.add(Enemy(self.surface, self.sprite_group, position,
-                                   (70, 70), self.walls, enemy_type, animated=True))
+            self.enemies.add(Enemy(self.surface, position, (70, 70), 
+                                   self.walls, enemy_type, animated=True))
         self.wave_now += 1
 
     def spawn_portal(self):

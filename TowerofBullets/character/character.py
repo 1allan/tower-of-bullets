@@ -12,10 +12,9 @@ def walls_collide(sprite1, sprite2):
 
 class Character(Entity):
 
-    def __init__(self, surface: pygame.Surface, 
-                 sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, speed: int, max_hp: int,
-                 wall_sprites: pygame.sprite.Group, image_file: str, animated=False):
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, 
+                 speed: int, max_hp: int, wall_sprites: pygame.sprite.Group, 
+                 image_file: str, animated=False):
         
         super().__init__(surface, position, size, speed, animated=animated, image_file=image_file)
 
@@ -25,7 +24,6 @@ class Character(Entity):
         self.inv_time = 1000
         self.last_hit = pygame.time.get_ticks()
         self.bullets = pygame.sprite.Group()
-        self.sprite_group = sprite_group
         self.wall_sprites = wall_sprites
         self.last_direction = [1, 0]
 
