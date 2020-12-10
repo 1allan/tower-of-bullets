@@ -1,11 +1,10 @@
 import pygame
 
 from util.functions import load_image
-from util.constants import CLOSEVIEW_ID, CONFIGVIEW_ID
+from util.constants import CLOSEVIEW_ID, CONFIGVIEW_ID, CHOOSEWEAPONVIEW_ID
 
 from entity import Entity
 from .screen import Screen
-from towerofbullets import TowerOfBullets
 
 
 class StartView(Screen):
@@ -31,6 +30,7 @@ class StartView(Screen):
         if self.play.rect.collidepoint(*mouse_pos) and mouse_click[0]:
             emit = CLOSEVIEW_ID
         elif self.config.rect.collidepoint(*mouse_pos) and mouse_click[0]:
+            # emit = CHOOSEWEAPONVIEW_ID
             emit = CONFIGVIEW_ID
         elif self.exit.rect.collidepoint(*mouse_pos) and mouse_click[0]:
             pygame.quit()

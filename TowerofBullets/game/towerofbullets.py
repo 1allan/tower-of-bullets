@@ -6,13 +6,14 @@ from time import time
 from util.functions import load_image
 from util.constants import ROOMS_DB, DEADVIEW_ID, WAITVIEW_ID
 
+from .singleton import SingletonMeta
 from scenery.room import Room
 from screens.hud import Hud
 from character.player import Player
 from dao.saveDAO import SaveDAO
 
 
-class TowerOfBullets:
+class TowerOfBullets(metaclass=SingletonMeta):
 
     def __init__(self, display, fps=60):
         self.surface = display
@@ -26,6 +27,7 @@ class TowerOfBullets:
         self.changed_room = False
 
     def run(self):
+        self.sprites = Group()
         self.player = Player(self.surface, (0, 0), (40, 70), 5,
                              100, 200, Group(), gold=0, animated=True)
         self.new_room()
