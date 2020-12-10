@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from items.bullet import Bullet
+from items.bullet import Bullet, BulletFactory
 from entity import Entity
 
 
@@ -23,7 +23,8 @@ class Weapon(Entity):
             self.last_tick = pygame.time.get_ticks()
 
             position = (self.rect.left, self.rect.top)
-            bullet = Bullet(self.surface, position, coordinates, self.bullet_args)
+            b_type = BulletFactory.get_bullet_type(self.bullet_args)
+            bullet = Bullet(self.surface, position, coordinates, b_type)
             
             return bullet
     
