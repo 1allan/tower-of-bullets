@@ -26,7 +26,7 @@ class TowerOfBullets:
         self.changed_room = False
 
     def run(self):
-        self.player = Player(self.surface, self.sprites, (0, 0), (40, 70), 5,
+        self.player = Player(self.surface, (0, 0), (40, 70), 5,
                              100, 200, Group(), gold=0, animated=True)
         self.new_room()
 
@@ -62,8 +62,8 @@ class TowerOfBullets:
         if self.room is not None:
             self.room.kill()
         room_data = ROOMS_DB[choice(list(ROOMS_DB.keys()))]
-        self.room = Room(self.surface, self.sprites, (0, 0),
-                         (self.width, self.height), room_data)
+        self.room = Room(self.surface, (0, 0), (self.width, self.height), 
+                         room_data)
         self.player.wall_sprites = self.room.walls
         self.room.player = self.player
         self.player.rect.left, self.player.rect.top = self.room.spawn_point

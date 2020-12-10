@@ -7,8 +7,7 @@ from entity import Entity
 
 class Weapon(Entity):
 
-    def __init__(self, surface: pygame.Surface, 
-                 sprite_group: pygame.sprite.Group, position: tuple, args):
+    def __init__(self, surface: pygame.Surface, position: tuple, args):
 
         super().__init__(surface, position, args['SIZE'], 
                          image_file='items/weapons/' + args['IMAGE_FILE'])
@@ -17,7 +16,6 @@ class Weapon(Entity):
         self.cost = args['COST']
         self.bullet_args = args['BULLET']
         self.last_tick = 0
-        self.sprite_group = sprite_group
         self.rotated_image = None
         
     def shoot(self, coordinates: tuple):
