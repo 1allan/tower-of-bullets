@@ -1,6 +1,6 @@
 import pygame
 
-from towerofbullets import TowerOfBullets
+from game.towerofbullets import TowerOfBullets
 from screens.hud import Hud
 from screens.pause import PauseView
 from screens.start import StartView
@@ -63,8 +63,7 @@ class Game:
 
                 elif next_ == STARTVIEW_ID:
                     self.overlay = views[next_](self.display)
-                    self.game = TowerOfBullets(self.display)
-                    self.game.run()
+                    self.game.run() # roda TowerofBullets de novo
 
                 elif next_ == CHOOSEWEAPONVIEW_ID:
                     self.overlay = views[next_](self.display, player=self.game.player)

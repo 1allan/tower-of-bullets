@@ -5,7 +5,6 @@ from util.constants import CLOSEVIEW_ID, CONFIGVIEW_ID, CHOOSEWEAPONVIEW_ID
 
 from entity import Entity
 from .screen import Screen
-from towerofbullets import TowerOfBullets
 
 
 class StartView(Screen):
