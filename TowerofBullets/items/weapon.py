@@ -10,7 +10,7 @@ class Weapon(Entity):
     def __init__(self, surface: pygame.Surface, position: tuple, args):
 
         super().__init__(surface, position, args['SIZE'], 
-                         image_file='items/weapons/' + args['IMAGE_FILE'])
+                         image_file='weapons/' + args['IMAGE_FILE'])
         
         self.fire_rate = args['FIRE_RATE']
         self.cost = args['COST']
@@ -25,7 +25,7 @@ class Weapon(Entity):
             position = (self.rect.left, self.rect.top)
             b_type = BulletFactory.get_bullet_type(self.bullet_args)
             bullet = Bullet(self.surface, position, coordinates, b_type)
-            
+            print(bullet.__dict__)
             return bullet
     
     def update(self, coordinates):

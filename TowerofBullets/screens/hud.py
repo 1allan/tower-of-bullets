@@ -51,9 +51,9 @@ class Hud(Screen):
         # Coins display
         font = pygame.font.SysFont('Arial', 15)
         gold = font.render(str(self.player.gold), True, COLOR_YELLOW)
-        self.surface.blit(load_image('items/coin.png', (15, 15)), (20, 55))
+        self.surface.blit(load_image('misc/coin.png', (15, 15)), (20, 55))
         self.surface.blit(gold, (40, 55))
 
-        self.surface.blit(load_image('misc/pause.png', (40, 40)), (720, 15))
+        self.surface.blit(load_image('ui/pause.png', (40, 40)), (720, 15))
         
         return self.event_listener()

@@ -10,9 +10,9 @@ class PauseView(Screen):
     def __init__(self, surface: pygame.Surface, position=None, size=None):
         super().__init__(surface, position, size)
         self.inicio = Entity(self.surface, (295, 300),
-                             (200, 75), 0, 'misc/inicio.png')
+                             (200, 75), 0, 'ui/inicio.png')
         self.play = Entity(self.surface, (344, 170),
-                           (102, 117), 0, 'misc/pause/play.png')
+                           (102, 117), 0, 'ui/pause/play.png')
 
     def event_listener(self):
         mouse_pos = pygame.mouse.get_pos()

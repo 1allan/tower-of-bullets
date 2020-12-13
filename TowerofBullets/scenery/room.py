@@ -106,17 +106,17 @@ class Room(pygame.sprite.Sprite):
                            (32, 64), image_file, 0)
 
     def spawn_coins(self, quantity: int):
-        image_file = "items/coin.png"
+        image_file = "misc/coin.png"
 
         for _ in range(quantity):
-            chosen = choice(list(self.floors))
+            chosen = choice(ist(self.floors))
             position = (chosen.rect.left, chosen.rect.top)
 
             self.coins.add(Item(self.surface, position, (20, 20), image_file,
                                 0))
 
     def spawn_energy_orbs(self, quantity: int):
-        image_file = "items/energy_orb.png"
+        image_file = "misc/energy_orb.png"
 
         for _ in range(quantity):
             chosen = choice(list(self.floors))
@@ -126,7 +126,7 @@ class Room(pygame.sprite.Sprite):
                                       0))
 
     def spawn_hearts(self, quantity: int):
-        image_file = "items/ui_heart_full.png"
+        image_file = "misc/ui_heart_full.png"
 
         for _ in range(quantity):
             chosen = choice(list(self.floors))

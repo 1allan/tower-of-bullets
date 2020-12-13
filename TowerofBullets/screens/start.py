@@ -14,13 +14,13 @@ class StartView(Screen):
         self.width, self.height = surface.get_size() if size is None else size
         self.surface = pygame.display.set_mode((self.width, self.height))
 
-        self.bg = load_image('misc/start/bg.png', (self.width, self.height))
+        self.bg = load_image('ui/start/bg.png', (self.width, self.height))
         self.play = Entity(self.surface, (170, 300),
-                           (200, 75), 0, 'misc/start/play.png')
+                           (200, 75), 0, 'ui/start/play.png')
         self.config = Entity(self.surface, (420, 300),
-                             (200, 75), 0, 'misc/start/config.png')
+                             (200, 75), 0, 'ui/start/config.png')
         self.exit = Entity(self.surface, (680, 100),
-                           (60, 60), 0, 'misc/start/exit.png')
+                           (60, 60), 0, 'ui/start/exit.png')
 
     def event_listener(self):
         mouse_pos = pygame.mouse.get_pos()

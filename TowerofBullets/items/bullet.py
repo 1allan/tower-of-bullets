@@ -4,8 +4,6 @@ import pygame
 from entity import Entity
 from util.functions import load_image
 
-IMAGE = 'misc/projectiles/default.png'
-
 
 class BulletType:
 
@@ -37,24 +35,24 @@ class Bullet(Entity):
     def __init__(self, surface: pygame.Surface, position: tuple, destination, b_type):
                  
         super().__init__(surface, position, b_type['SIZE'], speed=b_type['SPEED'],
-                         image_file='misc/projectiles/' + b_type['IMAGE_FILE'])
+                         image_file='projectiles/' + b_type['IMAGE_FILE'])
 
         self.damage = b_type['DAMAGE']
-        self.floating_point_x, self.floating_point_y = position
-        self.dest_x, self.dest_y = destination
+        self.__floating_point_x, self.__floating_point_y = position
+        self.__dest_x, self.__dest_y = destination
 
-        x_diff = self.dest_x - self.rect.left
-        y_diff = self.dest_y - self.rect.top
+        x_diff = self.__dest_x - self.rect.left
+        y_diff = self.__dest_y - self.rect.top
         angle = math.atan2(y_diff, x_diff)
 
-        self.change_x = math.cos(angle) * int(self.speed)
-        self.change_y = math.sin(angle) * int(self.speed)
+        self.__change_x = math.cos(angle) * int(self.speed)
+        self.__change_y = math.sin(angle) * int(self.speed)
 
     def update(self):
-        self.floating_point_y += self.change_y
-        self.floating_point_x += self.change_x
+        self.__floating_point_y += self.__change_y
+        self.__floating_point_x += self.__change_x
         
-        self.rect.left = int(self.floating_point_x)
-        self.rect.top = int(self.floating_point_y)
+        self.rect.left = int(self.__floating_point_x)
+        self.rect.top = int(self.__floating_point_y)
 
         

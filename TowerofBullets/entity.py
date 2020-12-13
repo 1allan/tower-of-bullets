@@ -7,7 +7,7 @@ from util.functions import load_image
 class Entity(pygame.sprite.Sprite):
 
     def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed: int=0, image_file: str='placeholder.png',  animated=False, animation_duration=1000):
+                 speed: int=0, image_file: str='misc/placeholder.png',  animated=False, animation_duration=1000):
 
         pygame.sprite.Sprite.__init__(self)
 

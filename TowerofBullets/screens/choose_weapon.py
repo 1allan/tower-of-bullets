@@ -9,7 +9,7 @@ class ChooseWeaponView(Screen):
   def __init__(self, surface: pygame.Surface, position=None, size=None, player=None):
         super().__init__(surface, position, size)
         self.player = player
-        self.bg = Entity(self.surface, (0, 0), self.surface.get_size(), 0, 'misc/config/bg.png')
+        self.bg = Entity(self.surface, (0, 0), self.surface.get_size(), 0, 'ui/config/bg.png')
 
         pygame.font.init()
         self.font = pygame.font.SysFont('Arial', 30)
