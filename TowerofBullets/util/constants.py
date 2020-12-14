@@ -270,7 +270,34 @@ ROOMS_DB = {
                 "ENEMY_QUANTITY": 1,
                 "ENEMIES": [BOSS_DB['FROZEN_LIZARD']]
             }
-
+        ]
+    },
+    'SALA4': {
+        'SPAWN_POINT': (300, 400),
+        'STRUCTURE': {
+            'LAYOUT': '04.txt'
+        },
+        'WAVES': [
+            {
+                "ENEMY_QUANTITY": 6,
+                "ENEMIES": [ENEMIES_DB['LIZARD']],
+            },
+            {
+                "ENEMY_QUANTITY": 1,
+                "ENEMIES": [BOSS_DB['DEMON']]
+            },
+            {
+                "ENEMY_QUANTITY": 3,
+                "ENEMIES": [ENEMIES_DB['LIZARD']]
+            },
+            {
+                "ENEMY_QUANTITY": 5,
+                "ENEMIES": [ENEMIES_DB['LIZARD']]
+            },
+            {
+                "ENEMY_QUANTITY": 1,
+                "ENEMIES": [BOSS_DB['FROZEN_LIZARD']]
+            }
         ]
     }
 }
