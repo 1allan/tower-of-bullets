@@ -31,7 +31,6 @@ class StartView(Screen):
         if self.play.rect.collidepoint(*mouse_pos) and mouse_click[0]:
             emit = CLOSEVIEW_ID
         elif self.config.rect.collidepoint(*mouse_pos) and mouse_click[0]:
-            # emit = CHOOSEWEAPONVIEW_ID
             emit = CONFIGVIEW_ID
         elif self.exit.rect.collidepoint(*mouse_pos) and mouse_click[0]:
             pygame.quit()
