@@ -25,7 +25,6 @@ class Weapon(Entity):
             position = (self.rect.left, self.rect.top)
             b_type = BulletFactory.get_bullet_type(self.bullet_args)
             bullet = Bullet(self.surface, position, coordinates, b_type)
-            print(bullet.__dict__)
             return bullet
     
     def update(self, coordinates):

@@ -109,7 +109,7 @@ class Room(pygame.sprite.Sprite):
         image_file = "misc/coin.png"
 
         for _ in range(quantity):
-            chosen = choice(ist(self.floors))
+            chosen = choice(list(self.floors))
             position = (chosen.rect.left, chosen.rect.top)
 
             self.coins.add(Item(self.surface, position, (20, 20), image_file,
@@ -126,7 +126,7 @@ class Room(pygame.sprite.Sprite):
                                       0))
 
     def spawn_hearts(self, quantity: int):
-        image_file = "misc/ui_heart_full.png"
+        image_file = "misc/heart.png"
 
         for _ in range(quantity):
             chosen = choice(list(self.floors))
