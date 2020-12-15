@@ -2,47 +2,45 @@ import math
 import pygame
 
 from util.functions import load_image
+from util.constants import WEAPONS_DB
 from character.character import Character
 from items.weapon import Weapon
 from items.bullet import Bullet
 
-IMAGE = 'characters/01.png'
+IMAGE = 'characters/player/'
 
 
 class Player(Character):
-    
-    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple,
-                 speed:int, hp: int, energy: int, gold: int=0, 
-                 weapon: Weapon=None, image_file: str=IMAGE):
-                 
-        super().__init__(surface, position, size, speed, hp, image_file)
-        self.energy = energy
+
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, 
+                 speed: int, max_hp: int, max_energy: int,
+                 wall_sprites: pygame.sprite.Group, rooms_survived: int = 0,
+                 gold: int = 0, image_file: str=IMAGE, animated=False):
+
+        super().__init__(surface, position, size, speed, max_hp, 
+                         wall_sprites, image_file=image_file, animated=animated)
+        
+        self.max_energy = max_energy
+        self.energy = self.max_energy
+        self.rooms_survived = rooms_survived
         self.gold = gold
-        self.last_direction = [1, 0]
-        
-        if self.weapon is None:
-            self.weapon = Weapon(self.surface, (self.rect.left, self.rect.top), 
-                             (30, 30), 2)
+        self.last_weapon_change = 0
+        self.weapon2 = Weapon(self.surface, (self.x, self.y),
+                              WEAPONS_DB['CAULE'])
 
-    def move(self, direction=None):
-        if direction[0] == self.last_direction[0] * -1:
-            self.last_direction = direction
-            self.image = pygame.transform.flip(self.image, True, False)
-            self.weapon.image = pygame.transform.flip(self.weapon.image, True,
-                                                      False)
+        self.weapon = Weapon(self.surface, (self.x, self.y), 
+                             WEAPONS_DB['AK47'])
         
-        speed = self.speed
-        # Sets an equivalent speed for diagonals
-        if 0 not in direction:
-            speed = round(((speed**2 + speed**2)**0.5)/2, 1)
-        
-        self.rect.left += speed * direction[0]
-        self.rect.top += speed * direction[1]
+    def attack(self, coordinates: tuple=None):
+        if coordinates is not None and self.energy - self.weapon.cost >= 0:
+            bullet = self.weapon.shoot(coordinates)
+            if bullet is not None:
+                self.bullets.add(bullet)
+                self.energy -= self.weapon.cost
+                return bullet
 
-    def shoot(self):
-        self.weapon.shoot(pygame.mouse.get_pos())
-
-    def update(self):
-        self.weapon.rect.left = self.rect.left
-        self.weapon.rect.top = self.rect.top
-        self.weapon.draw()
+    def swap_weapons(self):
+        current_tick = pygame.time.get_ticks()
+        if current_tick - self.last_weapon_change > 300:
+            self.last_weapon_change = current_tick
+            self.weapon, self.weapon2 = self.weapon2, self.weapon
