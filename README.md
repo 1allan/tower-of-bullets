@@ -1,5 +1,9 @@
 # Tower of Bullets
 This is a minigame made with Pygame as the last project of the subject Object Oriented Programing II at UFSC.
+Shout out to my colleagues who developed this with me:
+ - [AnthonyKamers](https://github.com/AnthonyKamers/)
+ - [antoniomontagner](https://github.com/antoniomontagner)
+ - [julien-vaz](https://github.com/julien-vaz/)
 
 ## Setup
 In the root directory, `towerofbullets/`, run:
