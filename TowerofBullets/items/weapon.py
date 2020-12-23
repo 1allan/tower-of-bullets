@@ -1,23 +1,21 @@
 import pygame
 import math
 
-from items.bullet import Bullet
+from items.bullet import Bullet, BulletFactory
 from entity import Entity
 
 
 class Weapon(Entity):
 
-    def __init__(self, surface: pygame.Surface, 
-                 sprite_group: pygame.sprite.Group, position: tuple, args):
+    def __init__(self, surface: pygame.Surface, position: tuple, args):
 
         super().__init__(surface, position, args['SIZE'], 
-                         image_file='items/weapons/' + args['IMAGE_FILE'])
+                         image_file='weapons/' + args['IMAGE_FILE'])
         
         self.fire_rate = args['FIRE_RATE']
         self.cost = args['COST']
         self.bullet_args = args['BULLET']
         self.last_tick = 0
-        self.sprite_group = sprite_group
         self.rotated_image = None
         
     def shoot(self, coordinates: tuple):
@@ -25,8 +23,8 @@ class Weapon(Entity):
             self.last_tick = pygame.time.get_ticks()
 
             position = (self.rect.left, self.rect.top)
-            bullet = Bullet(self.surface, position, coordinates, self.bullet_args)
-            
+            b_type = BulletFactory.get_bullet_type(self.bullet_args)
+            bullet = Bullet(self.surface, position, coordinates, b_type)
             return bullet
     
     def update(self, coordinates):

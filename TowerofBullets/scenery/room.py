@@ -12,17 +12,14 @@ from items.item import Item
 
 class Room(pygame.sprite.Sprite):
 
-    def __init__(self, surface: pygame.Surface,
-                 sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, args):
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, 
+                 args):
 
         pygame.sprite.Sprite.__init__(self)
 
-        self.sprite_group = sprite_group
         self.width, self.height = size
         self.surface = surface
         self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
-        self.rect.left, self.rect.top = position
 
         self.player = None
         self.spawn_point = args['SPAWN_POINT']
@@ -36,6 +33,7 @@ class Room(pygame.sprite.Sprite):
         self.wave_now = 0
         self.last_wave = pygame.time.get_ticks()
         self.waves = args['WAVES']
+        self.started = False
         self.rewarded = False
 
         self.coins = pygame.sprite.Group()
@@ -97,8 +95,8 @@ class Room(pygame.sprite.Sprite):
             chosen = choice(list(self.floors))
             position = (chosen.rect.left, chosen.rect.top)
 
-            self.enemies.add(Enemy(self.surface, self.sprite_group, position,
-                                   (70, 70), self.walls, enemy_type))
+            self.enemies.add(Enemy(self.surface, position, (70, 70), 
+                                   self.walls, enemy_type, animated=True))
         self.wave_now += 1
 
     def spawn_portal(self):
@@ -108,7 +106,7 @@ class Room(pygame.sprite.Sprite):
                            (32, 64), image_file, 0)
 
     def spawn_coins(self, quantity: int):
-        image_file = "items/coin.png"
+        image_file = "misc/coin.png"
 
         for _ in range(quantity):
             chosen = choice(list(self.floors))
@@ -118,7 +116,7 @@ class Room(pygame.sprite.Sprite):
                                 0))
 
     def spawn_energy_orbs(self, quantity: int):
-        image_file = "items/energy_orb.png"
+        image_file = "misc/energy_orb.png"
 
         for _ in range(quantity):
             chosen = choice(list(self.floors))
@@ -128,7 +126,7 @@ class Room(pygame.sprite.Sprite):
                                       0))
 
     def spawn_hearts(self, quantity: int):
-        image_file = "items/ui_heart_full.png"
+        image_file = "misc/heart.png"
 
         for _ in range(quantity):
             chosen = choice(list(self.floors))
@@ -142,12 +140,14 @@ class Room(pygame.sprite.Sprite):
         self.player = player
 
     def update(self):
-
+        tick = pygame.time.get_ticks()
+        if tick - self.last_wave < 3000 and not self.started:
+            return
+        else:
+            self.started = True
         self.enemies_bullets.update()
 
         if len(self.enemies) == 0:
-            tick = pygame.time.get_ticks()
-
             if not self.rewarded:
                 self.spawn_hearts(2)
                 self.spawn_coins(5)

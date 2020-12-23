@@ -10,13 +10,13 @@ class DeadView(Screen):
 
     def __init__(self, surface: pygame.Surface, position=None, size=None):
         super().__init__(surface, position, size)
-        self.bg = Entity(self.surface, (0, 0), self.surface.get_size(), 0, 'misc/config/bg.png')
+        self.bg = Entity(self.surface, (0, 0), self.surface.get_size(), 0, 'ui/config/bg.png')
 
-        self.game_over = Entity(self.surface, (240, 60), (320, 202), 0, 'misc/game_over/gameOver.png')
+        self.game_over = Entity(self.surface, (240, 60), (320, 202), 0, 'ui/game_over/gameOver.png')
         self.inicio = Entity(self.surface, (100, 400),
-                             (200, 75), 0, 'misc/inicio.png')
+                             (200, 75), 0, 'ui/inicio.png')
         self.config = Entity(self.surface, (500, 400),
-                             (200, 75), 0, 'misc/start/config.png')
+                             (200, 75), 0, 'ui/start/config.png')
         
         pygame.font.init()
         self.font = pygame.font.SysFont('Arial', 30)

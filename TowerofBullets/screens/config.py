@@ -15,13 +15,13 @@ class ConfigView(Screen):
         self.width, self.height = surface.get_size() if size is None else size
         self.surface = pygame.display.set_mode((self.width, self.height))
 
-        self.bg = load_image('misc/config/bg.png', (self.width, self.height))
+        self.bg = load_image('ui/config/bg.png', (self.width, self.height))
         self.config = Entity(surface, (131, 50),
-                             (500, 50), 0, 'misc/config/config.png')
+                             (500, 50), 0, 'ui/config/config.png')
         self.back = Entity(surface, (28, 50), (64, 64),
-                           0, 'misc/config/voltar.png')
-        self.controles = Entity(surface, (50, 100), (305, 437), 0, 'misc/config/controles.png')
-        self.recordes = Entity(surface, (50, 100), (305, 437), 0, 'misc/config/recordes.png')
+                           0, 'ui/config/voltar.png')
+        self.controles = Entity(surface, (50, 100), (305, 437), 0, 'ui/config/controles.png')
+        self.recordes = Entity(surface, (50, 100), (305, 437), 0, 'ui/config/recordes.png')
         
         self.saveDAO = SaveDAO('save_info.pkl')
         self.font = pygame.font.SysFont('Arial', 20)

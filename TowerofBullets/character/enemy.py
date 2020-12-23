@@ -9,16 +9,15 @@ from character.player import Player
 
 class Enemy(Character):
 
-    def __init__(self, surface: pygame.Surface,
-                 sprite_group: pygame.sprite.Group, position: tuple,
-                 size: tuple, wall_sprites, args):
+    def __init__(self, surface: pygame.Surface, position: tuple, size: tuple, 
+                 wall_sprites, args, animated=False):
 
-        super().__init__(surface, sprite_group, position, size,
+        super().__init__(surface, position, size,
                          args["SPEED"], args["HP"], wall_sprites, 
-                         'characters/enemies/' + args["IMAGE_FILE"])
+                         'characters/enemies/' + args["IMAGE_FILE"], animated)
 
-        self.weapon = Weapon(self.surface, sprite_group, 
-                            (self.rect.left, self.rect.top), args["WEAPON"])
+        self.weapon = Weapon(self.surface, (self.rect.left, self.rect.top), 
+                             args["WEAPON"])
         self.weapon.cost = 0
         self.inv_time = 0
 
@@ -42,8 +41,8 @@ class Enemy(Character):
 
         # colisao com parede
         if collision:
-            self.rect.left = positionBefore[0] - 1
-            self.rect.top = positionBefore[1] - 1
+            self.rect.left = positionBefore[0] - 2
+            self.rect.top = positionBefore[1] - 2
         else:
             self.rect.left = int(self.floating_point_x)
             self.rect.top = int(self.floating_point_y)
