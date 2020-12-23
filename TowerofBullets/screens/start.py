@@ -15,6 +15,7 @@ class StartView(Screen):
         self.surface = pygame.display.set_mode((self.width, self.height))
 
         self.bg = load_image('ui/start/bg.png', (self.width, self.height))
+        self.logo = Entity(self.surface, (72, 134), (655, 57), 0, 'ui/start/towerofbullets.png')
         self.play = Entity(self.surface, (170, 300),
                            (200, 75), 0, 'ui/start/play.png')
         self.config = Entity(self.surface, (420, 300),
@@ -30,7 +31,6 @@ class StartView(Screen):
         if self.play.rect.collidepoint(*mouse_pos) and mouse_click[0]:
             emit = CLOSEVIEW_ID
         elif self.config.rect.collidepoint(*mouse_pos) and mouse_click[0]:
-            # emit = CHOOSEWEAPONVIEW_ID
             emit = CONFIGVIEW_ID
         elif self.exit.rect.collidepoint(*mouse_pos) and mouse_click[0]:
             pygame.quit()
@@ -39,7 +39,8 @@ class StartView(Screen):
 
     def render(self):
         self.surface.blit(self.bg, (0, 0))
+        self.surface.blit(self.logo.image, (72, 150))
         self.surface.blit(self.play.image, (170, 300))
         self.surface.blit(self.config.image, (420, 300))
-        self.surface.blit(self.exit.image, (680, 100))
+        self.surface.blit(self.exit.image, (680, 50))
         return self.event_listener()
